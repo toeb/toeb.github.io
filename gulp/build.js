@@ -32,6 +32,7 @@ gulp.task('scripts', function () {
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.size());
 });
+var vulcanize = require('gulp-vulcanize');
 
 gulp.task('partials', function () {
   return gulp.src('src/{app,components}/**/*.html')
@@ -47,17 +48,8 @@ gulp.task('partials', function () {
     .pipe($.size());
 });
 
-var vulcanize = require('gulp-vulcanize');
-gulp.task('vulcanize', function(){
-  return gulp.src('src/index.html')
-        .pipe(vulcanize({
-            dest: '.tmp',
-            strip: true
-        }))
-        .pipe(gulp.dest('dist'));
-})
 
-gulp.task('html', ['styles', 'scripts', 'partials','vulcanize'], function () {
+gulp.task('html', ['styles', 'scripts', 'partials'], function () {
   var htmlFilter = $.filter('*.html');
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
@@ -84,12 +76,16 @@ gulp.task('html', ['styles', 'scripts', 'partials','vulcanize'], function () {
     .pipe($.useref())
     .pipe($.revReplace())
     .pipe(htmlFilter)
+    .pipe(vulcanize({
+      dest:'dist',
+      strip:true
+    }))
     .pipe($.minifyHtml({
       empty: true,
       spare: true,
       quotes: true
     }))
-    .pipe(htmlFilter.restore())
+    .pipe(htmlFilter.restore())    
     .pipe(gulp.dest('dist'))
     .pipe($.size());
 });
