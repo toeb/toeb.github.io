@@ -1,0 +1,43 @@
+{
+	"build_systems":
+	[
+		{
+			"cmd":
+			[
+				"cmd",
+				"/K",
+				"gulp",
+				"build"
+			],
+			"name": "build site",
+			"working_dir": "$project_path"
+		},
+		{
+			"cmd":
+			[
+				"cmd",
+				"/K",
+				"gulp",
+				"build",
+				"&&",
+				"git",
+				"deploy"
+			],
+			"name": "deploy site",
+			"working_dir": "$project_path"
+		},
+		
+	],
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"tab_size": 2,
+		"translate_tabs_to_spaces": true
+	}
+}

@@ -1,0 +1,1829 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"succ",
+				"success_flag"
+			],
+			[
+				"target",
+				"target_dir"
+			],
+			[
+				"__ev",
+				"__eval_ref_current_ans"
+			],
+			[
+				"return",
+				"return_code"
+			],
+			[
+				"proc",
+				"processResult"
+			],
+			[
+				"exe",
+				"executable"
+			],
+			[
+				"result",
+				"result_flag"
+			],
+			[
+				"break",
+				"breakpoint"
+			],
+			[
+				"value",
+				"value_file"
+			],
+			[
+				"bat",
+				"batch_file"
+			],
+			[
+				"call",
+				"callback_results"
+			],
+			[
+				"list_",
+				"list_filter_flags"
+			],
+			[
+				"shared",
+				"shared_content_dir"
+			],
+			[
+				"shr",
+				"shared_content_dir"
+			],
+			[
+				"conten",
+				"contentOk"
+			],
+			[
+				"content",
+				"content_dir"
+			],
+			[
+				"cache",
+				"cached_content_dir"
+			],
+			[
+				"test",
+				"test_dir"
+			],
+			[
+				"cut",
+				"cutilRun"
+			],
+			[
+				"cu",
+				"cut_off"
+			],
+			[
+				"current",
+				"current_descriptor"
+			],
+			[
+				"bin",
+				"bin_dir"
+			],
+			[
+				"cpp_",
+				"cpp_register_targets"
+			],
+			[
+				"include",
+				"include_directories"
+			],
+			[
+				"package",
+				"package_target_name"
+			],
+			[
+				"depen",
+				"dependency_list"
+			],
+			[
+				"depe",
+				"dependency_list"
+			],
+			[
+				"dependen",
+				"dependency"
+			],
+			[
+				"endf",
+				"endfunction"
+			],
+			[
+				"dep_tar",
+				"dep_targets_cfg"
+			],
+			[
+				"cpp_pa",
+				"cpp_package_targets_create"
+			],
+			[
+				"inst",
+				"inst_dir"
+			],
+			[
+				"target_",
+				"target_name"
+			],
+			[
+				"cpp",
+				"cpp_cfg_ish"
+			],
+			[
+				"endfo",
+				"endfunction"
+			],
+			[
+				"prop",
+				"prop_type"
+			],
+			[
+				"projec",
+				"project_id"
+			],
+			[
+				"paths_",
+				"paths_to_map"
+			],
+			[
+				"pacakge",
+				"package_target"
+			],
+			[
+				"pack",
+				"package_targets_cfg"
+			],
+			[
+				"tgt",
+				"tgt_name"
+			],
+			[
+				"default",
+				"default_layout"
+			],
+			[
+				"src",
+				"source_group_func"
+			],
+			[
+				"sour",
+				"source_group_func"
+			],
+			[
+				"fullP",
+				"fullPath"
+			],
+			[
+				"srs",
+				"srcs_map"
+			],
+			[
+				"srcs",
+				"srcs_map"
+			],
+			[
+				"parent_p",
+				"parent_project_name"
+			],
+			[
+				"parent",
+				"parent_project_name"
+			],
+			[
+				"pare",
+				"parent_proj"
+			],
+			[
+				"proj",
+				"parent_project_name"
+			],
+			[
+				"Pro",
+				"PROJECT_NAME"
+			],
+			[
+				"lbi",
+				"lib_name"
+			],
+			[
+				"proje",
+				"project_id"
+			],
+			[
+				"targe",
+				"target_name"
+			],
+			[
+				"targ",
+				"target_type"
+			],
+			[
+				"publ",
+				"public_include_dirs"
+			],
+			[
+				"curre",
+				"current_path"
+			],
+			[
+				"curren",
+				"current_part"
+			],
+			[
+				"path",
+				"path_parts"
+			],
+			[
+				"tar",
+				"target_type"
+			],
+			[
+				"target_cf",
+				"target_cfg"
+			],
+			[
+				"cpp_tar",
+				"cpp_target"
+			],
+			[
+				"res",
+				"result_path"
+			],
+			[
+				"cur",
+				"current_base"
+			],
+			[
+				"curr",
+				"current_rel"
+			],
+			[
+				"cps",
+				"cps_dir"
+			],
+			[
+				"first",
+				"first_match"
+			],
+			[
+				"end",
+				"endfunction"
+			],
+			[
+				"paren",
+				"parent_dir"
+			],
+			[
+				"cutil_ci",
+				"cutil_current_working_dir"
+			],
+			[
+				"packageSour",
+				"packageSources"
+			],
+			[
+				"pacage",
+				"package_dir"
+			],
+			[
+				"project_",
+				"project_installation_dir"
+			],
+			[
+				"install",
+				"installation_dir"
+			],
+			[
+				"conf",
+				"config_dir"
+			],
+			[
+				"setPacka",
+				"setPackageDir"
+			],
+			[
+				"setP",
+				"setPackageDescriptor"
+			],
+			[
+				"jsoN",
+				"json_print"
+			],
+			[
+				"defa",
+				"default_keys"
+			],
+			[
+				"paka",
+				"package_dir"
+			],
+			[
+				"setcon",
+				"setConfigDir"
+			],
+			[
+				"cust",
+				"custom_installation_dir"
+			],
+			[
+				"custom",
+				"custom_installation_dir"
+			],
+			[
+				"custo",
+				"custom_content_dir"
+			],
+			[
+				"isnt",
+				"installation_dir"
+			],
+			[
+				"config",
+				"config_dir"
+			],
+			[
+				"porj",
+				"project_dir"
+			],
+			[
+				"poj",
+				"project_dir"
+			],
+			[
+				"en",
+				"endforeach"
+			],
+			[
+				"contetn",
+				"content_dir"
+			],
+			[
+				"cnote",
+				"content_dir"
+			],
+			[
+				"instal",
+				"installation_dir"
+			],
+			[
+				"installe",
+				"installedPackages"
+			],
+			[
+				"confi",
+				"config_path"
+			],
+			[
+				"packa",
+				"packageDescriptor"
+			],
+			[
+				"cps_on",
+				"cps_onSave"
+			],
+			[
+				"cps_o",
+				"cps_onSave"
+			],
+			[
+				"pro",
+				"project_dir"
+			],
+			[
+				"versio",
+				"version"
+			],
+			[
+				"resol",
+				"resolve_ref"
+			],
+			[
+				"fi",
+				"filtered_package"
+			],
+			[
+				"li",
+				"__list_remove_at_lst"
+			],
+			[
+				"dir",
+				"directory"
+			],
+			[
+				"cma",
+				"cmake_files"
+			],
+			[
+				"insta",
+				"installationDescriptor"
+			],
+			[
+				"package_d",
+				"package_dir"
+			],
+			[
+				"dep",
+				"deporder"
+			],
+			[
+				"getDepende",
+				"getDependencyOrder"
+			],
+			[
+				"getDepen",
+				"getDependencyOrder"
+			],
+			[
+				"test_",
+				"test_runner_cpp"
+			],
+			[
+				"core",
+				"core_ip"
+			],
+			[
+				"package_",
+				"package_unique_id"
+			],
+			[
+				"setup",
+				"setup_tests"
+			],
+			[
+				"miss",
+				"missingDependencies"
+			],
+			[
+				"missin",
+				"missingPackages"
+			],
+			[
+				"msi",
+				"missingPackages"
+			],
+			[
+				"count",
+				"countrySpecificIban"
+			],
+			[
+				"depend",
+				"dependencies"
+			],
+			[
+				"stru",
+				"structure_map"
+			],
+			[
+				"cuti",
+				"cutilOnLoad"
+			],
+			[
+				"cmak",
+				"cmake_len"
+			],
+			[
+				"depende",
+				"dependency"
+			],
+			[
+				"cmake",
+				"cmake_files"
+			],
+			[
+				"public",
+				"public_includes"
+			],
+			[
+				"api",
+				"api_key"
+			],
+			[
+				"json",
+				"json_print"
+			],
+			[
+				"publi",
+				"publish_url"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/app/main/main.html",
+			"settings":
+			{
+				"buffer_size": 986,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "toeb.github.io.sublime-project",
+			"settings":
+			{
+				"buffer_size": 3431,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "cutil run test",
+	"command_palette":
+	{
+		"height": 185.0,
+		"selected_items":
+		[
+			[
+				"preview",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"preiv",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pwoe",
+				"SublimeREPL: PowerShell"
+			],
+			[
+				"install package",
+				"Package Control: Install Package"
+			],
+			[
+				"pwor",
+				"SublimeREPL: PowerShell"
+			],
+			[
+				"sublimerepl she",
+				"SublimeREPL: PowerShell"
+			],
+			[
+				"cmake",
+				"Set Syntax: CMake"
+			],
+			[
+				"package contro",
+				"Package Control: List Packages"
+			],
+			[
+				"key",
+				"Preferences: Key Bindings - Default"
+			],
+			[
+				"package",
+				"Preferences: Browse Packages"
+			],
+			[
+				"cma",
+				"Set Syntax: CMake"
+			],
+			[
+				"new syntax",
+				"z:AAAPackageDev: New JSON Syntax Definition"
+			],
+			[
+				"regex",
+				"Set Syntax: Regular Expression"
+			],
+			[
+				"git",
+				"Git: Commit history"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add Current File"
+			],
+			[
+				"gist",
+				"Gist: Create Private Gist"
+			],
+			[
+				"c#",
+				"Set Syntax: C#"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"git stat",
+				"Git: Status"
+			],
+			[
+				"git log",
+				"Git: Log Current File"
+			],
+			[
+				"",
+				"About"
+			],
+			[
+				"preivew",
+				"Markdown Preview: Github Flavored Markdown: Preview in Browser"
+			],
+			[
+				"prevew",
+				"Markdown Preview: Python Markdown: Preview in Browser"
+			],
+			[
+				"github",
+				"Markdown Preview: Github Flavored Markdown: Preview in Browser"
+			],
+			[
+				"mark",
+				"Set Syntax: Markdown"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"package control",
+				"Package Control: List Packages"
+			],
+			[
+				"export",
+				"Export to HTML: Show Export Menu"
+			],
+			[
+				"cmak",
+				"Set Syntax: CMake"
+			],
+			[
+				"syntax cmake",
+				"Set Syntax: CMake"
+			],
+			[
+				"prev",
+				"Markdown Preview: Python Markdown: Preview in Browser"
+			],
+			[
+				"markdonw",
+				"Markdown Preview: Open Markdown Cheat sheet"
+			],
+			[
+				"markd",
+				"Markdown Preview: Github Flavored Markdown: Preview in Browser"
+			],
+			[
+				"previ",
+				"Markdown Preview: Python Markdown: Preview in Browser"
+			],
+			[
+				"markdown",
+				"Set Syntax: MultiMarkdown"
+			],
+			[
+				"privew",
+				"Markdown Preview: Github Flavored Markdown: Preview in Browser"
+			],
+			[
+				"mult",
+				"Set Syntax: MultiMarkdown"
+			],
+			[
+				"markdow",
+				"Markdown Preview: Python Markdown: Preview in Browser"
+			],
+			[
+				"package Control Insta",
+				"Package Control: Install Package"
+			],
+			[
+				"synt",
+				"Set Syntax: CMake"
+			],
+			[
+				"packa",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 582.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"ls",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/E/projects/toeb.github.io",
+		"/E/projects/toeb.github.io/src",
+		"/E/projects/toeb.github.io/src/app",
+		"/E/projects/toeb.github.io/src/app/main"
+	],
+	"file_history":
+	[
+		"/C/Program Files/PHP/5.6.2-x64-NTS/php.ini",
+		"/E/projects/cutil/dependencies/cps/README.md",
+		"/E/projects/cutil/dependencies/oocmake/cmake/shell/read_line.cmake",
+		"/C/Users/Tobias/Downloads/Windows 8.1 Debug Checked (multiple editions) (x64) - DVD (English)/key.txt",
+		"/E/projects/mbslib-restructure/packages/duktape-0.12.0/examples/cmdline/README.txt",
+		"/E/projects/cppnamespace/namespace.h",
+		"/E/projects/core_dynamic/include/IDynamicObjectImplementation.h",
+		"/E/projects/core_dynamic/include/dynamic.types.h",
+		"/E/projects/core_dynamic/include/DynamicObjectImplemenationBase.h",
+		"/E/projects/cppdynamic/README.md",
+		"/E/projects/mbslib-restructure/packages/core/includes/core/serialization/json_serializers.h",
+		"/E/projects/cppdynamic/test.cpp",
+		"/E/projects/cppdynamic/LICENSE",
+		"/E/projects/cppdynamic/include/cppdynamic/any.h",
+		"/E/projects/cppdynamic/include/cppdynamic/config.h",
+		"/E/projects/cppdynamic/include/cppdynamic/default.h",
+		"/E/projects/cppdynamic/include/cppdynamic/dynamic.h",
+		"/E/projects/cppdynamic/include/cppdynamic/dynamic.types.h",
+		"/E/projects/cppdynamic/include/cppdynamic/dynamic_call.h",
+		"/E/projects/cppdynamic/include/cppdynamic/DynamicObject.h",
+		"/E/projects/cppdynamic/include/cppdynamic/DynamicObjectExpandoImplementation.h",
+		"/E/projects/cppdynamic/include/cppdynamic/DynamicObjectImplemenationBase.h",
+		"/E/projects/cppdynamic/include/cppdynamic/DynamicObjectReflectionImplementation.h",
+		"/E/projects/cppdynamic/include/cppdynamic/DynamicProperty.h",
+		"/E/projects/cppdynamic/include/cppdynamic/func_traits.h",
+		"/E/projects/cppdynamic/include/cppdynamic/IDynamicObjectImplementation.h",
+		"/E/projects/cppdynamic/include/cppdynamic/is_callable.h",
+		"/E/projects/cppdynamic/include/cppdynamic/sequence.h",
+		"/E/projects/cppdynamic/include/cppdynamic/template_argument.h",
+		"/E/projects/cppdynamic/include/cppdynamic/Void.h",
+		"/E/projects/cppdynamic/include/cppdynamic/tuple_utilities.h",
+		"/E/projects/cppdynamic/include/core.dynamic.h",
+		"/E/projects/core_dynamic/include/Basic.h",
+		"/E/projects/core_dynamic/CMakeLists.txt",
+		"/E/projects/mbslib-restructure/packages/core/includes/core/reflection/callable/dynamic_call.h",
+		"/E/projects/mscthesis/models.txt",
+		"/E/projects/mbslib-restructure/packages/interfaces/build/interfaces@0.0.1.tests.dir/Debug/test_runner.i",
+		"/E/projects/mbslib-restructure/packages/core/includes/core.dynamic.h",
+		"/C/Users/Tobias/Desktop/10balls",
+		"/E/projects/core_dynamic/include/core/preprocessor/Basic.h",
+		"/E/projects/core_dynamic/include/core/preprocessor/Variadic.h",
+		"/E/projects/core_dynamic/include/core/preprocessor/Reduce.h",
+		"/E/projects/mbslib-restructure/packages/core.math/tests/spatial_tests.cpp",
+		"/E/projects/mbslib-restructure/packages/core.math/math.matrix/spatial/spatial_operations.h",
+		"/C/Users/Tobias/Desktop/deprecated/# Wochenplan",
+		"/E/projects/mscthesis/chapters/appendix.tex",
+		"/C/Users/Tobias/Desktop/# Wochenplan",
+		"/E/projects/mscthesis/chapters/motivation.tex",
+		"/E/projects/mscthesis/readme.md",
+		"/E/projects/cutil/README.md",
+		"/E/projects/cutil/dependencies/oocmake/README.md",
+		"/E/projects/mbslib-restructure/packages/modelgraph/src/modelgraph/ExtensibleObject.cpp",
+		"/E/projects/cutil/dependencies/oocmake/cmake/parser/parse_sequence.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/map/navigation/nav.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/list/list_peek_front.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/list/list_fold.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/core/assert.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/ast/ast_parse_match.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/list/list_pop_back.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/ast/lang.cmake",
+		"/C/Users/Tobias/Desktop/todo.txt",
+		"/E/projects/cutil/dependencies/oocmake/cmake/function/curry2.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/list/list_peek_back.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/list/list_intersect.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/list/list_select.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/function/curry.cmake",
+		"/E/projects/cutil/cmake/cutil_init.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/function/call.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/function/lambda/lambda_new.cmake",
+		"/E/projects/cutil/dependencies/oocmake/tests/lambda_parse_test.cmake",
+		"/E/projects/cutil/LICENCE.txt",
+		"/E/projects/mbslib-restructure/packages/sdformat/cmake/FindOS.cmake",
+		"/E/projects/mbslib-restructure/packages/modelparser/package.cmake",
+		"/E/projects/sdformat/CMakeLists.txt",
+		"/E/projects/sdformat/doc/CMakeLists.txt",
+		"/E/projects/mbslib-restructure/packages/sdformat/README",
+		"/E/projects/mbslib-restructure/packages/sdformat/cmake/sdf_cpack.cmake",
+		"/E/projects/mbslib-restructure/packages/sdformat/cmake/SearchForStuff.cmake",
+		"/E/projects/mbslib-restructure/packages/interfaces/build/interfaces@0.0.1.tests.dir/Debug/interfaces.tests.i",
+		"/E/projects/mbslib-restructure/packages/sample2/package.cmake",
+		"/E/projects/mbslib-restructure/packages/interfaces/package.cmake",
+		"/E/projects/mbslib-restructure/packages/interfaces/tests/test_runner.cpp",
+		"/E/projects/mbslib-restructure/packages/interfaces/tests/interfaces.tests.cpp",
+		"/E/projects/mbslib-restructure/packages/boost_1_56_0/package.cmake",
+		"/E/projects/mbslib-restructure/packages/modelgraph/includes/modelgraph/Graph.h",
+		"/E/projects/mbslib-restructure/packages/core/tests/core.typetraits.test.cpp",
+		"/E/projects/mbslib-restructure/packages/core/includes/core/template/has_member_function_trait.h",
+		"/E/projects/mbslib-restructure/packages/core/includes/core/template/has_const_iterator.h",
+		"/E/projects/mbslib-restructure/packages/core/includes/core/template/sfinae_type_trait.h",
+		"/E/projects/mbslib-restructure/packages/modelparser/CMakeLists.txt",
+		"/E/projects/mbslib-restructure/packages/modelparser/include/modelparser.h",
+		"/E/projects/mbslib-restructure/packages/modelgraph/includes/modelgraph.h",
+		"/E/projects/mbslib-restructure/packages/modelparser/test/test_runner.cpp",
+		"/E/projects/mbslib-restructure/packages/modelparser/test/tests.cpp",
+		"/E/projects/mbslib-restructure/packages/interfaces/includes/interfaces.h",
+		"/E/projects/mbslib-restructure/packages/sample2/src/main.cpp",
+		"/E/projects/mbslib-restructure/packages/sample2/CMakeLists.txt",
+		"/E/projects/cutil/dependencies/oocmake/cmake/shell/shell.cmake",
+		"/C/Users/Tobias/Downloads/SmoothLifeAll004/SmoothLifeAll/SmoothLife/SmoothLifeConfig.txt",
+		"/C/Users/Tobias/Downloads/SmoothLifeAll004/SmoothLifeAll/SmoothLife/main.cpp",
+		"/E/projects/mbslib-restructure/packages/core/tests/events.test.cpp",
+		"/E/projects/mbslib-restructure/packages/modelgraph/tests/valuemodel.test.cpp",
+		"/E/projects/mbslib-restructure/packages/core/includes/core/values/values.h",
+		"/E/projects/mbslib-restructure/packages/modelgraph/includes/modelgraph/Value.h",
+		"/E/projects/mbslib-restructure/packages/modelgraph/package.cmake",
+		"/E/projects/mbslib-restructure/packages/modelgraph/.cps/project.json",
+		"/E/projects/cutil/dependencies/cps/cmake/classes/CpsCommandLineInterface.cmake",
+		"/E/projects/mbslib-restructure/packages/modelgraph/includes/modelgraph/graphviz.h",
+		"/E/projects/mbslib-restructure/packages/modelgraph/src/modelgraph/RigidBody.cpp.txt",
+		"/E/projects/mbslib-restructure/packages/modelgraph/src/modelgraph/Joint.cpp",
+		"/E/projects/cutil/dependencies/oocmake/.travis.yml",
+		"/E/projects/cutil/dependencies/oocmake/cmake/string/string_substring.cmake",
+		"/E/projects/cutil/dependencies/oocmake/tests/simple_object_definition.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/core/git/git.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/core/return/set_ans.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/function/import_function_string.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/function/function_import_table.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/function/bind.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/expr/expr_call.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/ast/script.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/ast/oocmake.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/ast/language.cmake",
+		"/e/projects/cutil/dependencies/oocmake/cmake/function/call.cmake",
+		"/E/projects/cutil/dependencies/oocmake/tests/string_split_at_first.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/string/string_split_at_first.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/core/icmake.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/string/string_trim.cmake",
+		"/E/projects/cutil/dependencies/oocmake/cmake/string/string_normalize_index.cmake"
+	],
+	"find":
+	{
+		"height": 30.0
+	},
+	"find_in_files":
+	{
+		"height": 312.0,
+		"where_history":
+		[
+			"E:\\projects\\cutil",
+			"E:\\projects\\cutil\\packages\\oo-cmake@0.0.0\\cmake\\ast",
+			"E:\\projects\\cutil",
+			"E:\\projects\\cuti",
+			"E:\\projects\\cutil",
+			"<open files>",
+			"E:\\projects\\cutil",
+			"E:\\projects\\cutil\\tests",
+			"<open folders>",
+			"",
+			"E:\\projects\\cutil\\cutil\\tmp",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"DS_",
+			"DS_EXPAND",
+			"DS_PRECEEDING_TYPE_TYPEDEF_",
+			"DS_PRECEEDING_TYPE_TYPEDEF_HELPER_NAME",
+			"namespace core",
+			"naemspace core",
+			"namespace core",
+			"p",
+			"#",
+			"Dokumentation",
+			"NOT DEFINED",
+			"INertial",
+			"git(",
+			"git.cmake",
+			"file_name",
+			"temp_dir",
+			"currentans",
+			"set_ans()",
+			"eval(",
+			"string",
+			"__eval_ref_res",
+			"current_ans",
+			"keep_temp",
+			"file_name",
+			"temp_dir",
+			"theref",
+			"restore",
+			"input_value",
+			"res",
+			"cmake_parse_arguments",
+			"download",
+			"init",
+			"restore",
+			"loading",
+			"message(PUSH \"loading",
+			"message(\"loading",
+			"loading ${",
+			"json_print",
+			"cpp_package_targets_create",
+			"cpp_package_create",
+			"cpp_package_create for targets",
+			"restore",
+			"flags",
+			"restoreAllPackageContent",
+			"restoreEve",
+			"resolve",
+			"list_intersection",
+			"lst",
+			"restoreEv",
+			"checkContent",
+			"restoreContent",
+			"cps_onpull",
+			"loadProject",
+			"cd",
+			"local_ref",
+			"getPackageDescriptor",
+			"restoreConte",
+			"restoreAllPackageContent",
+			"restoreEverything",
+			"cps_onrestore",
+			"commandHandler",
+			"cutil",
+			"used_label",
+			"min",
+			"unused_args",
+			"error",
+			"cutil_config",
+			"handler could handle",
+			"not target  handler could handle target",
+			"cpp_register_targets",
+			"dbg",
+			"${",
+			"installedPackage",
+			"project_id",
+			"getAllMissingDependencies",
+			"srcs_and_hdrs_map",
+			"srcs_map",
+			"cpp_setup_dependencies",
+			"pkg",
+			"cpp_package_config",
+			"cpp_cfg",
+			"CMakeLists",
+			"success",
+			"cpp_",
+			"}",
+			"save",
+			"current_part",
+			"map_select",
+			"list_foreach",
+			"map_select",
+			"list_foreach",
+			"glob",
+			"parts",
+			"map",
+			"source_group_func",
+			"package_tgt",
+			"target",
+			"targets",
+			"targets_cfg",
+			"dependencyOrder",
+			"core_setup_test",
+			"package_descriptor_filename",
+			"setContentDir",
+			"proto_declarefunction",
+			"save",
+			"load",
+			"saveProject",
+			"rcall",
+			"installPackage",
+			"getDependencies",
+			"setPackageDescriptor",
+			"loadPr",
+			"dbg",
+			"save",
+			"setInstallationDir",
+			"setInstallationDIr",
+			"${setInstallationDir}",
+			"dbg",
+			"loadProject",
+			"path_component",
+			"dbg",
+			"loadPro",
+			"this",
+			"setConfigDir",
+			"config_dir",
+			"loadProj",
+			"setConfigDir",
+			"config_path"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"map_get(\\1 \\3)\\nans(\\2)",
+			"map_get(\\1 \\3)ans(\\2)",
+			"map_get(\\1 \\3)\\nans(\\2)",
+			"map_get(\\1 \\3)\nans(\\2)"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/app/main/main.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 986,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								985,
+								985
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "toeb.github.io.sublime-project",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 3431,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								328,
+								328
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 314.0
+	},
+	"output.find_results":
+	{
+		"height": 142.0
+	},
+	"output.git":
+	{
+		"height": 130.0
+	},
+	"output.package_dev":
+	{
+		"height": 130.0
+	},
+	"project": "toeb.github.io.sublime-project",
+	"replace":
+	{
+		"height": 56.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"readme",
+				"dependencies\\oocmake\\README.md"
+			],
+			[
+				"curry",
+				"dependencies\\oocmake\\cmake\\function\\curry2.cmake"
+			],
+			[
+				"lang",
+				"dependencies\\oocmake\\cmake\\ast\\lang.cmake"
+			],
+			[
+				"hg_t",
+				"dependencies\\oocmake\\tests\\hg_tests.cmake"
+			],
+			[
+				"git.cm",
+				"dependencies\\oocmake\\cmake\\core\\git\\git.cmake"
+			],
+			[
+				"hg",
+				"dependencies\\oocmake\\cmake\\core\\hg\\hg.cmake"
+			],
+			[
+				"git",
+				"dependencies\\cps\\tests\\package_descriptor_from_git.cmake"
+			],
+			[
+				"find",
+				"Find Results"
+			],
+			[
+				"findre",
+				"Find Results"
+			],
+			[
+				"findr",
+				"Find Results"
+			],
+			[
+				"wra",
+				"dependencies\\oocmake\\cmake\\function\\wrap_executable.cmake"
+			],
+			[
+				"execut",
+				"dependencies\\oocmake\\cmake\\core\\execute.cmake"
+			],
+			[
+				"wrap",
+				"dependencies\\oocmake\\cmake\\function\\wrap_executable.cmake"
+			],
+			[
+				"cmake.cm",
+				"dependencies\\oocmake\\cmake\\core\\cmake\\cmake.cmake"
+			],
+			[
+				"git.cmake",
+				"dependencies\\oocmake\\cmake\\core\\git\\git.cmake"
+			],
+			[
+				"invoke_cm",
+				"dependencies\\oocmake\\tests\\invoke_cmake.cmake"
+			],
+			[
+				"eval",
+				"dependencies\\oocmake\\cmake\\core\\eval.cmake"
+			],
+			[
+				"simpel",
+				"dependencies\\oocmake\\tests\\simple_object_definition.cmake"
+			],
+			[
+				"set_ans",
+				"dependencies\\oocmake\\cmake\\core\\return\\set_ans.cmake"
+			],
+			[
+				"simple",
+				"dependencies\\oocmake\\tests\\simple_object_definition.cmake"
+			],
+			[
+				"simple_",
+				"dependencies\\oocmake\\tests\\simple_object_definition.cmake"
+			],
+			[
+				"string_splait",
+				"dependencies\\oocmake\\cmake\\string\\string_split_at_first.cmake"
+			],
+			[
+				"string_spl",
+				"dependencies\\oocmake\\tests\\string_split_at_first.cmake"
+			],
+			[
+				"icmake",
+				"cmake\\icmake.cmake"
+			],
+			[
+				"string_tr",
+				"dependencies\\oocmake\\cmake\\string\\string_trim.cmake"
+			],
+			[
+				"eval.cma",
+				"dependencies\\oocmake\\cmake\\core\\eval.cmake"
+			],
+			[
+				"string_nor",
+				"dependencies\\oocmake\\cmake\\string\\string_normalize_index.cmake"
+			],
+			[
+				"substring",
+				"dependencies\\oocmake\\cmake\\string\\string_substring.cmake"
+			],
+			[
+				"execute.cmake",
+				"dependencies\\oocmake\\cmake\\core\\execute.cmake"
+			],
+			[
+				"readl",
+				"dependencies\\oocmake\\cmake\\shell\\read_line.cmake"
+			],
+			[
+				"breakp",
+				"dependencies\\oocmake\\cmake\\debugging\\breakpoint.cmake"
+			],
+			[
+				"hg.cma",
+				"dependencies\\oocmake\\cmake\\core\\hg\\hg.cmake"
+			],
+			[
+				"cpscomm",
+				"dependencies\\cps\\cmake\\classes\\CpsCommandLineInterface.cmake"
+			],
+			[
+				"cd.cma",
+				"dependencies\\oocmake\\cmake\\bash\\cd.cmake"
+			],
+			[
+				"this_get",
+				"dependencies\\oocmake\\cmake\\object\\this\\this_get.cmake"
+			],
+			[
+				"glob_pare",
+				"dependencies\\oocmake\\tests\\glob_parentdirs.cmake"
+			],
+			[
+				"break",
+				"dependencies\\oocmake\\cmake\\debugging\\breakpoint.cmake"
+			],
+			[
+				"print_loc",
+				"dependencies\\oocmake\\cmake\\debugging\\print_locals.cmake"
+			],
+			[
+				"string_slic",
+				"dependencies\\oocmake\\cmake\\string\\string_slice.cmake"
+			],
+			[
+				"string_sub",
+				"dependencies\\oocmake\\cmake\\string\\string_substring.cmake"
+			],
+			[
+				"read_le",
+				"dependencies\\oocmake\\cmake\\shell\\read_line.cmake"
+			],
+			[
+				"read_line",
+				"dependencies\\oocmake\\tests\\read_line_test.cmake"
+			],
+			[
+				"read_lin",
+				"dependencies\\oocmake\\cmake\\shell\\read_line.cmake"
+			],
+			[
+				"make_tem",
+				"dependencies\\oocmake\\cmake\\file\\file_make_temporary.cmake"
+			],
+			[
+				"temp",
+				"dependencies\\oocmake\\cmake\\file\\file_make_temporary.cmake"
+			],
+			[
+				"project",
+				"dependencies\\cps\\cmake\\classes\\ProjectPackage.cmake"
+			],
+			[
+				"webser",
+				"dependencies\\cps\\cmake\\classes\\WebServicePackageSource.cmake"
+			],
+			[
+				"map_set",
+				"dependencies\\oocmake\\cmake\\map\\core\\map_set.cmake"
+			],
+			[
+				"tick",
+				"dependencies\\oocmake\\cmake\\core\\tick.cmake"
+			],
+			[
+				"message",
+				"dependencies\\oocmake\\cmake\\core\\message.cmake"
+			],
+			[
+				"map_get",
+				"dependencies\\oocmake\\cmake\\map\\core\\map_get.cmake"
+			],
+			[
+				"math",
+				"dependencies\\oocmake\\cmake\\core\\eval_math.cmake"
+			],
+			[
+				"cutil_ini",
+				"cmake\\cutil_init.cmake"
+			],
+			[
+				"cpp_package_c",
+				"dependencies\\cps\\cmake\\cpp\\cpp_package_config.cmake"
+			],
+			[
+				"cpscomma",
+				"dependencies\\cps\\cmake\\classes\\CpsCommandLineInterface.cmake"
+			],
+			[
+				"projectpackage",
+				"dependencies\\cps\\cmake\\classes\\ProjectPackage.cmake"
+			],
+			[
+				"assert",
+				"dependencies\\oocmake\\cmake\\core\\assert.cmake"
+			],
+			[
+				"list_filter_",
+				"dependencies\\oocmake\\cmake\\list\\list_filter_flags.cmake"
+			],
+			[
+				"list_filter_fl",
+				"dependencies\\oocmake\\tests\\list_filter_flags.cmake"
+			],
+			[
+				"list_inte",
+				"dependencies\\oocmake\\cmake\\list\\list_intersect.cmake"
+			],
+			[
+				"list_intes",
+				"dependencies\\oocmake\\cmake\\list\\list_intersection.cmake"
+			],
+			[
+				"list_",
+				"dependencies\\oocmake\\cmake\\list\\list_union.cmake"
+			],
+			[
+				"list_uni",
+				"dependencies\\oocmake\\cmake\\list\\list_union.cmake"
+			],
+			[
+				"projectp",
+				"dependencies\\cps\\cmake\\classes\\ProjectPackage.cmake"
+			],
+			[
+				"call",
+				"dependencies\\oocmake\\cmake\\function\\call.cmake"
+			],
+			[
+				"is_fun",
+				"dependencies\\oocmake\\cmake\\function\\is_function.cmake"
+			],
+			[
+				"try_ca",
+				"dependencies\\oocmake\\cmake\\function\\try_call.cmake"
+			],
+			[
+				"cps_onr",
+				"dependencies\\cps\\cmake\\initializers\\cps_onrestore.cmake"
+			],
+			[
+				"cpscli",
+				"dependencies\\cps\\cmake\\classes\\CpsCommandLineInterface.cmake"
+			],
+			[
+				"installed_pac",
+				"dependencies\\cps\\cmake\\package\\installed_package_create.cmake"
+			],
+			[
+				"cps_onres",
+				"dependencies\\cps\\cmake\\initializers\\cps_onrestore.cmake"
+			],
+			[
+				"globpackagesource",
+				"dependencies\\cps\\cmake\\classes\\GlobPackageSource.cmake"
+			],
+			[
+				"installedpackage",
+				"dependencies\\cps\\cmake\\classes\\InstalledPackageClass.cmake"
+			],
+			[
+				"installloca",
+				"dependencies\\cps\\tests\\ProjectInstallLocalPackage.cmake"
+			],
+			[
+				"projectinstall",
+				"dependencies\\cps\\tests\\ProjectInstallLocalPackage.cmake"
+			],
+			[
+				"cmake",
+				"dependencies\\cps\\cmake\\cpp\\cpp_cmakelists_handler.cmake"
+			],
+			[
+				"cutil_inst",
+				"cmake\\cutil_install.cmake"
+			],
+			[
+				"alias_create",
+				"dependencies\\oocmake\\cmake\\shell\\alias_create.cmake"
+			],
+			[
+				"cutil_ins",
+				"cmake\\cutil_install.cmake"
+			],
+			[
+				"alias_l",
+				"dependencies\\oocmake\\cmake\\shell\\alias_list.cmake"
+			],
+			[
+				"alias",
+				"dependencies\\oocmake\\cmake\\shell\\alias_create.cmake"
+			],
+			[
+				"cutilon",
+				"dependencies\\cps\\cmake\\initializers\\cutil_onload.cmake"
+			],
+			[
+				"cutil",
+				"cmake\\cutil_init.cmake"
+			],
+			[
+				"list_parse",
+				"dependencies\\oocmake\\cmake\\list\\list_parse_descriptor.cmake"
+			],
+			[
+				"structure",
+				"dependencies\\oocmake\\cmake\\list\\structured_list_parse.cmake"
+			],
+			[
+				"config_set",
+				"dependencies\\oocmake\\cmake\\config\\config_setup.cmake"
+			],
+			[
+				"cutil_in",
+				"cmake\\cutil_init.cmake"
+			],
+			[
+				"math_ma",
+				"dependencies\\oocmake\\cmake\\core\\math_max.cmake"
+			],
+			[
+				"list_parse_de",
+				"dependencies\\oocmake\\cmake\\list\\list_parse_descriptor.cmake"
+			],
+			[
+				"structu",
+				"dependencies\\oocmake\\cmake\\list\\structured_list_parse.cmake"
+			],
+			[
+				"config_setu",
+				"dependencies\\oocmake\\cmake\\config\\config_setup.cmake"
+			],
+			[
+				"config_fu",
+				"dependencies\\oocmake\\cmake\\config\\config_function.cmake"
+			],
+			[
+				"config_fun",
+				"dependencies\\oocmake\\cmake\\config\\config_function.cmake"
+			],
+			[
+				"config_",
+				"dependencies\\oocmake\\cmake\\config\\config_function.cmake"
+			],
+			[
+				"regex",
+				"dependencies\\oocmake\\cmake\\parser\\parse_regex.cmake"
+			],
+			[
+				"lambda_par",
+				"dependencies\\oocmake\\tests\\lambda_parse_test.cmake"
+			],
+			[
+				"list_sele",
+				"dependencies\\oocmake\\cmake\\list\\list_select.cmake"
+			],
+			[
+				"parse",
+				"dependencies\\oocmake\\cmake\\parser\\parse_string.cmake"
+			],
+			[
+				"cmake_list_ha",
+				"dependencies\\cps\\cmake\\cpp\\cpp_cmakelists_handler.cmake"
+			],
+			[
+				"cpp_package_target",
+				"dependencies\\cps\\cmake\\cpp\\cpp_package_targets_create.cmake"
+			],
+			[
+				"cp_auto",
+				"dependencies\\cps\\cmake\\cpp\\cpp_auto_configure.cmake"
+			],
+			[
+				"cpp_package_tra",
+				"dependencies\\cps\\cmake\\cpp\\cpp_package_targets_create.cmake"
+			],
+			[
+				"cpp_defaul",
+				"dependencies\\cps\\cmake\\cpp\\cpp_default_layout_handler.cmake"
+			],
+			[
+				"cpp_default",
+				"dependencies\\cps\\cmake\\cpp\\cpp_default_layout_handler.cmake"
+			],
+			[
+				"cpp_regist",
+				"dependencies\\cps\\cmake\\cpp\\cpp_register_targets.cmake"
+			],
+			[
+				"cpp_targets_create",
+				"dependencies\\cps\\cmake\\cpp\\cpp_package_targets_create.cmake"
+			],
+			[
+				"cpp_register",
+				"dependencies\\cps\\cmake\\cpp\\cpp_register_targets.cmake"
+			],
+			[
+				"default_la",
+				"dependencies\\cps\\cmake\\cpp\\cpp_default_layout_handler.cmake"
+			],
+			[
+				"cpp_configure",
+				"dependencies\\cps\\cmake\\cpp\\cpp_configure_package_target_dependencies.cmake"
+			],
+			[
+				"default",
+				"dependencies\\cps\\cmake\\cpp\\cpp_default_layout_handler.cmake"
+			],
+			[
+				"cpp_congi",
+				"dependencies\\cps\\cmake\\cpp\\cpp_configure_package_target_dependencies.cmake"
+			],
+			[
+				"default_lay",
+				"dependencies\\cps\\cmake\\cpp\\cpp_default_layout_handler.cmake"
+			],
+			[
+				"cpp_target_c",
+				"dependencies\\cps\\cmake\\cpp\\cpp_target_config.cmake"
+			],
+			[
+				"cpp_package_tar",
+				"dependencies\\cps\\cmake\\cpp\\cpp_package_targets_create.cmake"
+			],
+			[
+				"cpp_regis",
+				"dependencies\\cps\\cmake\\cpp\\cpp_register_targets.cmake"
+			],
+			[
+				"file_write",
+				"dependencies\\oocmake\\cmake\\file\\file_write.cmake"
+			],
+			[
+				"defau",
+				"dependencies\\cps\\cmake\\cpp\\cpp_default_layout_handler.cmake"
+			],
+			[
+				"cpp_target_co",
+				"dependencies\\cps\\cmake\\cpp\\cpp_target_config.cmake"
+			],
+			[
+				"cpp_package",
+				"dependencies\\cps\\cmake\\cpp\\cpp_package_config.cmake"
+			],
+			[
+				"property",
+				"E:\\projects\\mbslib-restructure\\packages\\modelgraph\\includes\\modelgraph\\Value\\IProperty.h"
+			],
+			[
+				"file_glo",
+				"dependencies\\oocmake\\cmake\\file\\file_glob.cmake"
+			],
+			[
+				"json_def",
+				"dependencies\\oocmake\\cmake\\map\\serialization\\json2_definition.cmake"
+			],
+			[
+				"json2",
+				"dependencies\\oocmake\\cmake\\map\\json2.cmake"
+			],
+			[
+				"json_des",
+				"dependencies\\oocmake\\cmake\\map\\serialization\\json\\json_deserialize.cmake"
+			],
+			[
+				"json",
+				"dependencies\\oocmake\\cmake\\map\\json.cmake"
+			],
+			[
+				"cpp_targets",
+				"dependencies\\cps\\cmake\\cpp\\cpp_register_targets.cmake"
+			],
+			[
+				"cpp_target",
+				"dependencies\\cps\\cmake\\cpp\\cpp_package_targets_create.cmake"
+			],
+			[
+				"register",
+				"dependencies\\cps\\cmake\\cpp\\cpp_register_targets.cmake"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 625.0,
+		"selected_items":
+		[
+		],
+		"width": 475.0
+	},
+	"select_symbol":
+	{
+		"height": 101.0,
+		"selected_items":
+		[
+		],
+		"width": 490.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 251.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
