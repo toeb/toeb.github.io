@@ -12,6 +12,11 @@ angular.module('toebgithubio', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize
         url:'/about',
         templateUrl:'app/about/about.html',
         controller:'AboutCtrl'
+      })
+      .state('polymer',{
+        url:'/polymer',
+        templateUrl:'app/polymer/polymer.html',
+        controller:'PolymerCtrl'
       });
 
     $urlRouterProvider.otherwise('/');
