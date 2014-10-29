@@ -16,7 +16,7 @@ gulp serve
 add to .git/config 
 ```
 [alias]
-  deploy = subtree push --prefix dist origin master
+  deploy = subtree push --prefix dist origin gh-pages
 ```
 gulp build
 git deploy
