@@ -47,7 +47,17 @@ gulp.task('partials', function () {
     .pipe($.size());
 });
 
-gulp.task('html', ['styles', 'scripts', 'partials'], function () {
+var vulcanize = require('gulp-vulcanize');
+gulp.task('vulcanize', function(){
+  return gulp.src('src/index.html')
+        .pipe(vulcanize({
+            dest: '.tmp',
+            strip: true
+        }))
+        .pipe(gulp.dest('dist'));
+})
+
+gulp.task('html', ['styles', 'scripts', 'partials','vulcanize'], function () {
   var htmlFilter = $.filter('*.html');
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
@@ -106,5 +116,6 @@ gulp.task('fonts', function () {
 gulp.task('clean', function () {
   return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.rimraf());
 });
+
 
 gulp.task('build', ['html', 'partials', 'images', 'fonts']);
