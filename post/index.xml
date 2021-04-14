@@ -13,7 +13,8 @@
       <pubDate>Mon, 04 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>https://toeb.github.io/post/testpage/</guid>
-      <description>public class Test { public static void Main() { } public int Test{get;set;} } class Test { public: static void Main() { } int&amp;amp; Test(){ throw std::exception();} } </description>
+      <description>some header Hallo Wlet
+public class Test { public static void Main() { } public int Test{get;set;} } class Test { public: static void Main() { } int&amp;amp; Test(){ throw std::exception();} } </description>
     </item>
     
   </channel>
