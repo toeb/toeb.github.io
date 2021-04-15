@@ -109,19 +109,11 @@
                     
                         
                         <li>
+                            <a href="/categories/c">c#</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/compiler">compiler</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/programming">programming</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/script">script</a>
                         </li>
                         
                     
@@ -191,7 +183,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Thursday, March 19, 2015
                         
                         
                         
@@ -216,99 +208,120 @@
                 post-container">
 
                 
-                <p>cmakepp: reflecting and manipulating CMakeLists
-by thetoeb • 2015/03/19 • 2 Comments</p>
-<p>The basic CMakeLists.txt files for cmake based projects are usually very simple. Their manipulation lends itself to be automated and for this purpose I developed a parser for cmake script which allows you to manipulate it programatically from within cmake itself. On top of the cmake script parser I generated utility functions which allow you to manipulate CMakeLists.txt files while still allowing you to manually working on them. This functionality is wrapped by a command line interface which I present to you in this post. You can find this part of cmakepp here. Feel free to try and please give me feedback if you like it or find any bugs.</p>
+                <p>The basic CMakeLists.txt files for cmake based projects are usually very simple. Their manipulation lends itself to be automated and for this purpose I developed a parser for cmake script which allows you to manipulate it programatically from within cmake itself. On top of the cmake script parser I generated utility functions which allow you to manipulate CMakeLists.txt files while still allowing you to manually working on them. This functionality is wrapped by a command line interface which I present to you in this post. You can find this part of cmakepp here. Feel free to try and please give me feedback if you like it or find any bugs.</p>
 <p>With this sample I want to show you how you can manipulate a CMakeList.txt using the command line interface cml (an alias for your shell of choice which is installed when you install cmakepp). The command line interface simply wraps functions which you could also use from cmake directly.</p>
-<p>Step 1 – Starting from Scratch
-The first thing to do is to create an initial CMakeLists.txt file in the directory of your project.</p>
-<h1 id="create-a-new-directory">create a new directory</h1>
-<p>./&gt; mkdir my_project
-./&gt; cd my_project
-my_project/&gt; cml init
-These commands result in a new CMakeLists file in the current directory. The projects name is derived by taking the parent directory’s name. As you can see the code is just vanilla cmake and you can modify it manually as ever you see fit.</p>
+<h2 id="step-1--starting-from-scratch">Step 1 – Starting from Scratch</h2>
+<p>The first thing to do is to create an initial CMakeLists.txt file in the directory of your project.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#75715e"># create a new directory
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">./&gt;</span> <span style="color:#960050;background-color:#1e0010">mkdir</span> <span style="color:#960050;background-color:#1e0010">my_project
+</span><span style="color:#960050;background-color:#1e0010">./&gt;</span> <span style="color:#960050;background-color:#1e0010">cd</span> <span style="color:#960050;background-color:#1e0010">my_project
+</span><span style="color:#960050;background-color:#1e0010">my_project/&gt;</span> <span style="color:#960050;background-color:#1e0010">cml</span> <span style="color:#960050;background-color:#1e0010">init</span> <span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>These commands result in a new CMakeLists file in the current directory. The projects name is derived by taking the parent directory’s name. As you can see the code is just vanilla cmake and you can modify it manually as ever you see fit.</p>
 <p>CMakeLists.txt:</p>
-<p>cmake_minimum_required(VERSION 3.2.1)</p>
-<p>project(my_project)
-Step 2 – Adding a target
-The first thing you might want to do is to add a target. Let’s say we want a library called my_lib and an executable called my_exe.</p>
-<h1 id="add-the-target">add the target</h1>
-<p>my_project/&gt; cml target add my_lib
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.2.1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>project(<span style="color:#e6db74">my_project</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="step-2--adding-a-target">Step 2 – Adding a target</h2>
+<p>The first thing you might want to do is to add a target. Let’s say we want a library called my_lib and an executable called my_exe.</p>
+<pre><code># add the target 
+my_project/&gt; cml target add my_lib
 my_project/&gt; cml target add my_exe executable
-Now you can see the scaffolding for a cmake library and executable target inside the CMakeLists.txt. You might have also noticed that what was generated is not a valid CMakeLists.txt because there are no source files specified for the lib and the exe. However this only causes an error if you generate it. So we need to add source files which leads us to the next section.</p>
+</code></pre><p>Now you can see the scaffolding for a cmake library and executable target inside the CMakeLists.txt. You might have also noticed that what was generated is not a valid CMakeLists.txt because there are no source files specified for the lib and the exe. However this only causes an error if you generate it. So we need to add source files which leads us to the next section.</p>
 <p>CMakeLists.txt:</p>
-<p>cmake_minimum_required(VERSION 3.2.1)</p>
-<p>project(my_project)</p>
-<p>add_library(my_lib)</p>
-<p>add_executable(my_exe)
-Step 3 – Adding source files, include directories and dependencies
-Using the command line tool you can easily add files, folders and values to the targets. The corresponding properties are automatically created or removed. Be sure to add at least something as sources.</p>
-<h2 id="add-source-files-to-the-my_lib-target-from-a-sub-directory-the-files-have-to-exist">add source files to the my_lib target from a sub-directory (the files have to exist)</h2>
-<p>my_project/src/my_lib/&gt; cml target my_lib sources append my_lib.cpp</p>
-<h2 id="add-source-file-from-another-directory-using-a-glob-expression">add source file from another directory using a glob expression</h2>
-<p>my_project/includes/my_lib_inc/&gt; cml target my_lib sources append my_lib*.h</p>
-<h2 id="add-source-file-to-my_exe">add source file to my_exe</h2>
-<p>my_project/&gt; cml target my_exe sources append src/main.cpp</p>
-<h2 id="add-an-include-directory-to-the-my_lib-target">add an include directory to the my_lib target</h2>
-<p>my_project/include/&gt; cml target my_lib includes append my_lib_inc</p>
-<h2 id="add-my_lib-dependency-to-my_exe">add my_lib dependency to my_exe</h2>
-<p>my_project/include/&gt; cml target my_exe links append my_lib
-All these modifications culminate in the CMakelists.txt as follows: CMakeLists.txt:</p>
-<p>cmake_minimum_required(VERSION 3.2.1)</p>
-<p>project(my_project)</p>
-<p>add_library(my_lib
-src/my_lib/my_lib.cpp
-includes/my_lib_inc/my_lib1.h
-includes/my_lib_inc/my_lib2.h
-)
-target_include_directories(my_lib PUBLIC include/my_lib_inc)</p>
-<p>add_executable(my_exe src/main.cpp)
-target_link_libraries(my_exe my_lib)
-Now we have a working CMake project with two targets of which one depends on the other. There are more possibilities than appending values to the targets properties. You can also remove, set, filter, clear them but alas their is still much functionality to be added.</p>
-<p>Step 4 – Renaming Targets and Changing their Type
-Renaming targets and changing their type is also a breeze with the reflection tool. Let’s rename the change the type my_exe to library and rename it to the_executable:</p>
-<p>my_project/&gt; cml target my_exe rename the_executable
-my_project/&gt; cml target the_executable type library
-CMakeLists.txt:</p>
-<p>cmake_minimum_required(VERSION 3.2.1)</p>
-<p>project(my_project)</p>
-<p>add_library(my_lib
-src/my_lib/my_lib.cpp
-includes/my_lib_inc/my_lib1.h
-includes/my_lib_inc/my_lib2.h
-)
-target_include_directories(my_lib PUBLIC include/my_lib_inc)</p>
-<p>add_library(the_executable src/main.cpp)
-target_link_libraries(the_executable my_lib)
-Step 5 – Generating the Project
-This step is just for completeness sake. Do as you would normally do with any cmake project.</p>
-<p>my_project/&gt; mkdir build
-my_project/&gt; cd build
-my_project/build/&gt; cmake ..
-my_project/build/&gt; cmake &ndash;build .</p>
-<h2 id="show-that-the-project-generated-correctly-in-my-case-for-visual-studio">show that the project generated correctly (in my case for Visual Studio)</h2>
-<p>my_project/build/&gt; ls
-[
-&ldquo;./my_project/build/ALL_BUILD.vcxproj&rdquo;,
-&ldquo;./my_project/build/ALL_BUILD.vcxproj.filters&rdquo;,
-&ldquo;./my_project/build/CMakeCache.txt&rdquo;,
-&ldquo;./my_project/build/CMakeFiles&rdquo;,
-&ldquo;./my_project/build/cmake_install.cmake&rdquo;,
-&ldquo;./my_project/build/Debug&rdquo;,
-&ldquo;./my_project/build/my_lib.dir&rdquo;,
-&ldquo;./my_project/build/my_lib.vcxproj&rdquo;,
-&ldquo;./my_project/build/my_lib.vcxproj.filters&rdquo;,
-&ldquo;./my_project/build/my_project.sln&rdquo;,
-&ldquo;./my_project/build/the_executable.dir&rdquo;,
-&ldquo;./my_project/build/the_executable.vcxproj&rdquo;,
-&ldquo;./my_project/build/the_executable.vcxproj.filters&rdquo;,
-&ldquo;./my_project/build/Win32&rdquo;,
-&ldquo;./my_project/build/ZERO_CHECK.vcxproj&rdquo;,
-&ldquo;./my_project/build/ZERO_CHECK.vcxproj.filters&rdquo;
-]
-Now the project is ready for use.</p>
-<p>Conclusion
-As you can see I have added a lot of functionality to cmakepp which allows you to use cmake script reflection to modify cmake code. Of course there are Caveats – like speed: A command call can take upwards of a second or 2 for a normal sized CMakeLists.txt because the token parser and the search procedures all are O(n) (n being the number of tokens parsed).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.2.1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>project(<span style="color:#e6db74">my_project</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#e6db74">my_lib</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">my_exe</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">Step</span> <span style="color:#960050;background-color:#1e0010">3</span> <span style="color:#960050;background-color:#1e0010">–</span> <span style="color:#960050;background-color:#1e0010">Adding</span> <span style="color:#960050;background-color:#1e0010">source</span> <span style="color:#960050;background-color:#1e0010">files,</span> <span style="color:#960050;background-color:#1e0010">include</span> <span style="color:#960050;background-color:#1e0010">directories</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">dependencies
+</span><span style="color:#960050;background-color:#1e0010">Using</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">command</span> <span style="color:#960050;background-color:#1e0010">line</span> <span style="color:#960050;background-color:#1e0010">tool</span> <span style="color:#960050;background-color:#1e0010">you</span> <span style="color:#960050;background-color:#1e0010">can</span> <span style="color:#960050;background-color:#1e0010">easily</span> <span style="color:#960050;background-color:#1e0010">add</span> <span style="color:#960050;background-color:#1e0010">files,</span> <span style="color:#960050;background-color:#1e0010">folders</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">values</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">targets.</span> <span style="color:#960050;background-color:#1e0010">The</span> <span style="color:#960050;background-color:#1e0010">corresponding</span> <span style="color:#960050;background-color:#1e0010">properties</span> <span style="color:#960050;background-color:#1e0010">are</span> <span style="color:#960050;background-color:#1e0010">automatically</span> <span style="color:#960050;background-color:#1e0010">created</span> <span style="color:#960050;background-color:#1e0010">or</span> <span style="color:#960050;background-color:#1e0010">removed.</span> <span style="color:#960050;background-color:#1e0010">Be</span> <span style="color:#960050;background-color:#1e0010">sure</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">add</span> <span style="color:#960050;background-color:#1e0010">at</span> <span style="color:#960050;background-color:#1e0010">least</span> <span style="color:#960050;background-color:#1e0010">something</span> <span style="color:#960050;background-color:#1e0010">as</span> <span style="color:#960050;background-color:#1e0010">sources.
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## add source files to the my_lib target from a sub-directory (the files have to exist) 
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">my_project/src/my_lib/&gt;</span> <span style="color:#960050;background-color:#1e0010">cml</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">my_lib</span> <span style="color:#960050;background-color:#1e0010">sources</span> <span style="color:#960050;background-color:#1e0010">append</span> <span style="color:#960050;background-color:#1e0010">my_lib.cpp
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## add source file from another directory using a glob expression 
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">my_project/includes/my_lib_inc/&gt;</span> <span style="color:#960050;background-color:#1e0010">cml</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">my_lib</span> <span style="color:#960050;background-color:#1e0010">sources</span> <span style="color:#960050;background-color:#1e0010">append</span> <span style="color:#960050;background-color:#1e0010">my_lib*.h
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## add source file to my_exe 
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">my_project/&gt;</span> <span style="color:#960050;background-color:#1e0010">cml</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">my_exe</span> <span style="color:#960050;background-color:#1e0010">sources</span> <span style="color:#960050;background-color:#1e0010">append</span> <span style="color:#960050;background-color:#1e0010">src/main.cpp
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## add an include directory to the my_lib target
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">my_project/include/&gt;</span> <span style="color:#960050;background-color:#1e0010">cml</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">my_lib</span> <span style="color:#960050;background-color:#1e0010">includes</span> <span style="color:#960050;background-color:#1e0010">append</span> <span style="color:#960050;background-color:#1e0010">my_lib_inc
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## add my_lib dependency to my_exe
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">my_project/include/&gt;</span> <span style="color:#960050;background-color:#1e0010">cml</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">my_exe</span> <span style="color:#960050;background-color:#1e0010">links</span> <span style="color:#960050;background-color:#1e0010">append</span> <span style="color:#960050;background-color:#1e0010">my_lib
+</span><span style="color:#960050;background-color:#1e0010">All</span> <span style="color:#960050;background-color:#1e0010">these</span> <span style="color:#960050;background-color:#1e0010">modifications</span> <span style="color:#960050;background-color:#1e0010">culminate</span> <span style="color:#960050;background-color:#1e0010">in</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">CMakelists.txt</span> <span style="color:#960050;background-color:#1e0010">as</span> <span style="color:#960050;background-color:#1e0010">follows:</span> <span style="color:#960050;background-color:#1e0010">CMakeLists.txt:
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.2.1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>project(<span style="color:#e6db74">my_project</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#e6db74">my_lib</span>
+  <span style="color:#e6db74">src/my_lib/my_lib.cpp</span>
+  <span style="color:#e6db74">includes/my_lib_inc/my_lib1.h</span>
+  <span style="color:#e6db74">includes/my_lib_inc/my_lib2.h</span>
+)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>target_include_directories(<span style="color:#e6db74">my_lib</span> <span style="color:#e6db74">PUBLIC</span> <span style="color:#e6db74">include/my_lib_inc</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">my_exe</span> <span style="color:#e6db74">src/main.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">my_exe</span> <span style="color:#e6db74">my_lib</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">Now</span> <span style="color:#960050;background-color:#1e0010">we</span> <span style="color:#960050;background-color:#1e0010">have</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">working</span> <span style="color:#960050;background-color:#1e0010">CMake</span> <span style="color:#960050;background-color:#1e0010">project</span> <span style="color:#960050;background-color:#1e0010">with</span> <span style="color:#960050;background-color:#1e0010">two</span> <span style="color:#960050;background-color:#1e0010">targets</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">which</span> <span style="color:#960050;background-color:#1e0010">one</span> <span style="color:#960050;background-color:#1e0010">depends</span> <span style="color:#960050;background-color:#1e0010">on</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">other.</span> <span style="color:#960050;background-color:#1e0010">There</span> <span style="color:#960050;background-color:#1e0010">are</span> <span style="color:#960050;background-color:#1e0010">more</span> <span style="color:#960050;background-color:#1e0010">possibilities</span> <span style="color:#960050;background-color:#1e0010">than</span> <span style="color:#960050;background-color:#1e0010">appending</span> <span style="color:#960050;background-color:#1e0010">values</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">targets</span> <span style="color:#960050;background-color:#1e0010">properties.</span> <span style="color:#960050;background-color:#1e0010">You</span> <span style="color:#960050;background-color:#1e0010">can</span> <span style="color:#960050;background-color:#1e0010">also</span> <span style="color:#960050;background-color:#1e0010">remove,</span> <span style="color:#960050;background-color:#1e0010">set,</span> <span style="color:#960050;background-color:#1e0010">filter,</span> <span style="color:#960050;background-color:#1e0010">clear</span> <span style="color:#960050;background-color:#1e0010">them</span> <span style="color:#960050;background-color:#1e0010">but</span> <span style="color:#960050;background-color:#1e0010">alas</span> <span style="color:#960050;background-color:#1e0010">their</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">still</span> <span style="color:#960050;background-color:#1e0010">much</span> <span style="color:#960050;background-color:#1e0010">functionality</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">be</span> <span style="color:#960050;background-color:#1e0010">added.
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">Step</span> <span style="color:#960050;background-color:#1e0010">4</span> <span style="color:#960050;background-color:#1e0010">–</span> <span style="color:#960050;background-color:#1e0010">Renaming</span> <span style="color:#960050;background-color:#1e0010">Targets</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">Changing</span> <span style="color:#960050;background-color:#1e0010">their</span> <span style="color:#960050;background-color:#1e0010">Type
+</span><span style="color:#960050;background-color:#1e0010">Renaming</span> <span style="color:#960050;background-color:#1e0010">targets</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">changing</span> <span style="color:#960050;background-color:#1e0010">their</span> <span style="color:#960050;background-color:#1e0010">type</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">also</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">breeze</span> <span style="color:#960050;background-color:#1e0010">with</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">reflection</span> <span style="color:#960050;background-color:#1e0010">tool.</span> <span style="color:#960050;background-color:#1e0010">Let’s</span> <span style="color:#960050;background-color:#1e0010">rename</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">change</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">type</span> <span style="color:#960050;background-color:#1e0010">my_exe</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">library</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">rename</span> <span style="color:#960050;background-color:#1e0010">it</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">the_executable:
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">my_project/&gt;</span> <span style="color:#960050;background-color:#1e0010">cml</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">my_exe</span> <span style="color:#960050;background-color:#1e0010">rename</span> <span style="color:#960050;background-color:#1e0010">the_executable
+</span><span style="color:#960050;background-color:#1e0010">my_project/&gt;</span> <span style="color:#960050;background-color:#1e0010">cml</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">the_executable</span> <span style="color:#960050;background-color:#1e0010">type</span> <span style="color:#960050;background-color:#1e0010">library
+</span><span style="color:#960050;background-color:#1e0010">CMakeLists.txt:
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.2.1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>project(<span style="color:#e6db74">my_project</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#e6db74">my_lib</span>
+  <span style="color:#e6db74">src/my_lib/my_lib.cpp</span>
+  <span style="color:#e6db74">includes/my_lib_inc/my_lib1.h</span>
+  <span style="color:#e6db74">includes/my_lib_inc/my_lib2.h</span>
+)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>target_include_directories(<span style="color:#e6db74">my_lib</span> <span style="color:#e6db74">PUBLIC</span> <span style="color:#e6db74">include/my_lib_inc</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#e6db74">the_executable</span> <span style="color:#e6db74">src/main.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">the_executable</span> <span style="color:#e6db74">my_lib</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">Step</span> <span style="color:#960050;background-color:#1e0010">5</span> <span style="color:#960050;background-color:#1e0010">–</span> <span style="color:#960050;background-color:#1e0010">Generating</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">Project
+</span><span style="color:#960050;background-color:#1e0010">This</span> <span style="color:#960050;background-color:#1e0010">step</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">just</span> <span style="color:#960050;background-color:#1e0010">for</span> <span style="color:#960050;background-color:#1e0010">completeness</span> <span style="color:#960050;background-color:#1e0010">sake.</span> <span style="color:#960050;background-color:#1e0010">Do</span> <span style="color:#960050;background-color:#1e0010">as</span> <span style="color:#960050;background-color:#1e0010">you</span> <span style="color:#960050;background-color:#1e0010">would</span> <span style="color:#960050;background-color:#1e0010">normally</span> <span style="color:#960050;background-color:#1e0010">do</span> <span style="color:#960050;background-color:#1e0010">with</span> <span style="color:#960050;background-color:#1e0010">any</span> <span style="color:#960050;background-color:#1e0010">cmake</span> <span style="color:#960050;background-color:#1e0010">project.
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">my_project/&gt;</span> <span style="color:#960050;background-color:#1e0010">mkdir</span> <span style="color:#960050;background-color:#1e0010">build
+</span><span style="color:#960050;background-color:#1e0010">my_project/&gt;</span> <span style="color:#960050;background-color:#1e0010">cd</span> <span style="color:#960050;background-color:#1e0010">build
+</span><span style="color:#960050;background-color:#1e0010">my_project/build/&gt;</span> <span style="color:#960050;background-color:#1e0010">cmake</span> <span style="color:#960050;background-color:#1e0010">..
+</span><span style="color:#960050;background-color:#1e0010">my_project/build/&gt;</span> <span style="color:#960050;background-color:#1e0010">cmake</span> <span style="color:#960050;background-color:#1e0010">--build</span> <span style="color:#960050;background-color:#1e0010">.
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## show that the project generated correctly (in my case for Visual Studio)
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">my_project/build/&gt;</span> <span style="color:#960050;background-color:#1e0010">ls</span> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">[
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/ALL_BUILD.vcxproj&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/ALL_BUILD.vcxproj.filters&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/CMakeCache.txt&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/CMakeFiles&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/cmake_install.cmake&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/Debug&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/my_lib.dir&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/my_lib.vcxproj&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/my_lib.vcxproj.filters&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/my_project.sln&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/the_executable.dir&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/the_executable.vcxproj&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/the_executable.vcxproj.filters&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/Win32&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/ZERO_CHECK.vcxproj&#34;,
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">&#34;./my_project/build/ZERO_CHECK.vcxproj.filters&#34;
+</span><span style="color:#960050;background-color:#1e0010">]
+</span></code></pre></div><p>Now the project is ready for use.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>As you can see I have added a lot of functionality to cmakepp which allows you to use cmake script reflection to modify cmake code. Of course there are Caveats – like speed: A command call can take upwards of a second or 2 for a normal sized CMakeLists.txt because the token parser and the search procedures all are O(n) (n being the number of tokens parsed).</p>
 <p>This functionality is very interesting to me because programatically altering cmake files will allow you (and me) to create project scaffolders and generators (like yeoman for web/javascript) which give you an easy start with any new cmake based project and later allows you to simply add files, target etc. Since it is written in pure cmake this is platform independent and could even be used by IDEs to update the CMakeLists files automatically without destroying custom code. The final destination for this is to have generator templates which scaffold your whole project and create standard/vanilla cmake files. Especially combination with my/a package manager this can become very powerful. All functionality described here and much more can also be used from within cmake itself.</p>
 <p>If you are more interested in the available commands go to the documentation of cmakelists_cli in the github repository.</p>
 <p>Future development will allow more complete and easier use of the command line client – more powerful commands, automatic deductions, formatting, …</p>
@@ -321,13 +334,13 @@ As you can see I have added a lot of functionality to cmakepp which allows you t
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/cmakepptemplategeneration/" data-toggle="tooltip" data-placement="top" title="cmakepp: Template Generation in CMake">&larr;
+                        <a href="/post/cmakeppheterogenouspackagesearchandretrieval/" data-toggle="tooltip" data-placement="top" title="Heterogeneous Package Search and Retrieval in CMake">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/cmakereadingandwritingjson/" data-toggle="tooltip" data-placement="top" title="cmakepp: Reading and Writing JSON">Next
+                        <a href="/post/usefulextensionsforcmake/" data-toggle="tooltip" data-placement="top" title="Useful extensions for CMake">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -364,6 +377,20 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         
                         
                         

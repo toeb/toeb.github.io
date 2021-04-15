@@ -109,19 +109,11 @@
                     
                         
                         <li>
+                            <a href="/categories/c">c#</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/compiler">compiler</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/programming">programming</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/script">script</a>
                         </li>
                         
                     
@@ -191,7 +183,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Tuesday, December 16, 2014
                         
                         
                         
@@ -216,119 +208,129 @@
                 post-container">
 
                 
-                <p>Parallel Processes in CMake
-by thetoeb • 2014/12/16 • 0 Comments</p>
-<p>If you need to check out multiple large repositories or build and install large separate projects you might want to use parallel processes in CMake. Dividing your tasks to use multiple CMake and or other processes can speed up your build and configuration steps immensely.</p>
+                <p>If you need to check out multiple large repositories or build and install large separate projects you might want to use parallel processes in CMake. Dividing your tasks to use multiple CMake and or other processes can speed up your build and configuration steps immensely.</p>
 <p>Since all cmake host OSs support multitasking from the command line it is possible to use cmake to contol them in turn. Using this approach I implemented a ‘platform independent’ control mechanism for starting, killing, querying and waiting for processes. Only the very basic functions are platform specific and the others are based on the abstraction layer that they provide.</p>
 <p>As of now platforms which support bash or powershell are supported.</p>
 <p>The functions are part of my cmake enhancement suite – oocmake and can be found at my github repository <a href="https://github.com/toeb/oo-cmake">https://github.com/toeb/oo-cmake</a>. Please report any issues you might have or contribute. (I am also happy if you just give me feedback)</p>
 <p>Installation is very easy and described in the README.md</p>
-<p>Examples
-Of course example are the easiest to show what is possible therefore I provided two:</p>
+<p>Examples</p>
+<p>Of course example are the easiest to show what is possible therefore I provided two:</p>
 <p>This example starts a script into three separate cmake processes. The program ends when all scripts are done executing.</p>
-<h1 id="define-a-script-which-counts-to-10-and-then">define a script which counts to 10 and then</h1>
-<h1 id="note-that-a-fresh-process-means-that-cmake-has-not-loaded-oocmake">note that a fresh process means that cmake has not loaded oocmake</h1>
-<p>set(script &quot;
-foreach(i RANGE 0 10)
-message(${i})
-execute_process(COMMAND ${CMAKE_COMMAND} -E sleep 1)
-endforeach()
-message(end)
-&ldquo;)</p>
-<h1 id="start-each-script---fork_script-returns-without-waiting-for-the-process-to-finish">start each script - fork_script returns without waiting for the process to finish.</h1>
-<h1 id="a-handle-to-the-created-process-is-returned">a handle to the created process is returned.</h1>
-<p>process_start_script(&quot;${script}&quot;)
-ans(handle1)
-process_start_script(&quot;${script}&quot;)
-ans(handle2)
-process_start_script(&quot;${script}&quot;)
-ans(handle3)</p>
-<h1 id="wait-for-every-process-to-finish-returns-the-handles-in-order-in-which-the-process-finishes">wait for every process to finish. returns the handles in order in which the process finishes</h1>
-<p>process_wait_all(${handle1} ${handle2} ${handle3})
-ans(res)</p>
-<h2 id="print-the-process-handles-in-order-of-completion">print the process handles in order of completion</h2>
-<p>json_print(${res})
-This example shows a slightly less useless case: Downloading multiple ‘large’ files in parallel to save time</p>
-<h2 id="define-a-function-which-downloads">define a function which downloads</h2>
-<h2 id="all-urls-specified-to-the-current-dir">all urls specified to the current dir</h2>
-<h2 id="returns-the-path-for-every-downloaded-files">returns the path for every downloaded files</h2>
-<p>function(download_files_parallel)
-## get current working dir
-pwd()
-ans(target_dir)</p>
-<pre><code>## process start loop 
-## starts a new process for every url to download
-set(handles)
-foreach(url ${ARGN})
-  ## start download by creating a cmake script
-  process_start_script(&quot;
-    include(${oocmake_base_dir}/oo-cmake.cmake) # include oocmake
-    download(\&quot;${url}\&quot; \&quot;${target_dir}\&quot;)
-    ans(result_path)
-    message(STATUS ${target_dir}/\${result_path})
-    &quot;)
-  ans(handle)
-  ## store process handle 
-  list(APPEND handles ${handle})
-endforeach()
-
-## wait for all downloads to finish
-process_wait_all(${handles})
-
-set(result_paths)
-foreach(handle ${handles})
-  ## get process stdout
-  process_stdout(${handle})
-  ans(output)
-
-  ## remove '-- ' from beginning of output which is
-  ## automatically prependend by message(STATUS) 
-  string(SUBSTRING &quot;${output}&quot; 3 -1 output)
-
-  ## store returned file path
-  list(APPEND result_paths ${output})
-
-endforeach()
-
-## return file paths of downloaded files
-return_ref(result_paths)
-</code></pre>
-<p>endfunction()</p>
-<h2 id="create-and-goto-download_dir">create and goto ./download_dir</h2>
-<p>cd(&ldquo;download_dir&rdquo; &ndash;create)</p>
-<h2 id="start-downloading-files-in-parallel-by-calling-previously-defined-function">start downloading files in parallel by calling previously defined function</h2>
-<p>download_files_parallel(
-<a href="http://www.cmake.org/files/v3.0/cmake-3.0.2.tar.gz">http://www.cmake.org/files/v3.0/cmake-3.0.2.tar.gz</a>
-<a href="http://www.cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz">http://www.cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz</a>
-)
-ans(paths)</p>
-<h2 id="assert-that-every-the-files-were-downloaded">assert that every the files were downloaded</h2>
-<p>foreach(path ${paths})
-assert(EXISTS &ldquo;${path}&quot;)
-endforeach()
-Functions and Datatypes
-datatypes
-<process handle> ::= { state:<process state> , pid:<process id> } process handle is a runtime unique map which is used to address a process. The process handle may contain more properties than specified – only the specified ones are available on all systems – these properties contain values which are implementation specific.
-<process info> ::= { } a map containing verbose information on a proccess. only the specified fields are available on all platforms. More are available depending on the OS you use. You should not try to use these without examining their origin / validity.
-<process state> ::= &ldquo;running&rdquo;|&ldquo;terminated&rdquo;|&ldquo;unknown&rdquo;
-<process id> ::= <string> a unspecified systemwide unique string which identifies a process (normally a integer)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#75715e"># define a script which counts to 10 and then 
+</span><span style="color:#75715e"># note that a fresh process means that cmake has not loaded oocmake
+</span><span style="color:#75715e"></span>set(<span style="color:#e6db74">script</span> <span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74">foreach(i RANGE 0 10)
+</span><span style="color:#e6db74">  message(\${i})
+</span><span style="color:#e6db74">  execute_process(COMMAND \${CMAKE_COMMAND} -E sleep 1)
+</span><span style="color:#e6db74">endforeach()
+</span><span style="color:#e6db74">message(end)
+</span><span style="color:#e6db74">&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># start each script - fork_script returns without waiting for the process to finish.
+</span><span style="color:#75715e"># a handle to the created process is returned.
+</span><span style="color:#75715e"></span>process_start_script(<span style="color:#e6db74">&#34;${script}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>ans(<span style="color:#e6db74">handle1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>process_start_script(<span style="color:#e6db74">&#34;${script}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>ans(<span style="color:#e6db74">handle2</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>process_start_script(<span style="color:#e6db74">&#34;${script}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>ans(<span style="color:#e6db74">handle3</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># wait for every process to finish. returns the handles in order in which the process finishes
+</span><span style="color:#75715e"></span>process_wait_all(<span style="color:#f92672">${</span>handle1<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>handle2<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>handle3<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>ans(<span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## print the process handles in order of completion
+</span><span style="color:#75715e"></span>json_print(<span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">This</span> <span style="color:#960050;background-color:#1e0010">example</span> <span style="color:#960050;background-color:#1e0010">shows</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">slightly</span> <span style="color:#960050;background-color:#1e0010">less</span> <span style="color:#960050;background-color:#1e0010">useless</span> <span style="color:#960050;background-color:#1e0010">case:</span> <span style="color:#960050;background-color:#1e0010">Downloading</span> <span style="color:#960050;background-color:#1e0010">multiple</span> <span style="color:#960050;background-color:#1e0010">‘large’</span> <span style="color:#960050;background-color:#1e0010">files</span> <span style="color:#960050;background-color:#1e0010">in</span> <span style="color:#960050;background-color:#1e0010">parallel</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">save</span> <span style="color:#960050;background-color:#1e0010">time
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#75715e">## define a function which downloads  
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">## all urls specified to the current dir
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">## returns the path for every downloaded files
+</span><span style="color:#75715e"></span>  function(<span style="color:#e6db74">download_files_parallel</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e">## get current working dir
+</span><span style="color:#75715e"></span>    pwd()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    ans(<span style="color:#e6db74">target_dir</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e">## process start loop 
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">## starts a new process for every url to download
+</span><span style="color:#75715e"></span>    set(<span style="color:#e6db74">handles</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    foreach(<span style="color:#e6db74">url</span> <span style="color:#f92672">${</span>ARGN<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#75715e">## start download by creating a cmake script
+</span><span style="color:#75715e"></span>      process_start_script(<span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74">        include(${oocmake_base_dir}/oo-cmake.cmake) # include oocmake
+</span><span style="color:#e6db74">        download(\&#34;</span><span style="color:#f92672">${</span>url<span style="color:#f92672">}</span><span style="color:#e6db74">\&#34;</span> <span style="color:#e6db74">\&#34;${target_dir}\&#34;)</span>
+        <span style="color:#e6db74">ans(result_path</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        message(<span style="color:#e6db74">STATUS</span> <span style="color:#f92672">${</span>target_dir<span style="color:#f92672">}</span><span style="color:#e6db74">/\</span><span style="color:#f92672">${</span>result_path<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        <span style="color:#960050;background-color:#1e0010">&#34;)
+</span><span style="color:#960050;background-color:#1e0010"></span>      ans(<span style="color:#e6db74">handle</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#75715e">## store process handle 
+</span><span style="color:#75715e"></span>      list(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">handles</span> <span style="color:#f92672">${</span>handle<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    endforeach()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e">## wait for all downloads to finish
+</span><span style="color:#75715e"></span>    process_wait_all(<span style="color:#f92672">${</span>handles<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    set(<span style="color:#e6db74">result_paths</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    foreach(<span style="color:#e6db74">handle</span> <span style="color:#f92672">${</span>handles<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#75715e">## get process stdout
+</span><span style="color:#75715e"></span>      process_stdout(<span style="color:#f92672">${</span>handle<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      ans(<span style="color:#e6db74">output</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#75715e">## remove &#39;-- &#39; from beginning of output which is
+</span><span style="color:#75715e"></span>      <span style="color:#75715e">## automatically prependend by message(STATUS) 
+</span><span style="color:#75715e"></span>      string(<span style="color:#e6db74">SUBSTRING</span> <span style="color:#e6db74">&#34;${output}&#34;</span> <span style="color:#e6db74">3</span> <span style="color:#e6db74">-1</span> <span style="color:#e6db74">output</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>      <span style="color:#75715e">## store returned file path
+</span><span style="color:#75715e"></span>      list(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">result_paths</span> <span style="color:#f92672">${</span>output<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    endforeach()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e">## return file paths of downloaded files
+</span><span style="color:#75715e"></span>    return_ref(<span style="color:#e6db74">result_paths</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  endfunction()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#75715e">## create and goto ./download_dir
+</span><span style="color:#75715e"></span>  cd(<span style="color:#e6db74">&#34;download_dir&#34;</span> <span style="color:#e6db74">--create</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#75715e">## start downloading files in parallel by calling previously defined function
+</span><span style="color:#75715e"></span>  download_files_parallel(
+    <span style="color:#e6db74">http://www.cmake.org/files/v3.0/cmake-3.0.2.tar.gz</span>
+    <span style="color:#e6db74">http://www.cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz</span>
+  )<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  ans(<span style="color:#e6db74">paths</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  <span style="color:#75715e">## assert that every the files were downloaded
+</span><span style="color:#75715e"></span>  foreach(<span style="color:#e6db74">path</span> <span style="color:#f92672">${</span>paths<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    assert(<span style="color:#e6db74">EXISTS</span> <span style="color:#e6db74">&#34;${path}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  endforeach()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="functions-and-datatypes">Functions and Datatypes</h2>
+<pre><code>datatypes
+&lt;process handle&gt; ::= { state:&lt;process state&gt; , pid:&lt;process id&gt; } process handle is a runtime unique map which is used to address a process. The process handle may contain more properties than specified – only the specified ones are available on all systems – these properties contain values which are implementation specific.
+&lt;process info&gt; ::= { } a map containing verbose information on a proccess. only the specified fields are available on all platforms. More are available depending on the OS you use. You should not try to use these without examining their origin / validity.
+&lt;process state&gt; ::= &quot;running&quot;|&quot;terminated&quot;|&quot;unknown&quot;
+&lt;process id&gt; ::= &lt;string&gt; a unspecified systemwide unique string which identifies a process (normally a integer)
 platform specific low level functions
-process_start(&lt;process start info?!&gt;):<process handle> platfrom specific function which starts a process and returns a process handle
+process_start(&lt;process start info?!&gt;):&lt;process handle&gt; platfrom specific function which starts a process and returns a process handle
 process_kill(&lt;process handle?!&gt;) platform specific function which stops a process.
-process_list():&lt;process handle &hellip;&gt; platform specific function which returns a process handle for all running processes on OS.
-process_info(&lt;process handle?!&gt;):<process info> platform specific function which returns a verbose process info
-process_isrunning(&lt;process handle?!&gt;):<bool> returns true iff process is running.
-process_timeout(&lt;n:<seconds>&gt;):<process handle> starts a process which times out in <n> seconds.
-process_wait(&lt;process handle~&gt; [&ndash;timeout &lt;n:seconds&gt;]):<process handle> waits for the specified process to finish or the specified timeout to run out. returns null if timeout runs out before process finishes.
-process_wait_all(&lt;process handle?!&hellip;&gt; &lt;[&ndash;timeout &lt;n:seconds&gt;] [&ndash;quietly]):&lt;process handle &hellip;&gt; waits for all specified process handles and returns them in the order that they completed. If the &ndash;timeout <n> value is specified the function returns as soon as the timeout is reached returning only the process finished up to that point. The function normally prints status messages which can be supressed via the &ndash;quietly flag.
-process_wait_any(&lt;process handle?!&hellip;&gt; &lt;?&quot;&ndash;timeout&rdquo; &lt;n:<seconds>&raquo; &lt;?&quot;&ndash;quietly&rdquo;&gt;):&lt;?process handle&gt; waits for any of the specified processes to finish, returning the handle of the first one to finished. If &ndash;timeout <n> is specified the function will return null after n seconds if no process completed up to that point in time. You can specify &ndash;quietly if you want to suppress the status messages.
-process_stdout(&lt;process handle~&gt;):<string> returns all data written to standard output stream of the process specified up to the current point in time
-process_stderr(&lt;process handle~&gt;):<string> return all data written to standard error stream of the process specified up to the current point in time
+process_list():&lt;process handle ...&gt; platform specific function which returns a process handle for all running processes on OS.
+process_info(&lt;process handle?!&gt;):&lt;process info&gt; platform specific function which returns a verbose process info
+process_isrunning(&lt;process handle?!&gt;):&lt;bool&gt; returns true iff process is running.
+process_timeout(&lt;n:&lt;seconds&gt;&gt;):&lt;process handle&gt; starts a process which times out in &lt;n&gt; seconds.
+process_wait(&lt;process handle~&gt; [--timeout &lt;n:seconds&gt;]):&lt;process handle&gt; waits for the specified process to finish or the specified timeout to run out. returns null if timeout runs out before process finishes.
+process_wait_all(&lt;process handle?!...&gt; &lt;[--timeout &lt;n:seconds&gt;] [--quietly]):&lt;process handle ...&gt; waits for all specified process handles and returns them in the order that they completed. If the --timeout &lt;n&gt; value is specified the function returns as soon as the timeout is reached returning only the process finished up to that point. The function normally prints status messages which can be supressed via the --quietly flag.
+process_wait_any(&lt;process handle?!...&gt; &lt;?&quot;--timeout&quot; &lt;n:&lt;seconds&gt;&gt;&gt; &lt;?&quot;--quietly&quot;&gt;):&lt;?process handle&gt; waits for any of the specified processes to finish, returning the handle of the first one to finished. If --timeout &lt;n&gt; is specified the function will return null after n seconds if no process completed up to that point in time. You can specify --quietly if you want to suppress the status messages.
+process_stdout(&lt;process handle~&gt;):&lt;string&gt; returns all data written to standard output stream of the process specified up to the current point in time
+process_stderr(&lt;process handle~&gt;):&lt;string&gt; return all data written to standard error stream of the process specified up to the current point in time
 process_return_code(&lt;process handle~&gt;):&lt;int?&gt; returns nothing or the process return code if the process is finished
-process_start_script(<cmake code>):<process handle> starts a separate cmake process which runs the specified cmake code.
+process_start_script(&lt;cmake code&gt;):&lt;process handle&gt; starts a separate cmake process which runs the specified cmake code.
 Inter Process Communication
-To communicate with you processes you can use any of the following well known mechanisms</p>
-<p>Environment Variables
+To communicate with you processes you can use any of the following well known mechanisms
+
+Environment Variables
 the started processes have access to you current Environment. So when you call set(ENV{VAR} value) before starting a process that process will have read access to the variable $ENV{VAR}
 Command Line Arguments
 all variables passed to start_process will be passed allong
@@ -342,8 +344,8 @@ return code
 the returns code tells you how you process finished and is often enough result information for a process you start
 Caveats
 process starting is slow – it can take seconds (it takes 900ms on my machine). The task needs to be a very large one for it to compensate the overhead.
-parallel processes use platform specific functions – It might cause problems on less well tested OSs and some may not be supported. (currently only platforms with bash or powershell are supported ie Windows and Linux)</p>
-
+parallel processes use platform specific functions – It might cause problems on less well tested OSs and some may not be supported. (currently only platforms with bash or powershell are supported ie Windows and Linux)
+</code></pre>
 
                 
 
@@ -351,13 +353,13 @@ parallel processes use platform specific functions – It might cause problems o
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/cpprenameablenamespaces/" data-toggle="tooltip" data-placement="top" title="Renameable Namespaces using the Preprocessor">&larr;
+                        <a href="/post/cmakeppfilesystem/" data-toggle="tooltip" data-placement="top" title="CMake and the Filesystem">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/cmakeppobjectsandmaps/" data-toggle="tooltip" data-placement="top" title="Objects and Maps in CMake">Next
+                        <a href="/post/cmakeppheterogenouspackagesearchandretrieval/" data-toggle="tooltip" data-placement="top" title="Heterogeneous Package Search and Retrieval in CMake">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -394,6 +396,20 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         
                         
                         

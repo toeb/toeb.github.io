@@ -110,19 +110,11 @@
                     
                         
                         <li>
+                            <a href="/categories/c">c#</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/compiler">compiler</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/programming">programming</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/script">script</a>
                         </li>
                         
                     
@@ -249,32 +241,6 @@ To parse versioned web asset filenames ala jquery-1.4.min.js I wrote a simple cl
 <hr>
 
 <div class="post-preview">
-    <a href="https://toeb.github.io/post/alternativetypedefsyntax/">
-        <h2 class="post-title">
-            Alternative `typedef` Syntax
-        </h2>
-	
-        <div class="post-content-preview">
-	    
-            An Alternative typedef Syntax using the C++ Preprocessor by thetoeb • 2014/10/13 • 3 Comments
-Disclaimer: This post will be more interesting to you if you work with the preprocessor.
-Here you can find a preprocessor only solution for changing the typedef syntax from typedef int number_type; to int typedef_as number_type; – an alternative typedef Syntax.
-If your wondering where this might be useful let me tell you why I needed it: I was working on a preprocessor macro which defines a property – a field, a getter and a setter.
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by toeb&#39;s Blog Tuesday, August 30, 2016
-    
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
     <a href="https://toeb.github.io/post/cppdynamicobject/">
         <h2 class="post-title">
             An Implementation of the Dynamic Object in C&#43;&#43;
@@ -308,30 +274,6 @@ You can find my implementation at https://github.com/toeb/cppdynamic it is licen
 	    
             Reading and Writing JSON with CMake by thetoeb • 2014/03/05 • 2 Comments
 While working on a package manager for CMake I came across the problem of finding a suitable format for my package descriptor files. First I thought about and tried using plain old CMake file that simply sets variables and can be included to access its contents. It was very quick and easy to implement. Hierarchical data structures however where hard to implement and a none standard format makes it harder to exchange data with a webservice/other programs.
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by toeb&#39;s Blog Tuesday, August 30, 2016
-    
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppreflectingandmanipulatingcmakelists/">
-        <h2 class="post-title">
-            cmakepp: reflecting and manipulating CMakeLists
-        </h2>
-	
-        <div class="post-content-preview">
-	    
-            cmakepp: reflecting and manipulating CMakeLists by thetoeb • 2015/03/19 • 2 Comments
-The basic CMakeLists.txt files for cmake based projects are usually very simple. Their manipulation lends itself to be automated and for this purpose I developed a parser for cmake script which allows you to manipulate it programatically from within cmake itself. On top of the cmake script parser I generated utility functions which allow you to manipulate CMakeLists.txt files while still allowing you to manually working on them.
         
        
 
@@ -408,30 +350,6 @@ This software is currently not in its finished state, It still needs polishing b
 	    
             dynamically calling “any” thing in C++ by thetoeb • 2014/07/15 • 0 Comments
 Extending upon boost’s any class which stores a type and a void ptr to any type of value, I created a callable version were you can assign any function, lambda, memberfunction etc. to the any and call it dynamically. This is a basic and important step for runtime reflection which I’m currently working on. Tell me if you like what I did and if you have any improvements.
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by toeb&#39;s Blog Tuesday, August 30, 2016
-    
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/">
-        <h2 class="post-title">
-            Heterogeneous Package Search and Retrieval in CMake
-        </h2>
-	
-        <div class="post-content-preview">
-	    
-            Heterogeneous Package Search and Retrieval in CMake by thetoeb • 2015/02/04 • 2 Comments
-Finding and Retrieving third party sources, tools and binaries is currently a hot subject for C++. There are quite a few solutions (biicode, cpm, hunter, …) Also there is github, bitbucket, source balls etc. Further there are many package managers for many different platforms which also can contain packages (apt-get, chocolatey, nuget, npm, pip, ….). So everything is very decentralized and heterogeneous.
         
        
 
@@ -602,57 +520,6 @@ using objects ### ============= # oo-cmake is very similar to javascript # I act
 <hr>
 
 <div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppobjectsandmaps/">
-        <h2 class="post-title">
-            Objects and Maps in CMake
-        </h2>
-	
-        <div class="post-content-preview">
-	    
-            Objects and Maps in CMake by thetoeb • 2014/02/16 • 7 Comments
-Get it at https://github.com/toeb/oo-cmake and tell me if you like it
-For more complex build system features oo programming would be a major boon. So I took it upon myself to create a usable and tested oo-extension for cmake (in pure CMake) so I could continue developing and extending my plattform independent tooling support (cutil) .
-It’s too bad that Kitware decided to use their own language (with very little high level language features) for their build system product because CMakes project generation capabilties are unparalleled .
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by toeb&#39;s Blog Tuesday, August 30, 2016
-    
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppparallelprocesses/">
-        <h2 class="post-title">
-            Parallel Processes in CMake
-        </h2>
-	
-        <div class="post-content-preview">
-	    
-            Parallel Processes in CMake by thetoeb • 2014/12/16 • 0 Comments
-If you need to check out multiple large repositories or build and install large separate projects you might want to use parallel processes in CMake. Dividing your tasks to use multiple CMake and or other processes can speed up your build and configuration steps immensely.
-Since all cmake host OSs support multitasking from the command line it is possible to use cmake to contol them in turn.
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by toeb&#39;s Blog Tuesday, August 30, 2016
-    
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
     <a href="https://toeb.github.io/post/cpprenameablenamespaces/">
         <h2 class="post-title">
             Renameable Namespaces using the Preprocessor
@@ -701,6 +568,77 @@ When using cmake for more than just simple projects it is lacking in various asp
 <hr>
 
 <div class="post-preview">
+    <a href="https://toeb.github.io/post/cmakeppreflectingandmanipulatingcmakelists/">
+        <h2 class="post-title">
+            cmakepp: reflecting and manipulating CMakeLists
+        </h2>
+	
+        <div class="post-content-preview">
+	    
+            The basic CMakeLists.txt files for cmake based projects are usually very simple. Their manipulation lends itself to be automated and for this purpose I developed a parser for cmake script which allows you to manipulate it programatically from within cmake itself. On top of the cmake script parser I generated utility functions which allow you to manipulate CMakeLists.txt files while still allowing you to manually working on them. This functionality is wrapped by a command line interface which I present to you in this post.
+        
+       
+
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by toeb&#39;s Blog Thursday, March 19, 2015
+    
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/">
+        <h2 class="post-title">
+            Heterogeneous Package Search and Retrieval in CMake
+        </h2>
+	
+        <div class="post-content-preview">
+	    
+            Finding and Retrieving third party sources, tools and binaries is currently a hot subject for C++. There are quite a few solutions (biicode, cpm, hunter, …) Also there is github, bitbucket, source balls etc. Further there are many package managers for many different platforms which also can contain packages (apt-get, chocolatey, nuget, npm, pip, ….). So everything is very decentralized and heterogeneous.
+On the other hand there is CMake the standard when it comes to creating platform independent projects for various build and developer environments.
+        
+       
+
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by toeb&#39;s Blog Wednesday, February 4, 2015
+    
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="https://toeb.github.io/post/cmakeppparallelprocesses/">
+        <h2 class="post-title">
+            Parallel Processes in CMake
+        </h2>
+	
+        <div class="post-content-preview">
+	    
+            If you need to check out multiple large repositories or build and install large separate projects you might want to use parallel processes in CMake. Dividing your tasks to use multiple CMake and or other processes can speed up your build and configuration steps immensely.
+Since all cmake host OSs support multitasking from the command line it is possible to use cmake to contol them in turn. Using this approach I implemented a ‘platform independent’ control mechanism for starting, killing, querying and waiting for processes.
+        
+       
+
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by toeb&#39;s Blog Tuesday, December 16, 2014
+    
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="https://toeb.github.io/post/cmakeppfilesystem/">
         <h2 class="post-title">
             CMake and the Filesystem
@@ -716,6 +654,54 @@ When using cmake for more than just simple projects it is lacking in various asp
     </a>
     <p class="post-meta">
     Posted by      &#34;toeb&#34; Thursday, November 27, 2014
+    
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="https://toeb.github.io/post/alternativetypedefsyntax/">
+        <h2 class="post-title">
+            Alternative `typedef` Syntax
+        </h2>
+	
+        <div class="post-content-preview">
+	    
+            An Alternative typedef Syntax using the C&#43;&#43; Preprocessor
+        
+       
+
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by toeb&#39;s Blog Monday, October 13, 2014
+    
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="https://toeb.github.io/post/cmakeppobjectsandmaps/">
+        <h2 class="post-title">
+            Objects and Maps in CMake
+        </h2>
+	
+        <div class="post-content-preview">
+	    
+            Get it at https://github.com/toeb/oo-cmake and tell me if you like it
+For more complex build system features oo programming would be a major boon. So I took it upon myself to create a usable and tested oo-extension for cmake (in pure CMake) so I could continue developing and extending my plattform independent tooling support (cutil) .
+It’s too bad that Kitware decided to use their own language (with very little high level language features) for their build system product because CMakes project generation capabilties are unparalleled .
+        
+       
+
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by toeb&#39;s Blog Sunday, February 16, 2014
     
     
     </p>
@@ -768,6 +754,20 @@ When using cmake for more than just simple projects it is lacking in various asp
         <h5>FEATURED TAGS</h5>
         <div class="tags">
              
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
             
                 
             

@@ -109,19 +109,11 @@
                     
                         
                         <li>
+                            <a href="/categories/c">c#</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/compiler">compiler</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/programming">programming</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/script">script</a>
                         </li>
                         
                     
@@ -191,7 +183,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Wednesday, February 4, 2015
                         
                         
                         
@@ -216,9 +208,7 @@
                 post-container">
 
                 
-                <p>Heterogeneous Package Search and Retrieval in CMake
-by thetoeb • 2015/02/04 • 2 Comments</p>
-<p>Finding and Retrieving third party sources, tools and binaries is currently a hot subject for C++. There are quite a few solutions (biicode, cpm, hunter, …) Also there is github, bitbucket, source balls etc. Further there are many package managers for many different platforms which also can contain packages (apt-get, chocolatey, nuget, npm, pip, ….). So everything is very decentralized and heterogeneous.</p>
+                <p>Finding and Retrieving third party sources, tools and binaries is currently a hot subject for C++. There are quite a few solutions (biicode, cpm, hunter, …) Also there is github, bitbucket, source balls etc. Further there are many package managers for many different platforms which also can contain packages (apt-get, chocolatey, nuget, npm, pip, ….). So everything is very decentralized and heterogeneous.</p>
 <p>On the other hand there is CMake the standard when it comes to creating platform independent projects for various build and developer environments. (of course it is not the only build tool but it is the standard for platform independent C/C++ projects) Most notably it generates MSBuild for Visual Studio and MAKE output which are the most commonly used build systems. CMake is as platform independent as it comes.</p>
 <p>For me the need arose to get multiple packages for a project I am working on. My list of dependencies were partially local and partially remote (local project a, local project b, Eigen3, tinyxml2, boost, etc…) I wanted to write my project configuration files in a way that I do not have to copy all the third party tools and sources into my repository but also I did not want the client to be responsible for retrieving them either.</p>
 <p>The first part of solving this problem is to be able to find and retrieve packages with platform independent CMake code from all kinds of package sources and that is what this blog post is about. The second part of the solution is to be able not only to retrieve packages but also their dependencies (package management). The third part is the only part specific to C++ – Combining packages in a way that everything builds correctly without tons of testing and configuration.</p>
@@ -227,200 +217,205 @@ by thetoeb • 2015/02/04 • 2 Comments</p>
 <p>cmakepp now contains package sources for github bitbucket web archives local archives local directorys git subversion mercurial and more to come (apt get, nuget, npm, are planned)</p>
 <p>These can be used to simply search and download packages.</p>
 <p>After all of this text I’m sure you want to see how to use it. So I’ll show you a simple Example:</p>
-<p>cmake_minimum_required(VERSION 2.8.12)</p>
-<h2 id="cmakeliststxt-for-a-simple-project">CMakeLists.txt for a simple project</h2>
-<p>set(current_dir &ldquo;${CMAKE_CURRENT_SOURCE_DIR}&quot;)</p>
-<h2 id="get-cmakepp">get cmakepp</h2>
-<p>if(NOT EXISTS &ldquo;${current_dir}/cmakepp.cmake&rdquo;)
-file(DOWNLOAD &ldquo;<a href="https://github.com/toeb/cmakepp/releases/download/v0.0.3/cmakepp.cmake%22">https://github.com/toeb/cmakepp/releases/download/v0.0.3/cmakepp.cmake&quot;</a> &ldquo;${current_dir}/cmakepp.cmake&rdquo;)
-endif()</p>
-<p>include(&quot;${current_dir}/cmakepp.cmake&rdquo;)</p>
-<p>if(NOT EXISTS ${current_dir}/dependencies/eigen3)
-message(&ldquo;installing Eigen3 from bitbucket&rdquo;)
-pull_package(eigen/eigen?tag=3.1.0 dependencies/eigen3)
-ans(package_handle)
-if(NOT package_handle)
-message(FATAL_ERROR &ldquo;could not pull Eigen3&rdquo;)
-endif()</p>
-<h2 id="print-the-package-information-returned">print the package information returned</h2>
-<p>json_print(${package_handle})
-endif()</p>
-<h2 id="from-here-on-everything-can-be-a-normal-cmakelists-file">from here on everything can be a normal cmakelists file</h2>
-<p>project(myproject)</p>
-<p>include_directories(&ldquo;dependencies/eigen3&rdquo;)</p>
-<p>fwrite(&ldquo;main.cpp&rdquo; &quot;
-#include <iostream>
-#include &lt;Eigen/Dense&gt;
-using Eigen::MatrixXd;
-int main()
-{
-MatrixXd m(2,2);
-m(0,0) = 3;
-m(1,0) = 2.5;
-m(0,1) = -1;
-m(1,1) = m(1,0) + m(0,1);
-std::cout &laquo; m &laquo; std::endl;
-}
-&ldquo;)
-add_executable(myexe &ldquo;main.cpp&rdquo;)
-After you write and configure this CMakeLists.txt you are able to work with you project as before. Of course the sample is overly simple – because I do not show you how this works with non-header-only libraries and installing and multiple targets,… But it is just to give you an idea of how things work.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">2.8.12</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## CMakeLists.txt for a simple project 
+</span><span style="color:#75715e"></span>set(<span style="color:#e6db74">current_dir</span> <span style="color:#e6db74">&#34;${CMAKE_CURRENT_SOURCE_DIR}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## get cmakepp
+</span><span style="color:#75715e"></span>if(<span style="color:#e6db74">NOT</span> <span style="color:#e6db74">EXISTS</span> <span style="color:#e6db74">&#34;${current_dir}/cmakepp.cmake&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  file(<span style="color:#e6db74">DOWNLOAD</span> <span style="color:#e6db74">&#34;https://github.com/toeb/cmakepp/releases/download/v0.0.3/cmakepp.cmake&#34;</span> <span style="color:#e6db74">&#34;${current_dir}/cmakepp.cmake&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>include(<span style="color:#e6db74">&#34;${current_dir}/cmakepp.cmake&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">NOT</span> <span style="color:#e6db74">EXISTS</span> <span style="color:#f92672">${</span>current_dir<span style="color:#f92672">}</span><span style="color:#e6db74">/dependencies/eigen3</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span> message(<span style="color:#e6db74">&#34;installing Eigen3 from bitbucket&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span> pull_package(<span style="color:#e6db74">eigen/eigen?tag=3.1.0</span> <span style="color:#e6db74">dependencies/eigen3</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span> ans(<span style="color:#e6db74">package_handle</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span> if(<span style="color:#e6db74">NOT</span> <span style="color:#e6db74">package_handle</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>  message(<span style="color:#e6db74">FATAL_ERROR</span> <span style="color:#e6db74">&#34;could not pull Eigen3&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span> endif()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#75715e">## print the package information returned
+</span><span style="color:#75715e"></span> json_print(<span style="color:#f92672">${</span>package_handle<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## from here on everything can be a normal cmakelists file
+</span><span style="color:#75715e"></span>project(<span style="color:#e6db74">myproject</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>include_directories(<span style="color:#e6db74">&#34;dependencies/eigen3&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>fwrite(<span style="color:#e6db74">&#34;main.cpp&#34;</span> <span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74">#include &lt;iostream&gt;
+</span><span style="color:#e6db74">#include &lt;Eigen/Dense&gt;
+</span><span style="color:#e6db74">using Eigen::MatrixXd;
+</span><span style="color:#e6db74">int main()
+</span><span style="color:#e6db74">{
+</span><span style="color:#e6db74">  MatrixXd m(2,2);
+</span><span style="color:#e6db74">  m(0,0) = 3;
+</span><span style="color:#e6db74">  m(1,0) = 2.5;
+</span><span style="color:#e6db74">  m(0,1) = -1;
+</span><span style="color:#e6db74">  m(1,1) = m(1,0) + m(0,1);
+</span><span style="color:#e6db74">  std::cout &lt;&lt; m &lt;&lt; std::endl;
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">myexe</span> <span style="color:#e6db74">&#34;main.cpp&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>After you write and configure this CMakeLists.txt you are able to work with you project as before. Of course the sample is overly simple – because I do not show you how this works with non-header-only libraries and installing and multiple targets,… But it is just to give you an idea of how things work.</p>
 <p>The only prerequisites are cmake &gt;= 2.8.12 and a build system e.g. MSVC or GCC</p>
 <p>To get this to work copy paste the code into a new directory in a file called CMakeLists.txt then type:</p>
-<blockquote>
-<p>mkdir build
-cd build
+<pre><code>&gt; mkdir build
+&gt; cd build
 build&gt; cmake ..
-build&gt; cmake &ndash;build .
+build&gt; cmake --build .
 build&gt; &lt;code to run executable e.g. ./Debug/myexe.exe under windows&gt;
-This might seem a bit of overkill – however when you install cmakepp you are not limited to using it in your CMakeLists.txt you can also invoke it through the commandline. Consider the following console log which work on your console of choice like bash powershell cmd.</p>
-</blockquote>
-<p>The following lists all packages available which match the uri toeb</p>
-<p>PS&gt; cmakepp query_package toeb
+This might seem a bit of overkill – however when you install cmakepp you are not limited to using it in your CMakeLists.txt you can also invoke it through the commandline. Consider the following console log which work on your console of choice like bash powershell cmd.
+</code></pre><p>The following lists all packages available which match the uri toeb</p>
+<pre><code>PS&gt; cmakepp query_package toeb
 [
-&ldquo;github:toeb/adolc&rdquo;,
-&ldquo;github:toeb/autogui&rdquo;,
-&ldquo;github:toeb/Blocks&rdquo;,
-&ldquo;github:toeb/cgen&rdquo;,
-&ldquo;github:toeb/CMake&rdquo;,
-&ldquo;github:toeb/cmakepp&rdquo;,
-&ldquo;github:toeb/core.common&rdquo;,
-&ldquo;github:toeb/core.filesystem&rdquo;,
-&ldquo;github:toeb/Core.FileSystem.PathUtilities&rdquo;,
-&ldquo;github:toeb/cpm&rdquo;,
-&ldquo;github:toeb/cpm-adolc&rdquo;,
-&ldquo;github:toeb/cpm-boost&rdquo;,
-&ldquo;github:toeb/cpm-boost-config&rdquo;,
-&ldquo;github:toeb/cpm-boost-graph&rdquo;,
-&ldquo;github:toeb/cpm-eigen&rdquo;,
-&ldquo;github:toeb/cpm-module&rdquo;,
-&ldquo;github:toeb/cpm-modules&rdquo;,
-&ldquo;github:toeb/cpp.reflect&rdquo;,
-&ldquo;github:toeb/cppaccessor&rdquo;,
-&ldquo;github:toeb/cppdynamic&rdquo;,
-&ldquo;github:toeb/cppnamespace&rdquo;,
-&ldquo;github:toeb/cps&rdquo;,
-&ldquo;github:toeb/cps-example&rdquo;,
-&ldquo;github:toeb/cps_sample&rdquo;,
-&ldquo;github:toeb/CTestTestAdapter&rdquo;,
-&ldquo;github:toeb/ctmpl&rdquo;,
-&ldquo;github:toeb/cts&rdquo;,
-&ldquo;github:toeb/cutil&rdquo;,
-&ldquo;github:toeb/cutil-playground&rdquo;,
-&ldquo;github:toeb/cutil-templates&rdquo;,
-&ldquo;bitbucket:toeb/cmodule&rdquo;,
-&ldquo;bitbucket:toeb/rbdl&rdquo;,
-&ldquo;bitbucket:toeb/rbdl&rdquo;,
-&ldquo;bitbucket:toeb/test_repo_hg&rdquo;,
-&ldquo;bitbucket:toeb/test_repo_git&rdquo;
+ &quot;github:toeb/adolc&quot;,
+ &quot;github:toeb/autogui&quot;,
+ &quot;github:toeb/Blocks&quot;,
+ &quot;github:toeb/cgen&quot;,
+ &quot;github:toeb/CMake&quot;,
+ &quot;github:toeb/cmakepp&quot;,
+ &quot;github:toeb/core.common&quot;,
+ &quot;github:toeb/core.filesystem&quot;,
+ &quot;github:toeb/Core.FileSystem.PathUtilities&quot;,
+ &quot;github:toeb/cpm&quot;,
+ &quot;github:toeb/cpm-adolc&quot;,
+ &quot;github:toeb/cpm-boost&quot;,
+ &quot;github:toeb/cpm-boost-config&quot;,
+ &quot;github:toeb/cpm-boost-graph&quot;,
+ &quot;github:toeb/cpm-eigen&quot;,
+ &quot;github:toeb/cpm-module&quot;,
+ &quot;github:toeb/cpm-modules&quot;,
+ &quot;github:toeb/cpp.reflect&quot;,
+ &quot;github:toeb/cppaccessor&quot;,
+ &quot;github:toeb/cppdynamic&quot;,
+ &quot;github:toeb/cppnamespace&quot;,
+ &quot;github:toeb/cps&quot;,
+ &quot;github:toeb/cps-example&quot;,
+ &quot;github:toeb/cps_sample&quot;,
+ &quot;github:toeb/CTestTestAdapter&quot;,
+ &quot;github:toeb/ctmpl&quot;,
+ &quot;github:toeb/cts&quot;,
+ &quot;github:toeb/cutil&quot;,
+ &quot;github:toeb/cutil-playground&quot;,
+ &quot;github:toeb/cutil-templates&quot;,
+ &quot;bitbucket:toeb/cmodule&quot;,
+ &quot;bitbucket:toeb/rbdl&quot;,
+ &quot;bitbucket:toeb/rbdl&quot;,
+ &quot;bitbucket:toeb/test_repo_hg&quot;,
+ &quot;bitbucket:toeb/test_repo_git&quot;
 ]
-The following returns all available package information for a specific package uri.</p>
-<p>PS&gt; cmakepp resolve_package toeb/cmakepp
+</code></pre><p>The following returns all available package information for a specific package uri.</p>
+<pre><code>PS&gt; cmakepp resolve_package toeb/cmakepp
 {
-&ldquo;package_descriptor&rdquo;:{
-&ldquo;id&rdquo;:&ldquo;cmakepp&rdquo;,
-&ldquo;version&rdquo;:&ldquo;0.0.0&rdquo;,
-&ldquo;description&rdquo;:&ldquo;a cmake enhancement suite&rdquo;,
-&ldquo;license&rdquo;:&ldquo;MIT&rdquo;,
-&ldquo;author&rdquo;:&ldquo;Tobias P. Becker&rdquo;
-},
-&ldquo;uri&rdquo;:&ldquo;github:toeb/cmakepp&rdquo;,
-&ldquo;repo_descriptor&rdquo;:{
-&ldquo;id&rdquo;:16892201,
-&ldquo;name&rdquo;:&ldquo;cmakepp&rdquo;,
-&ldquo;full_name&rdquo;:&ldquo;toeb/cmakepp&rdquo;,
-&ldquo;owner&rdquo;:{
-&ldquo;login&rdquo;:&ldquo;toeb&rdquo;,
-&ldquo;id&rdquo;:1451956,
-&ldquo;avatar_url&rdquo;:&ldquo;<a href="https://avatars.githubusercontent.com/u/1451956?v=3%22,">https://avatars.githubusercontent.com/u/1451956?v=3&quot;,</a>
-&ldquo;gravatar_id&rdquo;:null,
-&ldquo;url&rdquo;:&ldquo;<a href="https://api.github.com/users/toeb%22,">https://api.github.com/users/toeb&quot;,</a>
-&ldquo;html_url&rdquo;:&ldquo;<a href="https://github.com/toeb%22,">https://github.com/toeb&quot;,</a>
-&ldquo;followers_url&rdquo;:&ldquo;<a href="https://api.github.com/users/toeb/followers%22,">https://api.github.com/users/toeb/followers&quot;,</a>
-&ldquo;following_url&rdquo;:&ldquo;<a href="https://api.github.com/users/toeb/following%7B/other_user%7D%22,">https://api.github.com/users/toeb/following{/other_user}&quot;,</a>
-&ldquo;gists_url&rdquo;:&ldquo;<a href="https://api.github.com/users/toeb/gists%7B/gist_id%7D%22,">https://api.github.com/users/toeb/gists{/gist_id}&quot;,</a>
-&ldquo;starred_url&rdquo;:&ldquo;<a href="https://api.github.com/users/toeb/starred%7B/owner%7D%7B/repo%7D%22,">https://api.github.com/users/toeb/starred{/owner}{/repo}&quot;,</a>
-&ldquo;subscriptions_url&rdquo;:&ldquo;<a href="https://api.github.com/users/toeb/subscriptions%22,">https://api.github.com/users/toeb/subscriptions&quot;,</a>
-&ldquo;organizations_url&rdquo;:&ldquo;<a href="https://api.github.com/users/toeb/orgs%22,">https://api.github.com/users/toeb/orgs&quot;,</a>
-&ldquo;repos_url&rdquo;:&ldquo;<a href="https://api.github.com/users/toeb/repos%22,">https://api.github.com/users/toeb/repos&quot;,</a>
-&ldquo;events_url&rdquo;:&ldquo;<a href="https://api.github.com/users/toeb/events%7B/privacy%7D%22,">https://api.github.com/users/toeb/events{/privacy}&quot;,</a>
-&ldquo;received_events_url&rdquo;:&ldquo;<a href="https://api.github.com/users/toeb/received_events%22,">https://api.github.com/users/toeb/received_events&quot;,</a>
-&ldquo;type&rdquo;:&ldquo;User&rdquo;,
-&ldquo;site_admin&rdquo;:false
-},
-&ldquo;private&rdquo;:false,
-&ldquo;html_url&rdquo;:&ldquo;<a href="https://github.com/toeb/cmakepp%22,">https://github.com/toeb/cmakepp&quot;,</a>
-&ldquo;description&rdquo;:&ldquo;An Enhancement Suite for the CMake Build System&rdquo;,
-&ldquo;fork&rdquo;:false,
-&ldquo;url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp%22,">https://api.github.com/repos/toeb/cmakepp&quot;,</a>
-&ldquo;forks_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/forks%22,">https://api.github.com/repos/toeb/cmakepp/forks&quot;,</a>
-&ldquo;keys_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/keys%7B/key_id%7D%22,">https://api.github.com/repos/toeb/cmakepp/keys{/key_id}&quot;,</a>
-&ldquo;collaborators_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/collaborators%7B/collaborator%7D%22,">https://api.github.com/repos/toeb/cmakepp/collaborators{/collaborator}&quot;,</a>
-&ldquo;teams_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/teams%22,">https://api.github.com/repos/toeb/cmakepp/teams&quot;,</a>
-&ldquo;hooks_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/hooks%22,">https://api.github.com/repos/toeb/cmakepp/hooks&quot;,</a>
-&ldquo;issue_events_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/issues/events%7B/number%7D%22,">https://api.github.com/repos/toeb/cmakepp/issues/events{/number}&quot;,</a>
-&ldquo;events_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/events%22,">https://api.github.com/repos/toeb/cmakepp/events&quot;,</a>
-&ldquo;assignees_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/assignees%7B/user%7D%22,">https://api.github.com/repos/toeb/cmakepp/assignees{/user}&quot;,</a>
-&ldquo;branches_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/branches%7B/branch%7D%22,">https://api.github.com/repos/toeb/cmakepp/branches{/branch}&quot;,</a>
-&ldquo;tags_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/tags%22,">https://api.github.com/repos/toeb/cmakepp/tags&quot;,</a>
-&ldquo;blobs_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/git/blobs%7B/sha%7D%22,">https://api.github.com/repos/toeb/cmakepp/git/blobs{/sha}&quot;,</a>
-&ldquo;git_tags_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/git/tags%7B/sha%7D%22,">https://api.github.com/repos/toeb/cmakepp/git/tags{/sha}&quot;,</a>
-&ldquo;git_refs_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/git/refs%7B/sha%7D%22,">https://api.github.com/repos/toeb/cmakepp/git/refs{/sha}&quot;,</a>
-&ldquo;trees_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/git/trees%7B/sha%7D%22,">https://api.github.com/repos/toeb/cmakepp/git/trees{/sha}&quot;,</a>
-&ldquo;statuses_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/statuses/%7Bsha%7D%22,">https://api.github.com/repos/toeb/cmakepp/statuses/{sha}&quot;,</a>
-&ldquo;languages_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/languages%22,">https://api.github.com/repos/toeb/cmakepp/languages&quot;,</a>
-&ldquo;stargazers_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/stargazers%22,">https://api.github.com/repos/toeb/cmakepp/stargazers&quot;,</a>
-&ldquo;contributors_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/contributors%22,">https://api.github.com/repos/toeb/cmakepp/contributors&quot;,</a>
-&ldquo;subscribers_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/subscribers%22,">https://api.github.com/repos/toeb/cmakepp/subscribers&quot;,</a>
-&ldquo;subscription_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/subscription%22,">https://api.github.com/repos/toeb/cmakepp/subscription&quot;,</a>
-&ldquo;commits_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/commits%7B/sha%7D%22,">https://api.github.com/repos/toeb/cmakepp/commits{/sha}&quot;,</a>
-&ldquo;git_commits_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/git/commits%7B/sha%7D%22,">https://api.github.com/repos/toeb/cmakepp/git/commits{/sha}&quot;,</a>
-&ldquo;comments_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/comments%7B/number%7D%22,">https://api.github.com/repos/toeb/cmakepp/comments{/number}&quot;,</a>
-&ldquo;issue_comment_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/issues/comments/%7Bnumber%7D%22,">https://api.github.com/repos/toeb/cmakepp/issues/comments/{number}&quot;,</a>
-&ldquo;contents_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/contents/%7B+path%7D%22,">https://api.github.com/repos/toeb/cmakepp/contents/{+path}&quot;,</a>
-&ldquo;compare_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/compare/%7Bbase%7D...%7Bhead%7D%22,">https://api.github.com/repos/toeb/cmakepp/compare/{base}...{head}&quot;,</a>
-&ldquo;merges_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/merges%22,">https://api.github.com/repos/toeb/cmakepp/merges&quot;,</a>
-&ldquo;archive_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/%7Barchive_format%7D%7B/ref%7D%22,">https://api.github.com/repos/toeb/cmakepp/{archive_format}{/ref}&quot;,</a>
-&ldquo;downloads_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/downloads%22,">https://api.github.com/repos/toeb/cmakepp/downloads&quot;,</a>
-&ldquo;issues_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/issues%7B/number%7D%22,">https://api.github.com/repos/toeb/cmakepp/issues{/number}&quot;,</a>
-&ldquo;pulls_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/pulls%7B/number%7D%22,">https://api.github.com/repos/toeb/cmakepp/pulls{/number}&quot;,</a>
-&ldquo;milestones_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/milestones%7B/number%7D%22,">https://api.github.com/repos/toeb/cmakepp/milestones{/number}&quot;,</a>
-&ldquo;notifications_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/notifications%7B?since,all,participating%7D%22,">https://api.github.com/repos/toeb/cmakepp/notifications{?since,all,participating}&quot;,</a>
-&ldquo;labels_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/labels%7B/name%7D%22,">https://api.github.com/repos/toeb/cmakepp/labels{/name}&quot;,</a>
-&ldquo;releases_url&rdquo;:&ldquo;<a href="https://api.github.com/repos/toeb/cmakepp/releases%7B/id%7D%22,">https://api.github.com/repos/toeb/cmakepp/releases{/id}&quot;,</a>
-&ldquo;created_at&rdquo;:&ldquo;2014-02-16T19:26:18Z&rdquo;,
-&ldquo;updated_at&rdquo;:&ldquo;2015-02-04T15:15:40Z&rdquo;,
-&ldquo;pushed_at&rdquo;:&ldquo;2015-02-04T15:15:40Z&rdquo;,
-&ldquo;git_url&rdquo;:&ldquo;git://github.com/toeb/cmakepp.git&rdquo;,
-&ldquo;ssh_url&rdquo;:&ldquo;<a href="mailto:git@github.com">git@github.com</a>:toeb/cmakepp.git&rdquo;,
-&ldquo;clone_url&rdquo;:&ldquo;<a href="https://github.com/toeb/cmakepp.git%22,">https://github.com/toeb/cmakepp.git&quot;,</a>
-&ldquo;svn_url&rdquo;:&ldquo;<a href="https://github.com/toeb/cmakepp%22,">https://github.com/toeb/cmakepp&quot;,</a>
-&ldquo;homepage&rdquo;:null,
-&ldquo;size&rdquo;:2936,
-&ldquo;stargazers_count&rdquo;:49,
-&ldquo;watchers_count&rdquo;:49,
-&ldquo;language&rdquo;:&ldquo;Shell&rdquo;,
-&ldquo;has_issues&rdquo;:true,
-&ldquo;has_downloads&rdquo;:true,
-&ldquo;has_wiki&rdquo;:true,
-&ldquo;has_pages&rdquo;:false,
-&ldquo;forks_count&rdquo;:6,
-&ldquo;mirror_url&rdquo;:null,
-&ldquo;open_issues_count&rdquo;:11,
-&ldquo;forks&rdquo;:6,
-&ldquo;open_issues&rdquo;:11,
-&ldquo;watchers&rdquo;:49,
-&ldquo;default_branch&rdquo;:&ldquo;master&rdquo;,
-&ldquo;network_count&rdquo;:6,
-&ldquo;subscribers_count&rdquo;:8
-},
-&ldquo;package_source&rdquo;:{
-&ldquo;source_name&rdquo;:&ldquo;github&rdquo;,
-&ldquo;pull&rdquo;:&ldquo;package_source_pull_github&rdquo;,
-&ldquo;query&rdquo;:&ldquo;package_source_query_github&rdquo;,
-&ldquo;resolve&rdquo;:&ldquo;package_source_resolve_github&rdquo;
+ &quot;package_descriptor&quot;:{
+  &quot;id&quot;:&quot;cmakepp&quot;,
+  &quot;version&quot;:&quot;0.0.0&quot;,
+  &quot;description&quot;:&quot;a cmake enhancement suite&quot;,
+  &quot;license&quot;:&quot;MIT&quot;,
+  &quot;author&quot;:&quot;Tobias P. Becker&quot;
+ },
+ &quot;uri&quot;:&quot;github:toeb/cmakepp&quot;,
+ &quot;repo_descriptor&quot;:{
+  &quot;id&quot;:16892201,
+  &quot;name&quot;:&quot;cmakepp&quot;,
+  &quot;full_name&quot;:&quot;toeb/cmakepp&quot;,
+  &quot;owner&quot;:{
+   &quot;login&quot;:&quot;toeb&quot;,
+   &quot;id&quot;:1451956,
+   &quot;avatar_url&quot;:&quot;https://avatars.githubusercontent.com/u/1451956?v=3&quot;,
+   &quot;gravatar_id&quot;:null,
+   &quot;url&quot;:&quot;https://api.github.com/users/toeb&quot;,
+   &quot;html_url&quot;:&quot;https://github.com/toeb&quot;,
+   &quot;followers_url&quot;:&quot;https://api.github.com/users/toeb/followers&quot;,
+   &quot;following_url&quot;:&quot;https://api.github.com/users/toeb/following{/other_user}&quot;,
+   &quot;gists_url&quot;:&quot;https://api.github.com/users/toeb/gists{/gist_id}&quot;,
+   &quot;starred_url&quot;:&quot;https://api.github.com/users/toeb/starred{/owner}{/repo}&quot;,
+   &quot;subscriptions_url&quot;:&quot;https://api.github.com/users/toeb/subscriptions&quot;,
+   &quot;organizations_url&quot;:&quot;https://api.github.com/users/toeb/orgs&quot;,
+   &quot;repos_url&quot;:&quot;https://api.github.com/users/toeb/repos&quot;,
+   &quot;events_url&quot;:&quot;https://api.github.com/users/toeb/events{/privacy}&quot;,
+   &quot;received_events_url&quot;:&quot;https://api.github.com/users/toeb/received_events&quot;,
+   &quot;type&quot;:&quot;User&quot;,
+   &quot;site_admin&quot;:false
+  },
+  &quot;private&quot;:false,
+  &quot;html_url&quot;:&quot;https://github.com/toeb/cmakepp&quot;,
+  &quot;description&quot;:&quot;An Enhancement Suite for the CMake Build System&quot;,
+  &quot;fork&quot;:false,
+  &quot;url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp&quot;,
+  &quot;forks_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/forks&quot;,
+  &quot;keys_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/keys{/key_id}&quot;,
+  &quot;collaborators_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/collaborators{/collaborator}&quot;,
+  &quot;teams_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/teams&quot;,
+  &quot;hooks_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/hooks&quot;,
+  &quot;issue_events_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/issues/events{/number}&quot;,
+  &quot;events_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/events&quot;,
+  &quot;assignees_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/assignees{/user}&quot;,
+  &quot;branches_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/branches{/branch}&quot;,
+  &quot;tags_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/tags&quot;,
+  &quot;blobs_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/git/blobs{/sha}&quot;,
+  &quot;git_tags_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/git/tags{/sha}&quot;,
+  &quot;git_refs_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/git/refs{/sha}&quot;,
+  &quot;trees_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/git/trees{/sha}&quot;,
+  &quot;statuses_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/statuses/{sha}&quot;,
+  &quot;languages_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/languages&quot;,
+  &quot;stargazers_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/stargazers&quot;,
+  &quot;contributors_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/contributors&quot;,
+  &quot;subscribers_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/subscribers&quot;,
+  &quot;subscription_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/subscription&quot;,
+  &quot;commits_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/commits{/sha}&quot;,
+  &quot;git_commits_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/git/commits{/sha}&quot;,
+  &quot;comments_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/comments{/number}&quot;,
+  &quot;issue_comment_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/issues/comments/{number}&quot;,
+  &quot;contents_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/contents/{+path}&quot;,
+  &quot;compare_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/compare/{base}...{head}&quot;,
+  &quot;merges_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/merges&quot;,
+  &quot;archive_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/{archive_format}{/ref}&quot;,
+  &quot;downloads_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/downloads&quot;,
+  &quot;issues_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/issues{/number}&quot;,
+  &quot;pulls_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/pulls{/number}&quot;,
+  &quot;milestones_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/milestones{/number}&quot;,
+  &quot;notifications_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/notifications{?since,all,participating}&quot;,
+  &quot;labels_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/labels{/name}&quot;,
+  &quot;releases_url&quot;:&quot;https://api.github.com/repos/toeb/cmakepp/releases{/id}&quot;,
+  &quot;created_at&quot;:&quot;2014-02-16T19:26:18Z&quot;,
+  &quot;updated_at&quot;:&quot;2015-02-04T15:15:40Z&quot;,
+  &quot;pushed_at&quot;:&quot;2015-02-04T15:15:40Z&quot;,
+  &quot;git_url&quot;:&quot;git://github.com/toeb/cmakepp.git&quot;,
+  &quot;ssh_url&quot;:&quot;git@github.com:toeb/cmakepp.git&quot;,
+  &quot;clone_url&quot;:&quot;https://github.com/toeb/cmakepp.git&quot;,
+  &quot;svn_url&quot;:&quot;https://github.com/toeb/cmakepp&quot;,
+  &quot;homepage&quot;:null,
+  &quot;size&quot;:2936,
+  &quot;stargazers_count&quot;:49,
+  &quot;watchers_count&quot;:49,
+  &quot;language&quot;:&quot;Shell&quot;,
+  &quot;has_issues&quot;:true,
+  &quot;has_downloads&quot;:true,
+  &quot;has_wiki&quot;:true,
+  &quot;has_pages&quot;:false,
+  &quot;forks_count&quot;:6,
+  &quot;mirror_url&quot;:null,
+  &quot;open_issues_count&quot;:11,
+  &quot;forks&quot;:6,
+  &quot;open_issues&quot;:11,
+  &quot;watchers&quot;:49,
+  &quot;default_branch&quot;:&quot;master&quot;,
+  &quot;network_count&quot;:6,
+  &quot;subscribers_count&quot;:8
+ },
+ &quot;package_source&quot;:{
+  &quot;source_name&quot;:&quot;github&quot;,
+  &quot;pull&quot;:&quot;package_source_pull_github&quot;,
+  &quot;query&quot;:&quot;package_source_query_github&quot;,
+  &quot;resolve&quot;:&quot;package_source_resolve_github&quot;
+ }
 }
-}
-This concludes this simple blog post – It just scrapes at the edges of what you can do and if I have piqued your interest please visit the the project’s github package <a href="https://github.com/toeb/cmakepp">https://github.com/toeb/cmakepp</a> were I try to document everything vigorously and also try to explain my reasoning for the choices I make in the README file. Please let me know if you have any suggestions or bugs or feature requests or if you want to help 🙂 This software is free and under the MIT license.</p>
+</code></pre><p>This concludes this simple blog post – It just scrapes at the edges of what you can do and if I have piqued your interest please visit the the project’s github package <a href="https://github.com/toeb/cmakepp">https://github.com/toeb/cmakepp</a> were I try to document everything vigorously and also try to explain my reasoning for the choices I make in the README file. Please let me know if you have any suggestions or bugs or feature requests or if you want to help 🙂 This software is free and under the MIT license.</p>
 
 
                 
@@ -429,13 +424,13 @@ This concludes this simple blog post – It just scrapes at the edges of what yo
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/enabletypescriptcompilationforvs2013classlibrary/" data-toggle="tooltip" data-placement="top" title="How to enable Typescript Compilation for a VS2013 Class Library Project">&larr;
+                        <a href="/post/cmakeppparallelprocesses/" data-toggle="tooltip" data-placement="top" title="Parallel Processes in CMake">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/cppdynamicallycallanything/" data-toggle="tooltip" data-placement="top" title="dynamically calling “any” thing in C&#43;&#43;">Next
+                        <a href="/post/cmakeppreflectingandmanipulatingcmakelists/" data-toggle="tooltip" data-placement="top" title="cmakepp: reflecting and manipulating CMakeLists">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -472,6 +467,20 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         
                         
                         

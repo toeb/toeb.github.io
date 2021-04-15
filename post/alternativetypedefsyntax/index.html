@@ -34,9 +34,9 @@
     
 
     
-    <meta name="description" content="">
-    <meta property="og:description" content="" />
-    <meta property="twitter:description" content="" />
+    <meta name="description" content="An Alternative typedef Syntax using the C&#43;&#43; Preprocessor">
+    <meta property="og:description" content="An Alternative typedef Syntax using the C&#43;&#43; Preprocessor" />
+    <meta property="twitter:description" content="An Alternative typedef Syntax using the C&#43;&#43; Preprocessor" />
     
 
     
@@ -109,19 +109,11 @@
                     
                         
                         <li>
+                            <a href="/categories/c">c#</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/compiler">compiler</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/programming">programming</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/script">script</a>
                         </li>
                         
                     
@@ -182,6 +174,18 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/c&#43;&#43;" title="C&#43;&#43;">
+                            C&#43;&#43;
+                        </a>
+                        
+                        <a class="tag" href="/tags/preprocessor" title="Preprocessor">
+                            Preprocessor
+                        </a>
+                        
+                        <a class="tag" href="/tags/deprecated" title="deprecated">
+                            deprecated
+                        </a>
+                        
                     </div>
                     <h1>Alternative `typedef` Syntax</h1>
                     <h2 class="subheading"></h2>
@@ -191,7 +195,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Monday, October 13, 2014
                         
                         
                         
@@ -216,26 +220,27 @@
                 post-container">
 
                 
-                <p>An Alternative typedef Syntax using the C++ Preprocessor
-by thetoeb • 2014/10/13 • 3 Comments</p>
-<p>Disclaimer: This post will be more interesting to you if you work with the preprocessor.</p>
-<p>Here you can find a preprocessor only solution for changing the typedef syntax from typedef int number_type; to int typedef_as number_type; – an alternative typedef Syntax.</p>
-<p>If your wondering where this might be useful let me tell you why I needed it: I was working on a preprocessor macro which defines a property – a field, a getter and a setter. The easiest syntax I was able to achieve was the following: typedef int property(MyValue) which expanded into something similar to this:</p>
-<p>typedef int MyValuePropertyType;
+                <p><strong>Disclaimer: This post will be more interesting to you if you work with the preprocessor.</strong></p>
+<p>Here you can find a preprocessor only solution for changing the <code>typedef</code> syntax from <code>typedef int number_type</code>; to <code>int typedef_as number_type</code>; – an alternative <code>typedef</code> Syntax.</p>
+<p>If your wondering where this might be useful let me tell you why I needed it: I was working on a preprocessor macro which defines a property – a field, a getter and a setter. The easiest syntax I was able to achieve was the following: <code>typedef int property(MyValue)</code> which expanded into something similar to this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">int</span> MyValuePropertyType;
 MyValuePropertyType _MyValue;
-MyValuePropertyType getMyValue()const{return _MyValue;}
-void setMyValue(const MyValuePropertyType &amp; value){_MyValue = value;}
-The typedef at the beginning was not aesthetically pleasing and I wanted to get rid of it so that I would get the same functionality but with this syntax: int property(MyValue). (By the way – I do not like passing the name to the macro either, but there is no workaround for that) So I am terribly proud that I can now present to you the solution for my typedef_as macro. /s (seriously: someone might find it useful for similar situations while working with the preprocessor):</p>
-<p>// helper for getting preceeding type
-#define TYPEDEF_AS_HELPER_NAME(NAME) _<em>hiddenHelper</em>##NAME</p>
-<p>// inner macro for preceeding type typedef
-#define TYPEDEF_AS_(NAME)<br>
-static inline TYPEDEF_AS_HELPER_NAME(NAME)(){throw &ldquo;never call me&rdquo;;};<br>
-typedef decltype(TYPEDEF_AS_HELPER_NAME(NAME)())</p>
-<p>// typedef_as
-// changes the original typdef syntax from: <code>typedef &lt;type&gt; &lt;type alias&gt;</code> to <code>&lt;type&gt; typedef_as &lt;type_alias&gt;</code>
-#define typedef_as TYPEDEF_AS_(__##__LINE__)
-What this code does basically is to declare a static method method which returns the specified type. Then it takes this method’s decltype to start a typedef statement which you only need to complete with the name of the type alias. It uses the __LINE__ macro to create a unqiue name for the static helper method.</p>
+MyValuePropertyType <span style="color:#a6e22e">getMyValue</span>()<span style="color:#66d9ef">const</span>{<span style="color:#66d9ef">return</span> _MyValue;}
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setMyValue</span>(<span style="color:#66d9ef">const</span> MyValuePropertyType <span style="color:#f92672">&amp;</span> value){_MyValue <span style="color:#f92672">=</span> value;}
+</code></pre></div><p>The <code>typedef</code> at the beginning was not aesthetically pleasing and I wanted to get rid of it so that I would get the same functionality but with this syntax: <code>int property(MyValue)</code>. (By the way – I do not like passing the name to the macro either, but there is no workaround for that) So I am terribly proud that I can now present to you the solution for my <code>typedef_as</code> macro. /s (seriously: someone might find it useful for similar situations while working with the preprocessor):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">// helper for getting preceeding type
+</span><span style="color:#75715e"></span><span style="color:#75715e">#define TYPEDEF_AS_HELPER_NAME(NAME) __hiddenHelper_##NAME
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// inner macro for preceeding type typedef
+</span><span style="color:#75715e"></span><span style="color:#75715e">#define TYPEDEF_AS_(NAME)\
+</span><span style="color:#75715e">  static inline TYPEDEF_AS_HELPER_NAME(NAME)(){throw &#34;never call me&#34;;};\
+</span><span style="color:#75715e">  typedef decltype(TYPEDEF_AS_HELPER_NAME(NAME)()) 
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// typedef_as
+</span><span style="color:#75715e">// changes the original typdef syntax from: `typedef &lt;type&gt; &lt;type alias&gt;` to `&lt;type&gt; typedef_as &lt;type_alias&gt;`
+</span><span style="color:#75715e"></span><span style="color:#75715e">#define typedef_as TYPEDEF_AS_(__##__LINE__)
+</span><span style="color:#75715e"></span>
+</code></pre></div><p>What this code does basically is to declare a static method method which returns the specified type. Then it takes this method’s decltype to start a typedef statement which you only need to complete with the name of the type alias. It uses the <strong>LINE</strong> macro to create a unqiue name for the static helper method.</p>
 <p>Caveats:</p>
 <p>you should not use it in multiple header files outside of a class as naming conflicts can occur if you have two headerfiles and define the typedef at the same line and the namespace is the same.
 Feel free to use it (no dependencies, public domain) wherever you want. I’m always happy for feedback and upvotes :)</p>
@@ -247,13 +252,13 @@ Feel free to use it (no dependencies, public domain) wherever you want. I’m al
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/cppdynamicobject/" data-toggle="tooltip" data-placement="top" title="An Implementation of the Dynamic Object in C&#43;&#43;">&larr;
+                        <a href="/post/cmakeppobjectsandmaps/" data-toggle="tooltip" data-placement="top" title="Objects and Maps in CMake">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/csharpparsingwebassetfiles/" data-toggle="tooltip" data-placement="top" title="A Quick Way of Parsing versioned Web Asset Files">Next
+                        <a href="/post/cmakeppfilesystem/" data-toggle="tooltip" data-placement="top" title="CMake and the Filesystem">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -290,6 +295,20 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         
                         
                         

@@ -109,19 +109,11 @@
                     
                         
                         <li>
+                            <a href="/categories/c">c#</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/compiler">compiler</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/programming">programming</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/script">script</a>
                         </li>
                         
                     
@@ -191,7 +183,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Sunday, February 16, 2014
                         
                         
                         
@@ -216,78 +208,89 @@
                 post-container">
 
                 
-                <p>Objects and Maps in CMake
-by thetoeb • 2014/02/16 • 7 Comments</p>
-<p>Get it at <a href="https://github.com/toeb/oo-cmake">https://github.com/toeb/oo-cmake</a> and tell me if you like it</p>
+                <p>Get it at <a href="https://github.com/toeb/oo-cmake">https://github.com/toeb/oo-cmake</a> and tell me if you like it</p>
 <p>For more complex build system features oo programming would be a major boon. So I took it upon myself to create a usable and tested oo-extension for cmake (in pure CMake) so I could continue developing and extending my plattform independent tooling support (cutil) .</p>
 <p>It’s too bad that Kitware decided to use their own language (with very little high level language features) for their build system product because CMakes project generation capabilties are unparalleled .  I can understand that it seemed like a good idea at first ( the CMake scripting Language is platform independent and easier to use than make or bash or cmd also it was not intended to do complicated things). I however strongly believe that building a programm should be as easy as possible and therefore a high level language should have been used. CMake’s creators Bill Hoffman and Kenneth Martin have said that they would have done this differently if they had to do it again (<a href="http://www.aosabook.org/en/cmake.html">http://www.aosabook.org/en/cmake.html</a>)</p>
 <p>Of course CMake does not offer language features for a very sleak usage but the with these functions you can use prototypical inheritance, maps, methods, objects, lists, properties, references, etc. which are at the basis of every oo language.</p>
 <p>Even if you do not want to do inheritance in CMake you can use these functions for Maps (Dictionaries)</p>
 <p>People familiar with JavaScript will be familiar with this approach to object orientation.</p>
 <p>Here is a simple example</p>
-<p>cmake_minimum_required(VERSION 2.8)</p>
-<h1 id="include-standalone-version-of-oo-cmake">include standalone version of oo-cmake</h1>
-<h1 id="when-not-using-cutil-this--includes-the-function-files-as-well-as">when not using cutil this  includes the function files as well as</h1>
-<h1 id="the-dependent-functions">the dependent functions</h1>
-<p>include(&quot;../oo-cmake.cmake&quot;)</p>
-<p>message(&ldquo;creating a simple inheritance example&rdquo;)</p>
-<p>#create animal object
-obj_create(animal)</p>
-<h1 id="set-object-method-eat">set object method eat</h1>
-<h1 id="this-method-prints-out-which-food-the-animal-is-eating">this method prints out which food the animal is eating</h1>
-<h1 id="existing-functions-can-also-be-appliead-via-obj_bindcallref-func-arg1-arg2-arg3">existing functions can also be appliead via obj_bindcall(${ref} func arg1 arg2 arg3)</h1>
-<p>obj_set(
-${animal}   #reference to animal object
-&ldquo;eat&rdquo;       #name of property
-RAW         # RAW indictates that the data is to be treated as a raw string not a list (hinders evaluation)
-&ldquo;function(eat this)
-obj_get(${this} food food)
-message(&ldquo;I am eating ${food}&quot;)
-endfunction()&rdquo;
-)</p>
-<h1 id="create-mamal-object">create mamal object</h1>
-<p>obj_create(mamal)
-obj_setprototype(${mamal} ${animal})</p>
-<p>#create bird object
-obj_create(bird)                    #create instance
-obj_setprototype(${bird} ${animal}) #set prototype animal
-obj_set(${bird} food Birdfood)      #set bird&rsquo;s food property to &ldquo;Birdfood&rdquo;</p>
-<p>#create dog object
-obj_create(dog)                     #create instance
-obj_setprototype(${dog} ${mamal})   #set prototype mamal
-obj_set(${dog} food Dogfood)        #set dogs food property to &ldquo;Dogfood&rdquo;</p>
-<p>#create cat object
-obj_create(cat)                     #create instance
-obj_setprototype(${cat} ${mamal})   #set prototype mamal
-obj_set(${cat} food Catfood)        #set cat&rsquo;s food property to &ldquo;Catfood&rdquo;</p>
-<h1 id="call-eat-function-for-different-objects">call eat function for different objects</h1>
-<p>obj_callmember(${bird} eat)
-obj_callmember(${dog} eat)
-obj_callmember(${cat} eat)</p>
-<p>#output should be
-#I am eating Birdfood
-#I am eating Dogfood
-#I am eating Catfood
-You can use the following commands</p>
-<p>obj_create(out_ref [objectpath]) #returns a ref to a new object. this object is persistent and will exist until obj_delete is called, internally the object is represented by a folder
-obj_delete(in_ref) # deletes a object (deletes the folder internally)
-obj_find(refOrId) # searches for a named object or id
-obj_get(ref value key) # gets a property ${value} = ref[key] the prototype chain is considered
-obj_set(ref key value) # sets a property ref[key] = value
-obj_getref(ref prop_ref key) # returns the reference to a property (a file)
-obj_getownproperty(ref value key) # returns the value for property if the property belongs to ref
-obj_setownproperty(ref key value) # sets the own property ref[key] =value
-obj_has(ref result key) # sets result to true if ref[key] exists
-obj_hasownproperty(ref result key) # sets result to true if ref[key] exists and is owned by ref
-obj_callmember(ref methodname args&hellip;) # calls a stored memberfunction (first argument passed is ref)
-obj_bindcall(ref methodname args&hellip;) # calls a defined function setting first argument to ref
-obj_setprototype(ref proto_ref) # sets the prototype for ref
-obj_getprototype(ref proto_ref) # returns the prototyp for ref
-obj_settype(ref type) # sets the type for ref
-obj_gettype(ref type) # gets the type for ref
-obj_getkeys(ref keys) # returns all defined properties for ref
-obj_getownkeys(ref keys) # returns all defined properties that ref owns</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">2.8</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># include standalone version of oo-cmake
+</span><span style="color:#75715e"># when not using cutil this  includes the function files as well as
+</span><span style="color:#75715e"># the dependent functions
+</span><span style="color:#75715e"></span>include(<span style="color:#e6db74">&#34;../oo-cmake.cmake&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;creating a simple inheritance example&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#create animal object
+</span><span style="color:#75715e"></span>obj_create(<span style="color:#e6db74">animal</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># set object method eat
+</span><span style="color:#75715e"># this method prints out which food the animal is eating
+</span><span style="color:#75715e"># existing functions can also be appliead via obj_bindcall(${ref} func arg1 arg2 arg3)
+</span><span style="color:#75715e"></span>obj_set(
+    <span style="color:#f92672">${</span>animal<span style="color:#f92672">}</span>   <span style="color:#75715e">#reference to animal object
+</span><span style="color:#75715e"></span>    <span style="color:#e6db74">&#34;eat&#34;</span>       <span style="color:#75715e">#name of property
+</span><span style="color:#75715e"></span>    <span style="color:#e6db74">RAW</span>         <span style="color:#75715e"># RAW indictates that the data is to be treated as a raw string not a list (hinders evaluation)
+</span><span style="color:#75715e"></span>    <span style="color:#e6db74">&#34;function(eat this)
+</span><span style="color:#e6db74">      obj_get(${this} food food) 
+</span><span style="color:#e6db74">      message(&#34;</span><span style="color:#e6db74">I</span> <span style="color:#e6db74">am</span> <span style="color:#e6db74">eating</span> <span style="color:#f92672">${</span>food<span style="color:#f92672">}</span><span style="color:#e6db74">&#34;) 
+</span><span style="color:#e6db74">     endfunction()&#34;</span>
+)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># create mamal object
+</span><span style="color:#75715e"></span>obj_create(<span style="color:#e6db74">mamal</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_setprototype(<span style="color:#f92672">${</span>mamal<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>animal<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#create bird object
+</span><span style="color:#75715e"></span>obj_create(<span style="color:#e6db74">bird</span>)                    <span style="color:#75715e">#create instance
+</span><span style="color:#75715e"></span>obj_setprototype(<span style="color:#f92672">${</span>bird<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>animal<span style="color:#f92672">}</span>) <span style="color:#75715e">#set prototype animal
+</span><span style="color:#75715e"></span>obj_set(<span style="color:#f92672">${</span>bird<span style="color:#f92672">}</span> <span style="color:#e6db74">food</span> <span style="color:#e6db74">Birdfood</span>)      <span style="color:#75715e">#set bird&#39;s food property to &#34;Birdfood&#34;
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#create dog object
+</span><span style="color:#75715e"></span>obj_create(<span style="color:#e6db74">dog</span>)                     <span style="color:#75715e">#create instance
+</span><span style="color:#75715e"></span>obj_setprototype(<span style="color:#f92672">${</span>dog<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>mamal<span style="color:#f92672">}</span>)   <span style="color:#75715e">#set prototype mamal
+</span><span style="color:#75715e"></span>obj_set(<span style="color:#f92672">${</span>dog<span style="color:#f92672">}</span> <span style="color:#e6db74">food</span> <span style="color:#e6db74">Dogfood</span>)        <span style="color:#75715e">#set dogs food property to &#34;Dogfood&#34;
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#create cat object
+</span><span style="color:#75715e"></span>obj_create(<span style="color:#e6db74">cat</span>)                     <span style="color:#75715e">#create instance
+</span><span style="color:#75715e"></span>obj_setprototype(<span style="color:#f92672">${</span>cat<span style="color:#f92672">}</span> <span style="color:#f92672">${</span>mamal<span style="color:#f92672">}</span>)   <span style="color:#75715e">#set prototype mamal
+</span><span style="color:#75715e"></span>obj_set(<span style="color:#f92672">${</span>cat<span style="color:#f92672">}</span> <span style="color:#e6db74">food</span> <span style="color:#e6db74">Catfood</span>)        <span style="color:#75715e">#set cat&#39;s food property to &#34;Catfood&#34;
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># call eat function for different objects
+</span><span style="color:#75715e"></span>obj_callmember(<span style="color:#f92672">${</span>bird<span style="color:#f92672">}</span> <span style="color:#e6db74">eat</span>) <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_callmember(<span style="color:#f92672">${</span>dog<span style="color:#f92672">}</span> <span style="color:#e6db74">eat</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_callmember(<span style="color:#f92672">${</span>cat<span style="color:#f92672">}</span> <span style="color:#e6db74">eat</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#output should be
+</span><span style="color:#75715e">#I am eating Birdfood
+</span><span style="color:#75715e">#I am eating Dogfood
+</span><span style="color:#75715e">#I am eating Catfood
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">You</span> <span style="color:#960050;background-color:#1e0010">can</span> <span style="color:#960050;background-color:#1e0010">use</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">following</span> <span style="color:#960050;background-color:#1e0010">commands
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span> <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_create(<span style="color:#e6db74">out_ref</span> <span style="color:#e6db74">[objectpath]</span>) <span style="color:#75715e">#returns a ref to a new object. this object is persistent and will exist until obj_delete is called, internally the object is represented by a folder
+</span><span style="color:#75715e"></span>obj_delete(<span style="color:#e6db74">in_ref</span>) <span style="color:#75715e"># deletes a object (deletes the folder internally)
+</span><span style="color:#75715e"></span>obj_find(<span style="color:#e6db74">refOrId</span>) <span style="color:#75715e"># searches for a named object or id
+</span><span style="color:#75715e"></span>obj_get(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">value</span> <span style="color:#e6db74">key</span>) <span style="color:#75715e"># gets a property ${value} = ref[key] the prototype chain is considered
+</span><span style="color:#75715e"></span>obj_set(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">key</span> <span style="color:#e6db74">value</span>) <span style="color:#75715e"># sets a property ref[key] = value
+</span><span style="color:#75715e"></span>obj_getref(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">prop_ref</span> <span style="color:#e6db74">key</span>) <span style="color:#75715e"># returns the reference to a property (a file)
+</span><span style="color:#75715e"></span>obj_getownproperty(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">value</span> <span style="color:#e6db74">key</span>) <span style="color:#75715e"># returns the value for property if the property belongs to ref 
+</span><span style="color:#75715e"></span>obj_setownproperty(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">key</span> <span style="color:#e6db74">value</span>) <span style="color:#75715e"># sets the own property ref[key] =value
+</span><span style="color:#75715e"></span>obj_has(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">result</span> <span style="color:#e6db74">key</span>) <span style="color:#75715e"># sets result to true if ref[key] exists
+</span><span style="color:#75715e"></span>obj_hasownproperty(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">result</span> <span style="color:#e6db74">key</span>) <span style="color:#75715e"># sets result to true if ref[key] exists and is owned by ref
+</span><span style="color:#75715e"></span>obj_callmember(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">methodname</span> <span style="color:#e6db74">args...</span>) <span style="color:#75715e"># calls a stored memberfunction (first argument passed is ref)
+</span><span style="color:#75715e"></span>obj_bindcall(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">methodname</span> <span style="color:#e6db74">args...</span>) <span style="color:#75715e"># calls a defined function setting first argument to ref
+</span><span style="color:#75715e"></span>obj_setprototype(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">proto_ref</span>) <span style="color:#75715e"># sets the prototype for ref
+</span><span style="color:#75715e"></span>obj_getprototype(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">proto_ref</span>) <span style="color:#75715e"># returns the prototyp for ref
+</span><span style="color:#75715e"></span>obj_settype(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">type</span>) <span style="color:#75715e"># sets the type for ref
+</span><span style="color:#75715e"></span>obj_gettype(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">type</span>) <span style="color:#75715e"># gets the type for ref
+</span><span style="color:#75715e"></span>obj_getkeys(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">keys</span>) <span style="color:#75715e"># returns all defined properties for ref
+</span><span style="color:#75715e"></span>obj_getownkeys(<span style="color:#e6db74">ref</span> <span style="color:#e6db74">keys</span>) <span style="color:#75715e"># returns all defined properties that ref owns
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div>
 
                 
 
@@ -295,13 +298,13 @@ obj_getownkeys(ref keys) # returns all defined properties that ref owns</p>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/cmakeppparallelprocesses/" data-toggle="tooltip" data-placement="top" title="Parallel Processes in CMake">&larr;
+                        <a href="/post/csharpfluentexceptionhandling/" data-toggle="tooltip" data-placement="top" title="A Fluent Way of Exception Handling">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/objectorientedcmakenextiteration/" data-toggle="tooltip" data-placement="top" title="Object Oriented CMake: Next Iteration">Next
+                        <a href="/post/alternativetypedefsyntax/" data-toggle="tooltip" data-placement="top" title="Alternative `typedef` Syntax">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -338,6 +341,20 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         
                         
                         

@@ -14,13 +14,10 @@
     <loc>https://toeb.github.io/post/cmakeppexpressionsyntax/</loc>
     <lastmod>2018-06-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://toeb.github.io/categories/compiler/</loc>
+    <loc>https://toeb.github.io/tags/expression/</loc>
     <lastmod>2018-06-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://toeb.github.io/post/</loc>
-    <lastmod>2018-06-04T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://toeb.github.io/categories/script/</loc>
     <lastmod>2018-06-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://toeb.github.io/tags/</loc>
@@ -32,16 +29,10 @@
     <loc>https://toeb.github.io/post/csharpparsingwebassetfiles/</loc>
     <lastmod>2016-08-30T23:24:46+02:00</lastmod>
   </url><url>
-    <loc>https://toeb.github.io/post/alternativetypedefsyntax/</loc>
-    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
-  </url><url>
     <loc>https://toeb.github.io/post/cppdynamicobject/</loc>
     <lastmod>2016-08-30T23:24:46+02:00</lastmod>
   </url><url>
     <loc>https://toeb.github.io/post/cmakereadingandwritingjson/</loc>
-    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
-  </url><url>
-    <loc>https://toeb.github.io/post/cmakeppreflectingandmanipulatingcmakelists/</loc>
     <lastmod>2016-08-30T23:24:46+02:00</lastmod>
   </url><url>
     <loc>https://toeb.github.io/post/cmakepptemplategeneration/</loc>
@@ -51,9 +42,6 @@
     <lastmod>2016-08-30T23:24:46+02:00</lastmod>
   </url><url>
     <loc>https://toeb.github.io/post/cppdynamicallycallanything/</loc>
-    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
-  </url><url>
-    <loc>https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/</loc>
     <lastmod>2016-08-30T23:24:46+02:00</lastmod>
   </url><url>
     <loc>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</loc>
@@ -74,25 +62,52 @@
     <loc>https://toeb.github.io/post/objectorientedcmakenextiteration/</loc>
     <lastmod>2016-08-30T23:24:46+02:00</lastmod>
   </url><url>
-    <loc>https://toeb.github.io/post/cmakeppobjectsandmaps/</loc>
-    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
-  </url><url>
-    <loc>https://toeb.github.io/post/cmakeppparallelprocesses/</loc>
-    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
-  </url><url>
     <loc>https://toeb.github.io/post/cpprenameablenamespaces/</loc>
     <lastmod>2016-08-30T23:24:46+02:00</lastmod>
   </url><url>
     <loc>https://toeb.github.io/post/usefulextensionsforcmake/</loc>
     <lastmod>2016-08-30T23:24:46+02:00</lastmod>
   </url><url>
+    <loc>https://toeb.github.io/post/cmakeppreflectingandmanipulatingcmakelists/</loc>
+    <lastmod>2015-03-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/</loc>
+    <lastmod>2015-02-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cmakeppparallelprocesses/</loc>
+    <lastmod>2014-12-16T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://toeb.github.io/post/cmakeppfilesystem/</loc>
     <lastmod>2014-11-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://toeb.github.io/categories/programming/</loc>
+    <loc>https://toeb.github.io/tags/filesystem/</loc>
     <lastmod>2014-11-27T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://toeb.github.io/post/alternativetypedefsyntax/</loc>
+    <lastmod>2014-10-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/tags/c&#43;&#43;/</loc>
+    <lastmod>2014-10-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/tags/deprecated/</loc>
+    <lastmod>2014-10-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/tags/preprocessor/</loc>
+    <lastmod>2014-10-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cmakeppobjectsandmaps/</loc>
+    <lastmod>2014-02-16T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://toeb.github.io/post/csharpfluentexceptionhandling/</loc>
+    <lastmod>2013-12-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/tags/c#/</loc>
+    <lastmod>2013-12-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/categories/c#/</loc>
+    <lastmod>2013-12-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/tags/exceptions/</loc>
     <lastmod>2013-12-09T00:00:00+00:00</lastmod>
   </url>
 </urlset>

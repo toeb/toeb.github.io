@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C&#43;&#43; on toeb&#39;s Blog</title>
+    <link>https://toeb.github.io/tags/c&#43;&#43;/</link>
+    <description>Recent content in C&#43;&#43; on toeb&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 13 Oct 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://toeb.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Alternative `typedef` Syntax</title>
+      <link>https://toeb.github.io/post/alternativetypedefsyntax/</link>
+      <pubDate>Mon, 13 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/alternativetypedefsyntax/</guid>
+      <description>Disclaimer: This post will be more interesting to you if you work with the preprocessor.
+Here you can find a preprocessor only solution for changing the typedef syntax from typedef int number_type; to int typedef_as number_type; – an alternative typedef Syntax.
+If your wondering where this might be useful let me tell you why I needed it: I was working on a preprocessor macro which defines a property – a field, a getter and a setter.</description>
+    </item>
+    
+  </channel>
+</rss>
