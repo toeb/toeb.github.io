@@ -16,5 +16,15 @@
       <description>While doing some filesystem work I encountered alot of AccessViolationExceptions because a file is being opened to write multiple times. Even after closing the file explicitly a short timeframe exists in which the file could not be opened again. The simplest approach for me was to retry openening the file until it worked. To allow a more easy and more general way to handle exceptions I developed a small extensible try-repeat-framework which allows me to configure waiting and repeating strategies and also to only react to specific exceptions.</description>
     </item>
     
+    <item>
+      <title>Parsing Web Asset Files</title>
+      <link>https://toeb.github.io/post/csharpparsingwebassetfiles/</link>
+      <pubDate>Wed, 04 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/csharpparsingwebassetfiles/</guid>
+      <description>To parse versioned web asset filenames ala jquery-1.4.min.js I wrote a simple class
+/// &amp;lt;summary&amp;gt; /// simple class for describing a file library like /// jquery-1.4.min.js /// bootstrap.min.css /// libname-1.0.0.0.tag1.tag2.tag3.extension /// ... etc /// contains methods for parsing these kind of filenames /// &amp;lt;/summary&amp;gt; public class FileLib { /// &amp;lt;summary&amp;gt;  /// regular expression for parsing the filename  /// &amp;lt;/summary&amp;gt;  public static readonly string libRegex = @&amp;#34;((?&amp;lt;libname&amp;gt;[^.-]*)-?)((?&amp;lt;major&amp;gt;d+))?(.(?&amp;lt;minor&amp;gt;d+)(.(?&amp;lt;revision&amp;gt;d+)(.(?&amp;lt;build&amp;gt;d+))?)?)?(.(?&amp;lt;tags&amp;gt;.+))*&amp;#34;; /// &amp;lt;summary&amp;gt;  /// parses a path as a lib  /// &amp;lt;/summary&amp;gt;  /// &amp;lt;param name=&amp;#34;path&amp;#34;&amp;gt;&amp;lt;/param&amp;gt;  /// &amp;lt;returns&amp;gt;&amp;lt;/returns&amp;gt;  public static FileLib ParsePath(string path) { var filename = Path.</description>
+    </item>
+    
   </channel>
 </rss>

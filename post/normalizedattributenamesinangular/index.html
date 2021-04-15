@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -174,6 +186,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/angular" title="angular">
+                            angular
+                        </a>
+                        
+                        <a class="tag" href="/tags/js" title="js">
+                            js
+                        </a>
+                        
                     </div>
                     <h1>Normalized Attribute Names in Angular</h1>
                     <h2 class="subheading"></h2>
@@ -183,7 +203,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Tuesday, January 14, 2014
                         
                         
                         
@@ -208,36 +228,35 @@
                 post-container">
 
                 
-                <p>FRONTEND
-Normalized Attribute Names in Angular
-by thetoeb • 2014/01/14 • 1 Comment</p>
-<p>I have been doing some hard directive/ html markup work and I came across a problem where I needed the normalized html tag attribute names.   (I was trying to create a html element but needed access to the normalized names without turning it into a directive)</p>
+                <p>I have been doing some hard directive/ html markup work and I came across a problem where I needed the normalized html tag attribute names.   (I was trying to create a html element but needed access to the normalized names without turning it into a directive)</p>
 <p>Angular.js normalizes names like “test-name” and “data-test-name” to “testName”.  So I went ahead and extracted and wrapped the functions needed into the following function:</p>
-<p>/** normalizes attribute names ,  stolen from angular.js */
-function normalizeAttributeName(attributeName) {
-// copied from angular.js v1.2.2
-// (c) 2010-2012 Google, Inc. <a href="http://angularjs.org">http://angularjs.org</a>
-// License: MIT
-// modified by me :D
-var SPECIAL_CHARS_REGEXP = /([:-_]+(.))/g;
-var MOZ_HACK_REGEXP = /^moz([A-Z])/;</p>
-<pre><code> function camelCase(name) {
-   return name.
-     replace(SPECIAL_CHARS_REGEXP, function (_, separator, letter, offset) {
-       return offset ? letter.toUpperCase() : letter;
-     }).
-     replace(MOZ_HACK_REGEXP, 'Moz$1');
- }
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">
+<span style="color:#75715e">/** normalizes attribute names ,  stolen from angular.js */</span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">normalizeAttributeName</span>(<span style="color:#a6e22e">attributeName</span>) {
+  <span style="color:#75715e">// copied from angular.js v1.2.2
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (c) 2010-2012 Google, Inc. http://angularjs.org
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// License: MIT
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// modified by me :D
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">SPECIAL_CHARS_REGEXP</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/([:-_]+(.))/g</span>;
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">MOZ_HACK_REGEXP</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/^moz([A-Z])/</span>;
 
- var PREFIX_REGEXP = /^(x[:-_]|data[:-_])/i;
+  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">camelCase</span>(<span style="color:#a6e22e">name</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">name</span>.
+      <span style="color:#a6e22e">replace</span>(<span style="color:#a6e22e">SPECIAL_CHARS_REGEXP</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">separator</span>, <span style="color:#a6e22e">letter</span>, <span style="color:#a6e22e">offset</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">offset</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">letter</span>.<span style="color:#a6e22e">toUpperCase</span>() <span style="color:#f92672">:</span> <span style="color:#a6e22e">letter</span>;
+      }).
+      <span style="color:#a6e22e">replace</span>(<span style="color:#a6e22e">MOZ_HACK_REGEXP</span>, <span style="color:#e6db74">&#39;Moz$1&#39;</span>);
+  }
 
- function directiveNormalize(name) {
-   return camelCase(name.replace(PREFIX_REGEXP, ''));
- }
- return directiveNormalize(attributeName);
-</code></pre>
-<p>}
-I did not find out how this could be done by just calling an angular api so  if you know how, please let me know :D</p>
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">PREFIX_REGEXP</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">/^(x[:-_]|data[:-_])/i</span>;
+
+  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">directiveNormalize</span>(<span style="color:#a6e22e">name</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">camelCase</span>(<span style="color:#a6e22e">name</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#a6e22e">PREFIX_REGEXP</span>, <span style="color:#e6db74">&#39;&#39;</span>));
+  }
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">directiveNormalize</span>(<span style="color:#a6e22e">attributeName</span>);
+}
+
+</code></pre></div><p>I did not find out how this could be done by just calling an angular api so  if you know how, please let me know :D</p>
 
 
                 
@@ -246,13 +265,13 @@ I did not find out how this could be done by just calling an angular api so  if 
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/objectorientedcmakenextiteration/" data-toggle="tooltip" data-placement="top" title="Object Oriented CMake: Next Iteration">&larr;
+                        <a href="/post/enablingmvc5intellisensinclasslibraryproject/" data-toggle="tooltip" data-placement="top" title="Enabling MVC5 intellisense in a ClassLibrary Project">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/moderncmakeslides/" data-toggle="tooltip" data-placement="top" title="Modern CMake Slides">Next
+                        <a href="/post/cmakeppobjectsandmaps/" data-toggle="tooltip" data-placement="top" title="Objects and Maps in CMake">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -289,6 +308,34 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                            c&#43;&#43;
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        
+                        
+                        
                         
                         
                         

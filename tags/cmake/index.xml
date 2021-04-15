@@ -17,12 +17,65 @@
     </item>
     
     <item>
+      <title>Modern CMake Slides</title>
+      <link>https://toeb.github.io/post/moderncmakeslides/</link>
+      <pubDate>Tue, 30 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/moderncmakeslides/</guid>
+      <description>I’ve held a Presentation about “modern CMake” at the C++ Meetup in Wiesbaden a week ago and wanted to share the slides with the Internet. I try to highlight the parts of a CMake project which I consider as modern (I guess there is room for interpretation here)
+I give a small introduction to CMake command line, script mode and then mostly about targets, scoping etc. Of course you cannot hear my voice but maybe the slides themselves can give you some insight.</description>
+    </item>
+    
+    <item>
+      <title>cmakepp: Template Generation in CMake</title>
+      <link>https://toeb.github.io/post/cmakepptemplategeneration/</link>
+      <pubDate>Wed, 11 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cmakepptemplategeneration/</guid>
+      <description>Find it at http://github.com/toeb/cmakepp
+Download cmakepp standalone file here
+As with all my work I appreciate all feedback given and am particularly happy about virtual internet points 🙂
+To the Post: While working on the documentation of cmakepp I grew wary of always doubling the documentation – one in the source code and a mirror in the README.md. Also I was frustrated when I refactored and renamed functions or changed signatures which is not uncommon – especially when working on a new feature.</description>
+    </item>
+    
+    <item>
       <title>CMake and the Filesystem</title>
       <link>https://toeb.github.io/post/cmakeppfilesystem/</link>
       <pubDate>Thu, 27 Nov 2014 00:00:00 +0000</pubDate>
       
       <guid>https://toeb.github.io/post/cmakeppfilesystem/</guid>
       <description>Filesystem I have always been a bit confused when working with cmake’s file functions and the logic behind paths (sometimes they are found sometimes they are not…) For ease of use I reimplemented a own path managing system which behaves very similar to powershell and bash (see ss64.com) it is based around a global path stack and path qualification. All of my functions which work with paths use this system.</description>
+    </item>
+    
+    <item>
+      <title>Useful extensions for CMake</title>
+      <link>https://toeb.github.io/post/usefulextensionsforcmake/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/usefulextensionsforcmake/</guid>
+      <description>When using cmake for more than just simple projects it is lacking in various aspects. Some list and string functions are missing. Interaction with command line applications and the file system are harder than they need to be. Especially however using structured data (maps and objects) and more complex funtional programming is not easy at all. So a couple of months ago I started implementing some extensions for object oriented programming 1 2.</description>
+    </item>
+    
+    <item>
+      <title>cmakepp: Reading and Writing JSON</title>
+      <link>https://toeb.github.io/post/cmakereadingandwritingjson/</link>
+      <pubDate>Wed, 05 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cmakereadingandwritingjson/</guid>
+      <description>While working on a package manager for CMake I came across the problem of finding a suitable format for my package descriptor files. First I thought about and tried using plain old CMake file that simply sets variables and can be included to access its contents. It was very quick and easy to implement. Hierarchical data structures however where hard to implement and a none standard format makes it harder to exchange data with a webservice/other programs.</description>
+    </item>
+    
+    <item>
+      <title>Object Oriented CMake: Next Iteration</title>
+      <link>https://toeb.github.io/post/objectorientedcmakenextiteration/</link>
+      <pubDate>Tue, 25 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/objectorientedcmakenextiteration/</guid>
+      <description>I worked on my object oriented extensions for CMake and am on a much higher level of usability than before!
+try it at https://github.com/toeb/oo-cmake
+and as always: Feedback is most welcome
+See the following object tutorial for ease of use: (for the current version look at the readme.md on github)
+### using objects ### ============= # oo-cmake is very similar to javascript # I actually used the javascript reference to figure out how things could be done :) # oo-cmake is a pure object oriented language like javascript (only objects no types per se) # oo-cmake is currently file based and relies heavily on dynamic functions to be upfron about it: # oo-cmake is very slow (depending on what your doing) ## creating a object ## ================= obj_new(myobject)# ${myobject} now is a reference to an object obj_exists(${myobject} _exists)assert(_exists)## deleting a object ## ================= # oo-cmake does not contains automatic memory management # you can however remove all objects by calling obj_cleanup # (a very crude way of garbage collection) I would suggest calling it at the end of cmake.</description>
     </item>
     
   </channel>

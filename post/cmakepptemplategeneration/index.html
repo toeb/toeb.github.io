@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -174,6 +186,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        <a class="tag" href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
                     </div>
                     <h1>cmakepp: Template Generation in CMake</h1>
                     <h2 class="subheading"></h2>
@@ -183,7 +203,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Wednesday, February 11, 2015
                         
                         
                         
@@ -208,9 +228,7 @@
                 post-container">
 
                 
-                <p>cmakepp: Template Generation in CMake
-by thetoeb • 2015/02/11 • 0 Comments</p>
-<p>Find it at <a href="http://github.com/toeb/cmakepp">http://github.com/toeb/cmakepp</a></p>
+                <p>Find it at <a href="http://github.com/toeb/cmakepp">http://github.com/toeb/cmakepp</a></p>
 <p>Download cmakepp standalone file here</p>
 <p>As with all my work I appreciate all feedback given and am particularly happy about virtual internet points 🙂</p>
 <p>To the Post:
@@ -219,74 +237,88 @@ While working on the documentation of cmakepp I grew wary of always doubling the
 <p>While my original thought was only ‘how is the best way to generate markdown’ I soon realized that This kind of templating would allow for quite some more domains to be served. For Example generating C++ source code (i.e. data structures) – any kind of text based format could easily be generated.</p>
 <p>CMake itself allows you to do something not quite similar. You can use the string(CONFIGURE) and file(CONFIGURE) functions to replace @vars@ within text with values that you have specified. This however will never allow you to generate complex structures as simple as an inline foreach() loop.</p>
 <p>When I was finished with implementing my solution I noticed I had a far more mighty tool at hand than I anticipated: I could let the functions which I was documenting run and add the result to my documentation. For Example see the comments for the log function and the resulting README.md</p>
-<p>Template Process
-The template process is as follows:</p>
-<pre><code>                                                   |cmake scope|
-                                                        vvv             
-</code></pre>
-<p>(|file| =read=&gt;) |string| =template_compile=&gt; |cmake code| =eval=&gt; |string| (=write=&gt; |file|)
-Template Syntax
-The template syntax is quite easy:</p>
-<p>&lt;% %&gt; encloses cmake code
+<h2 id="template-process">Template Process</h2>
+<p>The template process is as follows:</p>
+<pre><code>
+                                                       |cmake scope|
+                                                            vvv             
+(|file| =read=&gt;) |string| =template_compile=&gt; |cmake code| =eval=&gt; |string| (=write=&gt; |file|)
+
+</code></pre><h2 id="template-syntax">Template Syntax</h2>
+<p>The template syntax is quite easy:</p>
+<pre><code>&lt;% %&gt; encloses cmake code
 &lt;%% and %%&gt; escape &lt;% and %&gt; resp.
 &lt;%= runs the function specified if possible (only single line function calls allowed) or formats the following string using the format() function (allows things like &lt;%=&quot;${var} {format.expression[3].navigation.key}%&gt;)
-single line function calls are func(&hellip;..) but not func(&hellip; \n &hellip;.)
+single line function calls are func(.....) but not func(... \n ....)
 shorthands
-@<cmake function call> is replaced with &lt;%= <cmake function call> %&gt;
-@<navigation expression> is replaced with &lt;%= {<navigation expression>}%&gt;
-Example
+@&lt;cmake function call&gt; is replaced with &lt;%= &lt;cmake function call&gt; %&gt;
+@&lt;navigation expression&gt; is replaced with &lt;%= {&lt;navigation expression&gt;}%&gt;
+</code></pre><p>Example
 This example takes an template input file and creates output using some given data.  You can also check out my <a href="#samples">Samples Repository</a> for templating.</p>
 <p><em>Input file - mytemplate.in</em></p>
-<p>Hello this is &lt;%={user.first_name}%&gt;,</p>
-<p>I am writing you from within a template file!  Here are some things I like:
+<pre><code>Hello this is &lt;%={user.first_name}%&gt;,
+
+I am writing you from within a template file!  Here are some things I like:
 &lt;% foreach(thing ${things}) %&gt;* The Thing: &lt;%={thing.name}%&gt; - &lt;%={thing.description}%&gt;
-&lt;% endforeach() %&gt;</p>
-<p>Thanks for Reading! Write me at &lt;%={user.email}%&gt;
+&lt;% endforeach() %&gt;
+
+Thanks for Reading! Write me at &lt;%={user.email}%&gt;
 (path of this file: &lt;%=${template_path}%&gt;)
-CMake</p>
-<h2 id="create-a-user-object">create a user object</h2>
-<p>data(&quot;{
-first_name:&lsquo;Tobias&rsquo;,
-last_name:&lsquo;Becker&rsquo;,
-email:&lsquo;<a href="mailto:toeb@thetoeb.de">toeb@thetoeb.de</a>&rsquo;
-}&quot;)
-ans(user)</p>
-<h2 id="create-a-list-of-things">create a list of things</h2>
-<p>data(&quot;[
-{
-name:&lsquo;Swimming&rsquo;,
-decsription:&lsquo;humanoid aquatic propulsion&rsquo;
-},
-{
-name:&lsquo;Programming&rsquo;,
-decsription:&lsquo;converting ideas to instructions&rsquo;
-},
-{
-name:&lsquo;Squash&rsquo;,
-decsription:&lsquo;destroying your body while chasing a ball&rsquo;
-}
-]&quot;)
-ans(things)</p>
-<h2 id="now-run-the-template-file">now run the template file</h2>
-<p>template_run_file(&ldquo;mytemplate.in&rdquo;)
-ans(generated_content)</p>
-<p>message(&quot;${generated_content}&quot;)
-stdout</p>
-<p>Hello this is Tobias,</p>
+</code></pre><p>CMake</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#75715e">## create a user object
+</span><span style="color:#75715e"></span>data(<span style="color:#e6db74">&#34;{
+</span><span style="color:#e6db74">    first_name:&#39;Tobias&#39;,
+</span><span style="color:#e6db74">    last_name:&#39;Becker&#39;,
+</span><span style="color:#e6db74">    email:&#39;toeb@thetoeb.de&#39;
+</span><span style="color:#e6db74">}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>ans(<span style="color:#e6db74">user</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## create a list of things
+</span><span style="color:#75715e"></span>data(<span style="color:#e6db74">&#34;[
+</span><span style="color:#e6db74">    {
+</span><span style="color:#e6db74">        name:&#39;Swimming&#39;,
+</span><span style="color:#e6db74">        decsription:&#39;humanoid aquatic propulsion&#39;
+</span><span style="color:#e6db74">    },
+</span><span style="color:#e6db74">    {
+</span><span style="color:#e6db74">        name:&#39;Programming&#39;,
+</span><span style="color:#e6db74">        decsription:&#39;converting ideas to instructions&#39;
+</span><span style="color:#e6db74">    },
+</span><span style="color:#e6db74">    {
+</span><span style="color:#e6db74">        name:&#39;Squash&#39;,
+</span><span style="color:#e6db74">        decsription:&#39;destroying your body while chasing a ball&#39;
+</span><span style="color:#e6db74">    }
+</span><span style="color:#e6db74">]&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>ans(<span style="color:#e6db74">things</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## now run the template file
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>template_run_file(<span style="color:#e6db74">&#34;mytemplate.in&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>ans(<span style="color:#e6db74">generated_content</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;${generated_content}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><pre><code>stdout
+
+
+</code></pre><p>Hello this is Tobias,</p>
 <p>I am writing you from within a template file!  Here are some things I like:</p>
 <ul>
 <li>The Thing: Swimming - humanoid aquatic propulsion</li>
 <li>The Thing: Programming - converting ideas to instructions</li>
 <li>The Thing: Squash - destroying your body while chasing a ball</li>
 </ul>
-<p>Thanks for Reading! Write me at <a href="mailto:toeb@thetoeb.de">toeb@thetoeb.de</a>
+<pre><code>
+Thanks for Reading! Write me at toeb@thetoeb.de
 (path of this file: C:/Users/Tobi/Documents/projects/cmakepp/cmake/templating/README.md.in)
 Implementation
-The implemenation is straightforward: Using CMake‘s regex functionality I split the input template into code fragment s and literal fragments source fragments are such which start with &lt;% and end with %&gt;. Out of these fragments I generate a cmake code listing which can be executed. This is done by appending code fragments directly and appending a template_out(<literal fragment>) for every literal fragment. The template itself works by creating an accumulator variable which can be appended to via template_out .</p>
-<p>Some more transformations are performed but the gist ist captured in this description.</p>
-<p>Example</p>
-<p>template string</p>
-<p>Hello &lt;%={user.name}%&gt;,
+The implemenation is straightforward: Using CMake‘s regex functionality I split the input template into code fragment s and literal fragments source fragments are such which start with &lt;% and end with `%&gt;`. Out of these fragments I generate a cmake code listing which can be executed. This is done by appending code fragments directly and appending a `template_out(&lt;literal fragment&gt;)` for every literal fragment. The template itself works by creating an accumulator variable which can be appended to via template_out .
+
+Some more transformations are performed but the gist ist captured in this description.
+
+Example
+
+template string
+</code></pre><p>Hello &lt;%={user.name}%&gt;,
 &lt;%foreach(i RANGE 1 3)%&gt;* &lt;%=${i}%&gt;
 &lt;%endforeach()%&gt;
 result of template_compile Note *the strings seem may seem strange. That is because they are cmake_escape</p>
@@ -300,7 +332,7 @@ template_out_format(${i})
 template_out(&quot;\n&rdquo;)
 endforeach()
 template_end()</p>
-
+<pre><code></code></pre>
 
                 
 
@@ -308,13 +340,13 @@ template_end()</p>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/ctesttestadapter/" data-toggle="tooltip" data-placement="top" title="CTest Integration for VisualStudio">&larr;
+                        <a href="/post/cmakeppheterogenouspackagesearchandretrieval/" data-toggle="tooltip" data-placement="top" title="Heterogeneous Package Search and Retrieval in CMake">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/cmakereadingandwritingjson/" data-toggle="tooltip" data-placement="top" title="cmakepp: Reading and Writing JSON">Next
+                        <a href="/post/cmakeppreflectingandmanipulatingcmakelists/" data-toggle="tooltip" data-placement="top" title="cmakepp: reflecting and manipulating CMakeLists">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -351,6 +383,34 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                            c&#43;&#43;
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        
+                        
+                        
                         
                         
                         

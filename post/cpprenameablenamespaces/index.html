@@ -34,9 +34,9 @@
     
 
     
-    <meta name="description" content="">
-    <meta property="og:description" content="" />
-    <meta property="twitter:description" content="" />
+    <meta name="description" content="Renameable Namespaces using the Preprocessor">
+    <meta property="og:description" content="Renameable Namespaces using the Preprocessor" />
+    <meta property="twitter:description" content="Renameable Namespaces using the Preprocessor" />
     
 
     
@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -174,6 +186,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/c&#43;&#43;" title="C&#43;&#43;">
+                            C&#43;&#43;
+                        </a>
+                        
+                        <a class="tag" href="/tags/obsolete" title="obsolete">
+                            obsolete
+                        </a>
+                        
                     </div>
                     <h1>Renameable Namespaces using the Preprocessor</h1>
                     <h2 class="subheading"></h2>
@@ -183,7 +203,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Tuesday, October 14, 2014
                         
                         
                         
@@ -208,49 +228,52 @@
                 post-container">
 
                 
-                <p>Renameable Namespaces using the Preprocessor
-by thetoeb • 2014/10/14 • 0 Comments</p>
-<p>Motivation
-If you are starting to work on a library and do not know exactly how your namespaces are going end up these macro helper are for you. I have written helpers that simplify using namespaces and lets you build up your namespaces with preprocessor defines. This allows you to quickly rename your namespaces which in turn makes it alot more flexible. You can find the code on github. It is licensed under the MIT license.</p>
+                <h2 id="motivation">Motivation</h2>
+<p>If you are starting to work on a library and do not know exactly how your namespaces are going end up these macro helper are for you. I have written helpers that simplify using namespaces and lets you build up your namespaces with preprocessor defines. This allows you to quickly rename your namespaces which in turn makes it alot more flexible. You can find the code on github. It is licensed under the MIT license.</p>
 <p>The reason why I wanted to have renameable, dynamically generated namespaces was to allow me to statically link multiple versions of the same library and to achieve this I needed to to prepend a versioned namespace e.g. wrap all namespaces in another namespace. This could have been achieved by wrapping the all include files in another namespace but some edge cases did not allow me to do it this way. So I chose to make the namespaces “dynamic” (as in compile time dynamic) which I could control with a single preprocessor define.</p>
-<p>Documentation
-I provide you with the following macros:</p>
-<p>NS_BEGIN(&hellip;)
-NS_END(&hellip;)
-NS(&hellip;)
-NS_USE(&hellip;)<br>
-Instead of using namespace X{ namespace Y{ &hellip; } } you write NS_BEGIN(X,Y) &hellip; NS_END(X,Y) these macros expand to the namespace definitions and allow you to use preprocessor defines to name your namespaces.</p>
+<h2 id="documentation">Documentation</h2>
+<p>I provide you with the following macros:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++">NS_BEGIN(...)
+NS_END(...)
+NS(...)
+NS_USE(...)  
+</code></pre></div><p>Instead of using namespace <code>X{ namespace Y{ ... } }</code> you write <code>NS_BEGIN(X,Y) ... NS_END(X,Y)</code> these macros expand to the namespace definitions and allow you to use preprocessor defines to name your namespaces.</p>
 <p>A nice side effect is that your code is not indented anymore by your IDE which, in my opinion, makes the code harder to read as get more and more nested namespaces. Also you can explicitly see where your namespace ends which is very helpful in long files – I always seem to get mixed up with too many braces…</p>
 <p>Of course your personal preferences may differ, but if you refactor without expensive tools defining your namespaces with these macros helps a lot as you only have to change it once. Furthermore you could easily add a build task that replaces these macros with the hard coded namespaces if you release your source code/ headers. (or leave them in, especially if you want your library users to be able to change the namespace as well).</p>
-<p>Besides beginning and ending a namespace you can also use NS(X,Y) to reference a namespace as it is expanded to X::Y. Another shorthand which is useful is NS_USE(X,Y) which just creates a using namespace statement: using namespace X::Y.</p>
+<p>Besides beginning and ending a namespace you can also use <code>NS(X,Y)</code> to reference a namespace as it is expanded to <code>X::Y</code>. Another shorthand which is useful is <code>NS_USE(X,Y)</code> which just creates a using namespace statement: <code>using namespace X::Y</code>.</p>
 <p>Of course you can also mix the macro based namespace and hard coded namespace statement to your hearts content.</p>
-<p>Example
-Here is an example application that shows you how to use these macros:</p>
-<p>#include &lt;cppnamespace/cppnamespace.h&gt;
-/// defines which for naming the namespaces, allows the parameterized buildup of naming schemes
-#define BASE_NAMESPACE matlib<br>
-#define MATRIX_NAMESPACE BASE_NAMESPACE, matrix
-#define VECTOR_NAMESPACE BASE_NAMESPACE, vector</p>
-<p>NS_BEGIN(MATRIX_NAMESPACE)
-// equivalent to namespace matlib{ namespace matrix{
-struct Matrix{
-auto operator()(int i, int j)-&gt;double;
+<h2 id="example">Example</h2>
+<p>Here is an example application that shows you how to use these macros:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cppnamespace/cppnamespace.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">/// defines which for naming the namespaces, allows the parameterized buildup of naming schemes 
+</span><span style="color:#75715e"></span><span style="color:#75715e">#define BASE_NAMESPACE matlib  
+</span><span style="color:#75715e">#define MATRIX_NAMESPACE BASE_NAMESPACE, matrix
+</span><span style="color:#75715e">#define VECTOR_NAMESPACE BASE_NAMESPACE, vector
+</span><span style="color:#75715e"></span>
+NS_BEGIN(MATRIX_NAMESPACE)
+<span style="color:#75715e">// equivalent to namespace matlib{ namespace matrix{ 
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Matrix</span>{
+  <span style="color:#66d9ef">auto</span> <span style="color:#a6e22e">operator</span>()(<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">int</span> j)<span style="color:#f92672">-&gt;</span><span style="color:#66d9ef">double</span>;
 };
 NS_END(MATRIX_NAMESPACE)
-//equivalent to }}</p>
-<p>NS_BEGIN(VECTOR_NAMESPACE)
-struct Vector : public NS(MATRIX_NAMESPACE)::Matrix{ // a vector is a matrix the namespace is accessed via NS(&hellip;) macro
-auto operator()(int i)-&gt;double;
-};</p>
-<p>NS_END(VECTOR_NAMESPACE)</p>
-<p>int main(){
-// using directive to access Vector
-NS_USE(VECTOR_NAMESPACE);</p>
-<p>Vector v;
-//global qualification for matrix - also works without using the preprocessor (but makes the code more brittle)
-::matlib::matrix::Matrix m;</p>
-<p>}
-Limitations:</p>
+<span style="color:#75715e">//equivalent to }}
+</span><span style="color:#75715e"></span>
+NS_BEGIN(VECTOR_NAMESPACE)
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Vector</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> NS(MATRIX_NAMESPACE)<span style="color:#f92672">::</span>Matrix{ <span style="color:#75715e">// a vector is a matrix the namespace is accessed via NS(...) macro
+</span><span style="color:#75715e"></span> <span style="color:#66d9ef">auto</span> <span style="color:#a6e22e">operator</span>()(<span style="color:#66d9ef">int</span> i)<span style="color:#f92672">-&gt;</span><span style="color:#66d9ef">double</span>;
+};
+
+NS_END(VECTOR_NAMESPACE)
+
+<span style="color:#66d9ef">int</span> main(){
+<span style="color:#75715e">// using directive to access Vector
+</span><span style="color:#75715e"></span> NS_USE(VECTOR_NAMESPACE);
+
+ Vector v;
+ <span style="color:#75715e">//global qualification for matrix - also works without using the preprocessor (but makes the code more brittle) 
+</span><span style="color:#75715e"></span> <span style="color:#f92672">::</span>matlib<span style="color:#f92672">::</span>matrix<span style="color:#f92672">::</span>Matrix m;
+}
+</code></pre></div><h2 id="limitations">Limitations:</h2>
 <p>Due to NS_REDUCE you can at most nest 100 namespaces (which is in itself absurd ;))
 I am happy for any critiques in form of comments, stars, upvotes, likes, etc. Especially if you find this useful let me know! I am aware there is only a niche audience for this kind of preprocessor stuff – but I do like to share :)</p>
 
@@ -261,13 +284,13 @@ I am happy for any critiques in form of comments, stars, upvotes, likes, etc. Es
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/usefulextensionsforcmake/" data-toggle="tooltip" data-placement="top" title="Useful extensions for CMake">&larr;
+                        <a href="/post/alternativetypedefsyntax/" data-toggle="tooltip" data-placement="top" title="Alternative `typedef` Syntax">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/objectorientedcmakenextiteration/" data-toggle="tooltip" data-placement="top" title="Object Oriented CMake: Next Iteration">Next
+                        <a href="/post/ctesttestadapter/" data-toggle="tooltip" data-placement="top" title="CTest and TextExplorer">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -304,6 +327,34 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                            c&#43;&#43;
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        
+                        
+                        
                         
                         
                         

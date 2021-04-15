@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="A Quick Way of Parsing versioned Web Asset Files" />
-    <meta property="og:title" content="A Quick Way of Parsing versioned Web Asset Files" />
-    <meta property="twitter:title" content="A Quick Way of Parsing versioned Web Asset Files" />
+    <meta name="title" content="Parsing Web Asset Files" />
+    <meta property="og:title" content="Parsing Web Asset Files" />
+    <meta property="twitter:title" content="Parsing Web Asset Files" />
     
 
     
@@ -47,7 +47,7 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>A Quick Way of Parsing versioned Web Asset Files-Toeb Blog</title>
+    <title>Parsing Web Asset Files-Toeb Blog</title>
 
     <link rel="canonical" href="/post/csharpparsingwebassetfiles/">
 
@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -174,8 +186,12 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/c" title="C#">
+                            C#
+                        </a>
+                        
                     </div>
-                    <h1>A Quick Way of Parsing versioned Web Asset Files</h1>
+                    <h1>Parsing Web Asset Files</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by 
@@ -183,7 +199,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Wednesday, December 4, 2013
                         
                         
                         
@@ -208,127 +224,123 @@
                 post-container">
 
                 
-                <p>A Quick Way of Parsing versioned Web Asset Files
-by thetoeb • 2013/12/04 • 0 Comments</p>
-<p>To parse versioned web asset filenames ala
+                <p>To parse versioned web asset filenames ala
 jquery-1.4.min.js
 I wrote a simple class</p>
-<p>/// <summary>
-/// simple class for describing a file library like
-/// jquery-1.4.min.js
-/// bootstrap.min.css
-/// libname-1.0.0.0.tag1.tag2.tag3.extension
-/// &hellip; etc
-/// contains methods for parsing these kind of filenames
-/// </summary>
-public class FileLib
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e">/// simple class for describing a file library like 
+</span><span style="color:#75715e">/// jquery-1.4.min.js
+</span><span style="color:#75715e">/// bootstrap.min.css
+</span><span style="color:#75715e">/// libname-1.0.0.0.tag1.tag2.tag3.extension
+</span><span style="color:#75715e">/// ... etc
+</span><span style="color:#75715e">/// contains methods for parsing these kind of filenames
+</span><span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FileLib</span>
 {
-/// <summary>
-/// regular expression for parsing the filename
-/// </summary>
-public static readonly string libRegex = @&quot;((?<libname>[^.-]<em>)-?)((?<major>d+))?(.(?<minor>d+)(.(?<revision>d+)(.(?<build>d+))?)?)?(.(?<tags>.+))</em>&quot;;
-/// <summary>
-/// parses a path as a lib
-/// </summary>
-/// <param name="path"></param>
-/// <returns></returns>
-public static FileLib ParsePath(string path)
-{
-var filename = Path.GetFileName(path);
-return Parse(filename);
-}
-/// <summary>
-/// parses a filename as a file lib
-/// </summary>
-/// <param name="filename"></param>
-/// <returns></returns>
-public static FileLib Parse(string filename)
-{
-var match = Regex.Match(filename, libRegex);
-match.NextMatch();
-var lib = match.Groups[&ldquo;libname&rdquo;].Value ?? &ldquo;&quot;;
-var major = match.Groups[&ldquo;major&rdquo;].Value ?? &ldquo;&quot;;
-var minor = match.Groups[&ldquo;minor&rdquo;].Value ?? &ldquo;&quot;;
-var revision = match.Groups[&ldquo;revision&rdquo;].Value ?? &ldquo;&quot;;
-var build = match.Groups[&ldquo;build&rdquo;].Value ?? &ldquo;&quot;;
-var tags = match.Groups[&ldquo;tags&rdquo;].Value.Split('.');
-var extension = tags.LastOrDefault() ?? &ldquo;&quot;;
-tags = tags.Reverse().Skip(1).Reverse().ToArray();
-var result = new FileLib()
-{
-Extension = extension,
-LibName = lib,
-Major = major,
-Minor = minor,
-Revision = revision,
-Build = build,
-Tags = tags</p>
-<pre><code>};
-return result;
-</code></pre>
-<p>}
-/// <summary>
-/// Major version number
-/// </summary>
-public string Major { get; set; }
-/// <summary>
-/// Minor version number
-/// </summary>
-public string Minor { get; set; }
-/// <summary>
-/// Revision Number
-/// </summary>
-public string Revision { get; set; }</p>
-<p>/// <summary>
-/// Build number
-/// </summary>
-public string Build { get; set; }</p>
-<p>/// <summary>
-/// Creates a version object for the Filelib. returns null if this is not possible
-/// </summary>
-/// <returns></returns>
-public Version GetVersion()
-{</p>
-<pre><code>Version parsedVersion = null;
-try
-{
-  var version = Major + &quot;.&quot; + Minor + &quot;.&quot; + Revision + &quot;.&quot; + Build;
-  while (version.EndsWith(&quot;.&quot;)) version = version.Substring(0, version.Length - 1);
-  if (version == &quot;&quot;) return parsedVersion;
-  parsedVersion = new Version(version);
-}
-catch (Exception exception) { }
-return parsedVersion;
-</code></pre>
-<p>}
-/// <summary>
-/// the name of the lib
-/// </summary>
-public string LibName { get; set; }
-/// <summary>
-/// the tags of the lib.  e.g. min, intellisense, etc
-/// </summary>
-public IEnumerable<string> Tags { get; set; }
-/// <summary>
-/// the extension of the lib
-/// </summary>
-public string Extension { get; set; }
-}</p>
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// regular expression for parsing the filename
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">string</span> libRegex = <span style="color:#e6db74">@&#34;((?&lt;libname&gt;[^.-]*)-?)((?&lt;major&gt;d+))?(.(?&lt;minor&gt;d+)(.(?&lt;revision&gt;d+)(.(?&lt;build&gt;d+))?)?)?(.(?&lt;tags&gt;.+))*&#34;</span>;
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// parses a path as a lib
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;param name=&#34;path&#34;&gt;&lt;/param&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> FileLib ParsePath(<span style="color:#66d9ef">string</span> path)
+  {
+    <span style="color:#66d9ef">var</span> filename = Path.GetFileName(path);
+    <span style="color:#66d9ef">return</span> Parse(filename);
+  }
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// parses a filename as a file lib 
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;param name=&#34;filename&#34;&gt;&lt;/param&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> FileLib Parse(<span style="color:#66d9ef">string</span> filename)
+  {
+    <span style="color:#66d9ef">var</span> match = Regex.Match(filename, libRegex);
+    match.NextMatch();
+    <span style="color:#66d9ef">var</span> lib = match.Groups[<span style="color:#e6db74">&#34;libname&#34;</span>].Value ?? <span style="color:#e6db74">&#34;&#34;</span>;
+    <span style="color:#66d9ef">var</span> major = match.Groups[<span style="color:#e6db74">&#34;major&#34;</span>].Value ?? <span style="color:#e6db74">&#34;&#34;</span>;
+    <span style="color:#66d9ef">var</span> minor = match.Groups[<span style="color:#e6db74">&#34;minor&#34;</span>].Value ?? <span style="color:#e6db74">&#34;&#34;</span>;
+    <span style="color:#66d9ef">var</span> revision = match.Groups[<span style="color:#e6db74">&#34;revision&#34;</span>].Value ?? <span style="color:#e6db74">&#34;&#34;</span>;
+    <span style="color:#66d9ef">var</span> build = match.Groups[<span style="color:#e6db74">&#34;build&#34;</span>].Value ?? <span style="color:#e6db74">&#34;&#34;</span>;
+    <span style="color:#66d9ef">var</span> tags = match.Groups[<span style="color:#e6db74">&#34;tags&#34;</span>].Value.Split(<span style="color:#e6db74">&#39;.&#39;</span>);
+    <span style="color:#66d9ef">var</span> extension = tags.LastOrDefault() ?? <span style="color:#e6db74">&#34;&#34;</span>;
+    tags = tags.Reverse().Skip(<span style="color:#ae81ff">1</span>).Reverse().ToArray();
+    <span style="color:#66d9ef">var</span> result = <span style="color:#66d9ef">new</span> FileLib()
+    {
+      Extension = extension,
+      LibName = lib,
+      Major = major,
+      Minor = minor,
+      Revision = revision,
+      Build = build,
+      Tags = tags
 
+    };
+    <span style="color:#66d9ef">return</span> result;
+  }
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// Major version number
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Major { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// Minor version number
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Minor { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// Revision Number
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Revision { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// Build number
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Build { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// Creates a version object for the Filelib. returns null if this is not possible
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;returns&gt;&lt;/returns&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> Version GetVersion()
+  {
+
+    Version parsedVersion = <span style="color:#66d9ef">null</span>;
+    <span style="color:#66d9ef">try</span>
+    {
+      <span style="color:#66d9ef">var</span> version = Major + <span style="color:#e6db74">&#34;.&#34;</span> + Minor + <span style="color:#e6db74">&#34;.&#34;</span> + Revision + <span style="color:#e6db74">&#34;.&#34;</span> + Build;
+      <span style="color:#66d9ef">while</span> (version.EndsWith(<span style="color:#e6db74">&#34;.&#34;</span>)) version = version.Substring(<span style="color:#ae81ff">0</span>, version.Length - <span style="color:#ae81ff">1</span>);
+      <span style="color:#66d9ef">if</span> (version == <span style="color:#e6db74">&#34;&#34;</span>) <span style="color:#66d9ef">return</span> parsedVersion;
+      parsedVersion = <span style="color:#66d9ef">new</span> Version(version);
+    }
+    <span style="color:#66d9ef">catch</span> (Exception exception) { }
+    <span style="color:#66d9ef">return</span> parsedVersion;
+
+  }
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// the name of the lib
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> LibName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// the tags of the lib.  e.g. min, intellisense, etc
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> IEnumerable&lt;<span style="color:#66d9ef">string</span>&gt; Tags { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+  <span style="color:#75715e">/// &lt;summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// the extension of the lib
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">/// &lt;/summary&gt;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Extension { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+}
+</code></pre></div>
 
                 
 
                 <hr>
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/post/cppdynamicobject/" data-toggle="tooltip" data-placement="top" title="An Implementation of the Dynamic Object in C&#43;&#43;">&larr;
-                            Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/post/cmakeppexpressionsyntax/" data-toggle="tooltip" data-placement="top" title="cmakepp: Expression Syntax">Next
+                        <a href="/post/csharpfluentexceptionhandling/" data-toggle="tooltip" data-placement="top" title="A Fluent Way of Exception Handling">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -365,6 +377,34 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                            c&#43;&#43;
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        
+                        
+                        
                         
                         
                         

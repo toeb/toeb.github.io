@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>angular on toeb&#39;s Blog</title>
+    <link>https://toeb.github.io/tags/angular/</link>
+    <description>Recent content in angular on toeb&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 Jan 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://toeb.github.io/tags/angular/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Normalized Attribute Names in Angular</title>
+      <link>https://toeb.github.io/post/normalizedattributenamesinangular/</link>
+      <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/normalizedattributenamesinangular/</guid>
+      <description>I have been doing some hard directive/ html markup work and I came across a problem where I needed the normalized html tag attribute names. (I was trying to create a html element but needed access to the normalized names without turning it into a directive)
+Angular.js normalizes names like “test-name” and “data-test-name” to “testName”. So I went ahead and extracted and wrapped the functions needed into the following function:</description>
+    </item>
+    
+  </channel>
+</rss>

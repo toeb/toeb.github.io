@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>obsolete on toeb&#39;s Blog</title>
+    <link>https://toeb.github.io/tags/obsolete/</link>
+    <description>Recent content in obsolete on toeb&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 Oct 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://toeb.github.io/tags/obsolete/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Renameable Namespaces using the Preprocessor</title>
+      <link>https://toeb.github.io/post/cpprenameablenamespaces/</link>
+      <pubDate>Tue, 14 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cpprenameablenamespaces/</guid>
+      <description>Motivation If you are starting to work on a library and do not know exactly how your namespaces are going end up these macro helper are for you. I have written helpers that simplify using namespaces and lets you build up your namespaces with preprocessor defines. This allows you to quickly rename your namespaces which in turn makes it alot more flexible. You can find the code on github. It is licensed under the MIT license.</description>
+    </item>
+    
+  </channel>
+</rss>

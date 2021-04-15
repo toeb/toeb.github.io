@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C&#43;&#43; on toeb&#39;s Blog</title>
+    <link>https://toeb.github.io/categories/c&#43;&#43;/</link>
+    <description>Recent content in C&#43;&#43; on toeb&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 Oct 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://toeb.github.io/categories/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Renameable Namespaces using the Preprocessor</title>
+      <link>https://toeb.github.io/post/cpprenameablenamespaces/</link>
+      <pubDate>Tue, 14 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cpprenameablenamespaces/</guid>
+      <description>Motivation If you are starting to work on a library and do not know exactly how your namespaces are going end up these macro helper are for you. I have written helpers that simplify using namespaces and lets you build up your namespaces with preprocessor defines. This allows you to quickly rename your namespaces which in turn makes it alot more flexible. You can find the code on github. It is licensed under the MIT license.</description>
+    </item>
+    
+    <item>
+      <title>Dynamic Object in C&#43;&#43;</title>
+      <link>https://toeb.github.io/post/cppdynamicobject/</link>
+      <pubDate>Wed, 08 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cppdynamicobject/</guid>
+      <description>You can find my implementation at https://github.com/toeb/cppdynamic it is licensed under the MIT license. I’d be happy for feedback and or optimizations :) Dynamic object are useful, especially in rapid prototyping, non-performance critical situations, and situations in which data/functions -bags are needed (non schema specific data). Also when serializing and deserializing dynamic objects can be a very valuable asset.
+Dynamic programming languages inherently support this. e.g.
+var obj = {}; obj.</description>
+    </item>
+    
+    <item>
+      <title>dynamically calling `any` thing in C&#43;&#43;</title>
+      <link>https://toeb.github.io/post/cppdynamicallycallanything/</link>
+      <pubDate>Tue, 15 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cppdynamicallycallanything/</guid>
+      <description>Extending upon boost’s any class which stores a type and a void ptr to any type of value, I created a callable version were you can assign any function, lambda, memberfunction etc. to the any and call it dynamically. This is a basic and important step for runtime reflection which I’m currently working on. Tell me if you like what I did and if you have any improvements.
+You can look at the running example at ideone</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="An Implementation of the Dynamic Object in C&#43;&#43;" />
-    <meta property="og:title" content="An Implementation of the Dynamic Object in C&#43;&#43;" />
-    <meta property="twitter:title" content="An Implementation of the Dynamic Object in C&#43;&#43;" />
+    <meta name="title" content="Dynamic Object in C&#43;&#43;" />
+    <meta property="og:title" content="Dynamic Object in C&#43;&#43;" />
+    <meta property="twitter:title" content="Dynamic Object in C&#43;&#43;" />
     
 
     
@@ -47,7 +47,7 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>An Implementation of the Dynamic Object in C&#43;&#43;-Toeb Blog</title>
+    <title>Dynamic Object in C&#43;&#43;-Toeb Blog</title>
 
     <link rel="canonical" href="/post/cppdynamicobject/">
 
@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -174,8 +186,16 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/c&#43;&#43;" title="C&#43;&#43;">
+                            C&#43;&#43;
+                        </a>
+                        
+                        <a class="tag" href="/tags/c&#43;&#43;10" title="C&#43;&#43;10">
+                            C&#43;&#43;10
+                        </a>
+                        
                     </div>
-                    <h1>An Implementation of the Dynamic Object in C&#43;&#43;</h1>
+                    <h1>Dynamic Object in C&#43;&#43;</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by 
@@ -183,7 +203,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Wednesday, October 8, 2014
                         
                         
                         
@@ -208,106 +228,113 @@
                 post-container">
 
                 
-                <p>An Implementation of the Dynamic Object in C++
-by thetoeb • 2014/10/08 • 2 Comments</p>
-<p>You can find my implementation at <a href="https://github.com/toeb/cppdynamic">https://github.com/toeb/cppdynamic</a> it is licensed under the MIT license. I’d be happy for feedback and or optimizations :)
+                <p>You can find my implementation at <a href="https://github.com/toeb/cppdynamic">https://github.com/toeb/cppdynamic</a> it is licensed under the MIT license. I’d be happy for feedback and or optimizations :)
 Dynamic object are useful, especially in rapid prototyping, non-performance critical situations, and situations in which data/functions -bags are needed (non schema specific data). Also when serializing and deserializing dynamic objects can be a very valuable asset.</p>
 <p>Dynamic programming languages inherently support this. e.g.</p>
-<p>var obj = {};
-obj.a = &lsquo;asd&rsquo;;
-obj.b = {};
-obj.b.c = 3;
-obj.d = function(i,j){ return i+j;}
-C# Also supports dynamic objects utilizing the dynamic keyword:</p>
-<p>dynamic obj = new ExpandoObject();
-obj.a = &ldquo;asd&rdquo;;
-obj.b = new ExpandObject();
-obj.b.c = 3;
-obj.d = (int i, int j)=&gt;i+j;
-I tried as to stay close to c#’s dynamic objects when trying to implement them for c++. Of course I could not alter the language so I have to use the indexer operator operator[](const std::string &amp;)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++">var obj <span style="color:#f92672">=</span> {};
+obj.a <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">&#39;</span>asd<span style="color:#960050;background-color:#1e0010">&#39;</span>;
+obj.b <span style="color:#f92672">=</span> {};
+obj.b.c <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
+obj.d <span style="color:#f92672">=</span> function(i,j){ <span style="color:#66d9ef">return</span> i<span style="color:#f92672">+</span>j;}
+</code></pre></div><p>C# Also supports dynamic objects utilizing the dynamic keyword:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++">dynamic obj <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ExpandoObject();
+obj.a <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;asd&#34;</span>;
+obj.b <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ExpandObject();
+obj.b.c <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
+obj.d <span style="color:#f92672">=</span> (<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">int</span> j)<span style="color:#f92672">=&gt;</span>i<span style="color:#f92672">+</span>j;
+</code></pre></div><p>I tried as to stay close to c#’s dynamic objects when trying to implement them for c++. Of course I could not alter the language so I have to use the indexer operator <code>operator[](const std::string &amp;)</code></p>
 <p>My syntax is as follows:</p>
-<p>DynamicObject obj;
-obj[&ldquo;a&rdquo;] = &ldquo;asd&rdquo;;
-obj[&ldquo;b&rdquo;] = DynamicObject();
-obj[&ldquo;b&rdquo;][&ldquo;c&rdquo;] = 3;
-obj[&ldquo;d&rdquo;] = [](int i, int j){return i+j;};
-Here is a working example of what you can do:</p>
-<p>#include &lt;core.dynamic.h&gt;
-#include &lt;assert.h&gt;</p>
-<p>int main(){
-{
-// dynamic object can be a fundamental type
-dynamic::DynamicObject uut = 33;
-assert(33 == (int)uut);</p>
-<pre><code>}
-</code></pre>
-<p>{
-// dynamic object can be a complex type
-dynamic::DynamicObject uut = std::string(&ldquo;hello&rdquo;);
-assert(&ldquo;hello&rdquo; == (std::string)uut);
-}
-{
-// dynamic object can be reassigned
-dynamic::DynamicObject uut = 33;
-assert(33 == (int)uut);
-uut = std::string(&ldquo;hello&rdquo;);
-assert(&ldquo;hello&rdquo; == (std::string)uut);
-}
-{
-//dynamic object can be a functor
-dynamic::DynamicObject uut = [](int i, int j){return i + j; };
-int result = uut(3, 4);
-assert(result == 7);
-}</p>
-<p>{
-// dynamic object can be an expando object
-dynamic::DynamicObject uut;
-uut[&ldquo;prop1&rdquo;] = 33;
-uut[&ldquo;prop2&rdquo;] = std::string(&ldquo;hello&rdquo;);
-uut[&ldquo;prop3&rdquo;][&ldquo;prop31&rdquo;] = 5;
-uut[&ldquo;prop4&rdquo;] = [](int i, int j){return i + j; };
-int prop1 = uut[&ldquo;prop1&rdquo;];
-std::string prop2 = uut[&ldquo;prop2&rdquo;];
-int prop31 = uut[&ldquo;prop3&rdquo;][&ldquo;prop31&rdquo;];
-int result = uut[&ldquo;prop4&rdquo;](5, 6);</p>
-<pre><code>assert(prop1 == 33);
-assert(prop2 == &quot;hello&quot;);
-assert(prop31 == 5);
-assert(result == 11);
-</code></pre>
-<p>}</p>
-<p>{
-// you can create a custom dynamic object implementation:
-class MyImp : public dynamic::DynamicObjectImplementationBase{
-protected:
-virtual bool tryMemberGet(const get_member_context &amp; context, result_type &amp; result)override
-{
-if (context.name == &ldquo;prop1&rdquo;){
-result = 44;
-return true;
-}
-if (context.name == &ldquo;prop2&rdquo;){
-result = std::string(&ldquo;asd&rdquo;);
-return true;
-}</p>
-<pre><code>    return false;
-  }
-};
-// initialization is still a bit complex 
-dynamic::DynamicObject uut = 
-  std::dynamic_pointer_cast&lt;dynamic::IDynamicObjectImplementation&gt;(std::make_shared&lt;MyImp&gt;());
-int a = uut[&quot;prop1&quot;];
-std::string b = uut[&quot;prop2&quot;];
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++">DynamicObject obj;
+obj[<span style="color:#e6db74">&#34;a&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;asd&#34;</span>;
+obj[<span style="color:#e6db74">&#34;b&#34;</span>] <span style="color:#f92672">=</span> DynamicObject();
+obj[<span style="color:#e6db74">&#34;b&#34;</span>][<span style="color:#e6db74">&#34;c&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
+obj[<span style="color:#e6db74">&#34;d&#34;</span>] <span style="color:#f92672">=</span> [](<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">int</span> j){<span style="color:#66d9ef">return</span> i<span style="color:#f92672">+</span>j;};
+</code></pre></div><p>Here is a working example of what you can do:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;core.dynamic.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;assert.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    {
+      <span style="color:#75715e">// dynamic object can be a fundamental type
+</span><span style="color:#75715e"></span>      dynamic<span style="color:#f92672">::</span>DynamicObject uut <span style="color:#f92672">=</span> <span style="color:#ae81ff">33</span>;
+      assert(<span style="color:#ae81ff">33</span> <span style="color:#f92672">==</span> (<span style="color:#66d9ef">int</span>)uut);
 
-assert(a == 44);
-assert(b == &quot;asd&quot;);
-</code></pre>
-<p>}</p>
-<p>}
-Caveats:</p>
-<p>Functors with multiple overloads of operator() cannot be used as members or values (the is_callable&lt;&gt; and func_traits&lt;&gt; type traits would need to be specialized for the corresonding type.) This is especially sad, because no compiler independent version for std::bind return functors are usable.
+    }
+  {
+    <span style="color:#75715e">// dynamic object can be a complex type
+</span><span style="color:#75715e"></span>    dynamic<span style="color:#f92672">::</span>DynamicObject uut <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>string(<span style="color:#e6db74">&#34;hello&#34;</span>);
+    assert(<span style="color:#e6db74">&#34;hello&#34;</span> <span style="color:#f92672">==</span> (std<span style="color:#f92672">::</span>string)uut);
+  }
+  {
+    <span style="color:#75715e">// dynamic object can be reassigned
+</span><span style="color:#75715e"></span>    dynamic<span style="color:#f92672">::</span>DynamicObject uut <span style="color:#f92672">=</span> <span style="color:#ae81ff">33</span>;
+    assert(<span style="color:#ae81ff">33</span> <span style="color:#f92672">==</span> (<span style="color:#66d9ef">int</span>)uut);
+    uut <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>string(<span style="color:#e6db74">&#34;hello&#34;</span>);
+    assert(<span style="color:#e6db74">&#34;hello&#34;</span> <span style="color:#f92672">==</span> (std<span style="color:#f92672">::</span>string)uut);
+  }
+  {
+    <span style="color:#75715e">//dynamic object can be a functor
+</span><span style="color:#75715e"></span>    dynamic<span style="color:#f92672">::</span>DynamicObject uut <span style="color:#f92672">=</span> [](<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">int</span> j){<span style="color:#66d9ef">return</span> i <span style="color:#f92672">+</span> j; };
+    <span style="color:#66d9ef">int</span> result <span style="color:#f92672">=</span> uut(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>);
+    assert(result <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>);
+  }
+
+  {
+    <span style="color:#75715e">// dynamic object can be an expando object
+</span><span style="color:#75715e"></span>    dynamic<span style="color:#f92672">::</span>DynamicObject uut;
+    uut[<span style="color:#e6db74">&#34;prop1&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">33</span>;
+    uut[<span style="color:#e6db74">&#34;prop2&#34;</span>] <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>string(<span style="color:#e6db74">&#34;hello&#34;</span>);
+    uut[<span style="color:#e6db74">&#34;prop3&#34;</span>][<span style="color:#e6db74">&#34;prop31&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
+    uut[<span style="color:#e6db74">&#34;prop4&#34;</span>] <span style="color:#f92672">=</span> [](<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">int</span> j){<span style="color:#66d9ef">return</span> i <span style="color:#f92672">+</span> j; };
+    <span style="color:#66d9ef">int</span> prop1 <span style="color:#f92672">=</span> uut[<span style="color:#e6db74">&#34;prop1&#34;</span>];
+    std<span style="color:#f92672">::</span>string prop2 <span style="color:#f92672">=</span> uut[<span style="color:#e6db74">&#34;prop2&#34;</span>];
+    <span style="color:#66d9ef">int</span> prop31 <span style="color:#f92672">=</span> uut[<span style="color:#e6db74">&#34;prop3&#34;</span>][<span style="color:#e6db74">&#34;prop31&#34;</span>];
+    <span style="color:#66d9ef">int</span> result <span style="color:#f92672">=</span> uut[<span style="color:#e6db74">&#34;prop4&#34;</span>](<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>);
+
+
+    assert(prop1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">33</span>);
+    assert(prop2 <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;hello&#34;</span>);
+    assert(prop31 <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>);
+    assert(result <span style="color:#f92672">==</span> <span style="color:#ae81ff">11</span>);
+
+  }
+
+  {
+    <span style="color:#75715e">// you can create a custom dynamic object implementation:
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyImp</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> dynamic<span style="color:#f92672">::</span>DynamicObjectImplementationBase{
+    <span style="color:#66d9ef">protected</span><span style="color:#f92672">:</span>
+      <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">bool</span> tryMemberGet(<span style="color:#66d9ef">const</span> get_member_context <span style="color:#f92672">&amp;</span> context, result_type <span style="color:#f92672">&amp;</span> result)<span style="color:#66d9ef">override</span>
+      {
+        <span style="color:#66d9ef">if</span> (context.name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;prop1&#34;</span>){
+          result <span style="color:#f92672">=</span> <span style="color:#ae81ff">44</span>;
+          <span style="color:#66d9ef">return</span> true;
+        }
+        <span style="color:#66d9ef">if</span> (context.name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;prop2&#34;</span>){
+          result <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>string(<span style="color:#e6db74">&#34;asd&#34;</span>);
+          <span style="color:#66d9ef">return</span> true;
+        }
+
+        <span style="color:#66d9ef">return</span> false;
+      }
+    };
+    <span style="color:#75715e">// initialization is still a bit complex 
+</span><span style="color:#75715e"></span>    dynamic<span style="color:#f92672">::</span>DynamicObject uut <span style="color:#f92672">=</span> 
+      std<span style="color:#f92672">::</span>dynamic_pointer_cast<span style="color:#f92672">&lt;</span>dynamic<span style="color:#f92672">::</span>IDynamicObjectImplementation<span style="color:#f92672">&gt;</span>(std<span style="color:#f92672">::</span>make_shared<span style="color:#f92672">&lt;</span>MyImp<span style="color:#f92672">&gt;</span>());
+    <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> uut[<span style="color:#e6db74">&#34;prop1&#34;</span>];
+    std<span style="color:#f92672">::</span>string b <span style="color:#f92672">=</span> uut[<span style="color:#e6db74">&#34;prop2&#34;</span>];
+
+    assert(a <span style="color:#f92672">==</span> <span style="color:#ae81ff">44</span>);
+    assert(b <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;asd&#34;</span>);
+
+  }
+
+
+
+}
+</code></pre></div><h2 id="caveats">Caveats:</h2>
+<p>Functors with multiple overloads of <code>operator()</code> cannot be used as members or values (the <code>is_callable&lt;&gt;</code> and <code>func_traits&lt;&gt;</code> type traits would need to be specialized for the corresonding type.) This is especially sad, because no compiler independent version for <code>std::bind</code> return functors are usable.
 Method modifiers except nonconst and const are not implemented.
-Since c++ is statically typed working around it can be hard at times, however it is possible thanks to operator overloading. Especially operator(), operator[], operator T() are usefull to allow dynamic objects.</p>
+Since c++ is statically typed working around it can be hard at times, however it is possible thanks to operator overloading. Especially <code>operator()</code>, <code>operator[]</code>, <code>operator T()</code> are useful to allow dynamic objects.</p>
 
 
                 
@@ -316,13 +343,13 @@ Since c++ is statically typed working around it can be hard at times, however it
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/cmakereadingandwritingjson/" data-toggle="tooltip" data-placement="top" title="cmakepp: Reading and Writing JSON">&larr;
+                        <a href="/post/usefulextensionsforcmake/" data-toggle="tooltip" data-placement="top" title="Useful extensions for CMake">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/csharpparsingwebassetfiles/" data-toggle="tooltip" data-placement="top" title="A Quick Way of Parsing versioned Web Asset Files">Next
+                        <a href="/post/alternativetypedefsyntax/" data-toggle="tooltip" data-placement="top" title="Alternative `typedef` Syntax">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -359,6 +386,34 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                            c&#43;&#43;
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        
+                        
+                        
                         
                         
                         

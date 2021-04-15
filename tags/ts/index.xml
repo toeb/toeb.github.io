@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ts on toeb&#39;s Blog</title>
+    <link>https://toeb.github.io/tags/ts/</link>
+    <description>Recent content in ts on toeb&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 18 Dec 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://toeb.github.io/tags/ts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Typescript in V2013</title>
+      <link>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</link>
+      <pubDate>Wed, 18 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</guid>
+      <description>I know its a little obscure, but I recently needed to find out how to enable Typescript in a Visual Studio 2013 Class Library project, because per default this is not enabled. (probably a bug)
+Vanilla way of enabling TypeScript:
+Create a “Class Library” project Add a Typescript file (.ts) This is were the bug occurs, normally the TypeScript file should compile on save. However it does not. So after searching around and looking at the csproj file and comparing it to a MvcApplication csproj file I found out what the problem is:</description>
+    </item>
+    
+  </channel>
+</rss>

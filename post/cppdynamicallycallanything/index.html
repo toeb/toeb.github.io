@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="dynamically calling “any” thing in C&#43;&#43;" />
-    <meta property="og:title" content="dynamically calling “any” thing in C&#43;&#43;" />
-    <meta property="twitter:title" content="dynamically calling “any” thing in C&#43;&#43;" />
+    <meta name="title" content="dynamically calling `any` thing in C&#43;&#43;" />
+    <meta property="og:title" content="dynamically calling `any` thing in C&#43;&#43;" />
+    <meta property="twitter:title" content="dynamically calling `any` thing in C&#43;&#43;" />
     
 
     
@@ -47,7 +47,7 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>dynamically calling “any” thing in C&#43;&#43;-Toeb Blog</title>
+    <title>dynamically calling `any` thing in C&#43;&#43;-Toeb Blog</title>
 
     <link rel="canonical" href="/post/cppdynamicallycallanything/">
 
@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -174,8 +186,16 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/c&#43;&#43;" title="C&#43;&#43;">
+                            C&#43;&#43;
+                        </a>
+                        
+                        <a class="tag" href="/tags/c&#43;&#43;10" title="C&#43;&#43;10">
+                            C&#43;&#43;10
+                        </a>
+                        
                     </div>
-                    <h1>dynamically calling “any” thing in C&#43;&#43;</h1>
+                    <h1>dynamically calling `any` thing in C&#43;&#43;</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by 
@@ -183,7 +203,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Tuesday, July 15, 2014
                         
                         
                         
@@ -208,42 +228,41 @@
                 post-container">
 
                 
-                <p>dynamically calling “any” thing in C++
-by thetoeb • 2014/07/15 • 0 Comments</p>
-<p>Extending upon boost’s any class which stores a type and a void ptr to any type of value, I created a callable version were you can assign any function, lambda, memberfunction etc. to the any and call it dynamically. This is a basic and important step for runtime reflection which I’m currently working on. Tell me if you like what I did and if you have any improvements.</p>
+                <p>Extending upon boost’s any class which stores a type and a void ptr to any type of value, I created a callable version were you can assign any function, lambda, memberfunction etc. to the any and call it dynamically. This is a basic and important step for runtime reflection which I’m currently working on. Tell me if you like what I did and if you have any improvements.</p>
 <p>You can look at the running example at ideone</p>
-<p>// example
-#include&lt;assert.h&gt;
-using namespace nspace;
-int add(int i, int j){
-return i + j;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">// example
+</span><span style="color:#75715e"></span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;assert.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> nspace;
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">add</span>(<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">int</span> j){
+  <span style="color:#66d9ef">return</span> i <span style="color:#f92672">+</span> j;
 }
-int main(){</p>
-<p>// call a lambda (or any other functor)
-{
-any uut = [](int i, int j){ return i + j; };
-assert(uut(4, 1).as<int>() == 5);
-}
-// call a std function
-{
-any uut = std::function&lt;int(int, int)&gt;([](int i, int j){ return i + j; });
-assert(uut(3, 2).as<int>() == 5); // uut(3,2) is equivalent to uut({3,2}), uut(std::vector<any>{3,2})
-}
-// call a standard c function
-{
-any uut = &amp;add;
-assert(uut(4, 2).as<int>() == 6);
-}
-// call a member function
-{
-struct MyType{ int val; MyType(int val) :val(val){} int add(int i, int j){ return i + j + val; } };
-any uut = &amp;MyType::add;
-// need to specify an object to bind for member function pointer
-auto result = uut(std::make_shared<MyType>(3), 2, 1);
-assert(result.as<int>() == 6);
-}</p>
-<p>}</p>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
 
+  <span style="color:#75715e">// call a lambda (or any other functor)
+</span><span style="color:#75715e"></span>  {
+    any uut <span style="color:#f92672">=</span> [](<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">int</span> j){ <span style="color:#66d9ef">return</span> i <span style="color:#f92672">+</span> j; };
+    assert(uut(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>).as<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>);
+  }
+  <span style="color:#75715e">// call a std function
+</span><span style="color:#75715e"></span>  {
+    any uut <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>function<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>(<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span>([](<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">int</span> j){ <span style="color:#66d9ef">return</span> i <span style="color:#f92672">+</span> j; });
+    assert(uut(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>).as<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>); <span style="color:#75715e">// uut(3,2) is equivalent to uut({3,2}), uut(std::vector&lt;any&gt;{3,2})
+</span><span style="color:#75715e"></span>  }
+  <span style="color:#75715e">// call a standard c function
+</span><span style="color:#75715e"></span>  {
+    any uut <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>add;
+    assert(uut(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">2</span>).as<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">6</span>);
+  }
+  <span style="color:#75715e">// call a member function
+</span><span style="color:#75715e"></span>  {
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">MyType</span>{ <span style="color:#66d9ef">int</span> val; MyType(<span style="color:#66d9ef">int</span> val) <span style="color:#f92672">:</span>val(val){} <span style="color:#66d9ef">int</span> add(<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">int</span> j){ <span style="color:#66d9ef">return</span> i <span style="color:#f92672">+</span> j <span style="color:#f92672">+</span> val; } };
+    any uut <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>MyType<span style="color:#f92672">::</span>add;
+    <span style="color:#75715e">// need to specify an object to bind for member function pointer
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">auto</span> result <span style="color:#f92672">=</span> uut(std<span style="color:#f92672">::</span>make_shared<span style="color:#f92672">&lt;</span>MyType<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">3</span>), <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>);
+    assert(result.as<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">6</span>);
+  }
+}
+</code></pre></div>
 
                 
 
@@ -251,13 +270,13 @@ assert(result.as<int>() == 6);
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/enabletypescriptcompilationforvs2013classlibrary/" data-toggle="tooltip" data-placement="top" title="How to enable Typescript Compilation for a VS2013 Class Library Project">&larr;
+                        <a href="/post/cppiscallabletypetrait/" data-toggle="tooltip" data-placement="top" title="`is_callable` type trait">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/ctesttestadapter/" data-toggle="tooltip" data-placement="top" title="CTest Integration for VisualStudio">Next
+                        <a href="/post/usefulextensionsforcmake/" data-toggle="tooltip" data-placement="top" title="Useful extensions for CMake">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -294,6 +313,34 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                            c&#43;&#43;
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        
+                        
+                        
                         
                         
                         

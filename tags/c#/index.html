@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -214,6 +226,30 @@
 </div>
 <hr>
 
+<div class="post-preview">
+    <a href="https://toeb.github.io/post/csharpparsingwebassetfiles/">
+        <h2 class="post-title">
+            Parsing Web Asset Files
+        </h2>
+	
+        <div class="post-content-preview">
+	    
+            To parse versioned web asset filenames ala jquery-1.4.min.js I wrote a simple class
+/// &lt;summary&gt; /// simple class for describing a file library like /// jquery-1.4.min.js /// bootstrap.min.css /// libname-1.0.0.0.tag1.tag2.tag3.extension /// ... etc /// contains methods for parsing these kind of filenames /// &lt;/summary&gt; public class FileLib { /// &lt;summary&gt;  /// regular expression for parsing the filename  /// &lt;/summary&gt;  public static readonly string libRegex = @&#34;((?&lt;libname&gt;[^.-]*)-?)((?&lt;major&gt;d+))?(.(?&lt;minor&gt;d+)(.(?&lt;revision&gt;d+)(.(?&lt;build&gt;d+))?)?)?(.(?&lt;tags&gt;.+))*&#34;; /// &lt;summary&gt;  /// parses a path as a lib  /// &lt;/summary&gt;  /// &lt;param name=&#34;path&#34;&gt;&lt;/param&gt;  /// &lt;returns&gt;&lt;/returns&gt;  public static FileLib ParsePath(string path) { var filename = Path.
+        
+       
+
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by toeb&#39;s Blog Wednesday, December 4, 2013
+    
+    
+    </p>
+
+</div>
+<hr>
+
 
             
 
@@ -236,6 +272,34 @@
         <h5>FEATURED TAGS</h5>
         <div class="tags">
              
+            
+                
+            
+                
+            
+                
+                    <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                        c&#43;&#43;
+                    </a>
+                
+            
+                
+            
+                
+                    <a href="/tags/cmake" title="cmake">
+                        cmake
+                    </a>
+                
+            
+                
+                    <a href="/tags/cmakepp" title="cmakepp">
+                        cmakepp
+                    </a>
+                
+            
+                
+            
+                
             
                 
             

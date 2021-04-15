@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -174,6 +186,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        <a class="tag" href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
                     </div>
                     <h1>cmakepp: Reading and Writing JSON</h1>
                     <h2 class="subheading"></h2>
@@ -183,7 +203,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Wednesday, March 5, 2014
                         
                         
                         
@@ -208,128 +228,151 @@
                 post-container">
 
                 
-                <p>Reading and Writing JSON with CMake
-by thetoeb • 2014/03/05 • 2 Comments</p>
-<p>While working on a package manager for CMake I came across the problem of finding a suitable format for my package descriptor files. First I thought about and tried using plain old CMake file that simply sets variables and can be included to access its contents. It was very quick and easy to implement. Hierarchical data structures however where hard to implement and a none standard format makes it harder to exchange data with a webservice/other programs. So I opted for using JSON as my import/export format. JSON is alot easier to parse than XML and is still ubiquitous in software developement so I cast aside XML (for now).</p>
+                <p>While working on a package manager for CMake I came across the problem of finding a suitable format for my package descriptor files. First I thought about and tried using plain old CMake file that simply sets variables and can be included to access its contents. It was very quick and easy to implement. Hierarchical data structures however where hard to implement and a none standard format makes it harder to exchange data with a webservice/other programs. So I opted for using JSON as my import/export format. JSON is alot easier to parse than XML and is still ubiquitous in software developement so I cast aside XML (for now).</p>
 <p>You can grab my implementation for reading and writing JSON with CMake at Github. Its part of my object oriented CMake library and uses my implementation for CMake maps and references.</p>
 <p>Note: Because CMake only understands strings the deserializer only accepts string , array or object values. Also all keys and values have to be double quoted.</p>
 <p>As always: feedback is most welcome if you feel like it you can tell me if you find it usefull, have ideas, or think that I have reinvented the wheel.</p>
 <p>Here are some examples for serialization and deserialization:</p>
-<h1 id="serialize-empty-value">serialize empty value</h1>
-<p>json_serialize(res &ldquo;&quot;)
-assert(NOT res)</p>
-<h1 id="serialze-simple-value">serialze simple value</h1>
-<p>json_serialize(res &ldquo;hello!&quot;)
-assert(res)
-assert(&quot;&quot;hello!&quot;&rdquo; STREQUAL ${res})</p>
-<h1 id="serialize-a-cmake-list-value">serialize a cmake list value</h1>
-<p>json_serialize(res &ldquo;a;b;c&rdquo;)
-assert(res)
-assert(EQUALS &ldquo;&quot;a\\;b\\;c&quot;&rdquo; ${res})</p>
-<p>#empty object
-element(uut MAP)
-element(END)
-json_serialize(res ${uut})
-assert(&quot;{}&rdquo; STREQUAL ${res})</p>
-<h1 id="empty-list">empty list</h1>
-<p>element(uut LIST)
-element(END)
-json_serialize(res ${uut})
-assert(&quot;[]&quot; STREQUAL ${res})</p>
-<h1 id="ref">ref</h1>
-<p>ref_new(uut)
-ref_set(${uut} &ldquo;a b c&rdquo;)
-json_serialize(res ${uut})
-assert(&quot;&quot;a b c&quot;&quot; STREQUAL ${res})</p>
-<h1 id="list-with-one-element">list with one element</h1>
-<p>element(uut LIST)
-value(1)
-element(END)
-json_serialize(res ${uut})
-assert(&quot;[&quot;1&quot;]&quot; STREQUAL ${res})</p>
-<h1 id="list-with-multiple-elements-element">list with multiple elements element</h1>
-<p>element(uut LIST)
-value(1)
-value(2)
-element(END)
-json_serialize(res ${uut})
-assert(&quot;[&quot;1&quot;,&quot;2&quot;]&quot; STREQUAL ${res})</p>
-<h1 id="object-with-single-value">object with single value</h1>
-<p>element(uut MAP)
-value(KEY k1 val1)
-element(END)
-json_serialize(res ${uut})
-assert(&quot;{&quot;k1&quot;:&quot;val1&quot;}&quot; STREQUAL ${res})</p>
-<h1 id="object-with-multiple-value">object with multiple value</h1>
-<p>element(uut MAP)
-value(KEY k1 val1)
-value(KEY k2 val2)
-element(END)
-json_serialize(res ${uut})
-assert(&quot;{&quot;k1&quot;:&quot;val1&quot;,&quot;k2&quot;:&quot;val2&quot;}&quot; STREQUAL ${res})</p>
-<h1 id="list-with-single-map">list with single map</h1>
-<p>element(uut LIST)
-element()
-value(KEY k1 1)
-element(END)
-element(END)
-json_serialize(res ${uut})
-assert(&quot;[{&quot;k1&quot;:&quot;1&quot;}]&quot; STREQUAL ${res})</p>
-<h1 id="deserialize-a-empty-value">deserialize a empty value</h1>
-<p>json_deserialize(res &ldquo;&quot;)
-assert(NOT res)</p>
-<h1 id="deserialize-a-empty-object">deserialize a empty object</h1>
-<p>json_deserialize(res &ldquo;{}&quot;)
-assert(res)
-ref_isvalid( ${res}  is_ref)
-assert(is_ref MESSAGE &ldquo;expected res to be a ref&rdquo;)</p>
-<h1 id="desirialize-a-empty-array">desirialize a empty array</h1>
-<p>json_deserialize(res &ldquo;[]&quot;)
-assert(res)
-ref_isvalid( ${res} is_ref)
-assert(is_ref MESSAGE &ldquo;expected res to be a ref&rdquo;)</p>
-<h1 id="deserialize-a-simple-value">deserialize a simple value</h1>
-<p>json_deserialize(res &ldquo;&quot;teststring&quot;&quot;)
-assert(${res} STREQUAL &ldquo;teststring&rdquo;)</p>
-<h1 id="deserialize-a-array-with-one-value">deserialize a array with one value</h1>
-<p>json_deserialize(res &ldquo;[&quot;1&quot;]&quot;)
-map_navigate(val &ldquo;res[0]&quot;)
-assert(${val} STREQUAL &ldquo;1&rdquo;)</p>
-<p>#deserialize a array with multiple values
-json_deserialize(res &ldquo;[&quot;1&quot;, &quot;2&quot;]&quot;)
-map_navigate(val &ldquo;res[0]&quot;)
-assert(${val} STREQUAL &ldquo;1&rdquo;)
-map_navigate(val &ldquo;res[1]&quot;)
-assert(${val} STREQUAL &ldquo;2&rdquo;)</p>
-<h1 id="deserialize-a-simple-object-with-one-value">deserialize a simple object with one value</h1>
-<p>json_deserialize(res &ldquo;{ &quot;key&quot; : &quot;value&quot;}&quot;)
-map_navigate(val &ldquo;res.key&rdquo;)
-assert(${val} STREQUAL &ldquo;value&rdquo;)</p>
-<h1 id="deserialize-a-simple-object-with-multiple-values">deserialize a simple object with multiple values</h1>
-<p>json_deserialize(res &ldquo;{ &quot;key&quot; : &quot;value&quot;, &quot;key2&quot; : &quot;val2&quot;}&quot;)
-map_navigate(val &ldquo;res.key&rdquo;)
-assert(${val} STREQUAL &ldquo;value&rdquo;)
-map_navigate(val &ldquo;res.key2&rdquo;)
-assert(${val} STREQUAL &ldquo;val2&rdquo;)</p>
-<h1 id="deserialize-a-simple-nested-structure">deserialize a simple nested structure</h1>
-<p>json_deserialize(res &ldquo;{ &quot;key&quot; : {&quot;key3&quot;:&quot;myvalue&quot; }, &quot;key2&quot; : &quot;val2&quot;}&quot;)
-map_navigate(val &ldquo;res.key2&rdquo;)
-assert(${val} STREQUAL &ldquo;val2&rdquo;)
-map_navigate(val &ldquo;res.key.key3&rdquo;)
-assert(${val} STREQUAL &ldquo;myvalue&rdquo;)</p>
-<h1 id="deserialize-a-nested-structure-containing-both-arrays-and-objects">deserialize a nested structure containing both arrays and objects</h1>
-<p>json_deserialize(res &ldquo;{ &quot;key&quot; : [&quot;1&quot;, &quot;2&quot;], &quot;key2&quot; : &quot;val2&quot;}&quot;)
-map_navigate(val &ldquo;res.key2&rdquo;)
-assert(${val} STREQUAL &ldquo;val2&rdquo;)
-map_navigate(val &ldquo;res.key[0]&quot;)
-assert(${val} STREQUAL &ldquo;1&rdquo;)
-map_navigate(val &ldquo;res.key[1]&quot;)
-assert(${val} STREQUAL &ldquo;2&rdquo;)</p>
-<h1 id="deserialize-a-deeply-nested-structure-and-get-a-value">deserialize a &lsquo;deeply&rsquo; nested structure and get a value</h1>
-<p>json_deserialize(res &ldquo;{ &quot;key&quot; : [{&quot;k1&quot;:&quot;v1&quot;}, &quot;2&quot;], &quot;key2&quot; : &quot;val2&quot;}&quot;)
-map_navigate(val &ldquo;res.key[0].k1&rdquo;)
-assert(${val} STREQUAL &ldquo;v1&rdquo;)</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># serialize empty value
+</span><span style="color:#75715e"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">NOT</span> <span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># serialze simple value
+</span><span style="color:#75715e"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;hello!&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;\&#34;</span><span style="color:#e6db74">hello!\</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># serialize a cmake list value
+</span><span style="color:#75715e"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;a;b;c&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">EQUALS</span> <span style="color:#e6db74">&#34;\&#34;</span><span style="color:#e6db74">a\\\\;b\\\\;c\</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#empty object
+</span><span style="color:#75715e"></span>element(<span style="color:#e6db74">uut</span> <span style="color:#e6db74">MAP</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>element(<span style="color:#e6db74">END</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#f92672">${</span>uut<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;{}&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># empty list
+</span><span style="color:#75715e"></span>element(<span style="color:#e6db74">uut</span> <span style="color:#e6db74">LIST</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>element(<span style="color:#e6db74">END</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#f92672">${</span>uut<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;[]&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># ref
+</span><span style="color:#75715e"></span>ref_new(<span style="color:#e6db74">uut</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>ref_set(<span style="color:#f92672">${</span>uut<span style="color:#f92672">}</span> <span style="color:#e6db74">&#34;a b c&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#f92672">${</span>uut<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;\&#34;</span><span style="color:#e6db74">a</span> <span style="color:#e6db74">b</span> <span style="color:#e6db74">c\</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># list with one element
+</span><span style="color:#75715e"></span>element(<span style="color:#e6db74">uut</span> <span style="color:#e6db74">LIST</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>value(<span style="color:#e6db74">1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>element(<span style="color:#e6db74">END</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#f92672">${</span>uut<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;[\&#34;</span><span style="color:#e6db74">1\</span><span style="color:#e6db74">&#34;]&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># list with multiple elements element
+</span><span style="color:#75715e"></span>element(<span style="color:#e6db74">uut</span> <span style="color:#e6db74">LIST</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>value(<span style="color:#e6db74">1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>value(<span style="color:#e6db74">2</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>element(<span style="color:#e6db74">END</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#f92672">${</span>uut<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;[\&#34;</span><span style="color:#e6db74">1\</span><span style="color:#e6db74">&#34;,\&#34;</span><span style="color:#e6db74">2\</span><span style="color:#e6db74">&#34;]&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># object with single value
+</span><span style="color:#75715e"></span>element(<span style="color:#e6db74">uut</span> <span style="color:#e6db74">MAP</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>value(<span style="color:#e6db74">KEY</span> <span style="color:#e6db74">k1</span> <span style="color:#e6db74">val1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>element(<span style="color:#e6db74">END</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#f92672">${</span>uut<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;{\&#34;</span><span style="color:#e6db74">k1\</span><span style="color:#e6db74">&#34;:\&#34;</span><span style="color:#e6db74">val1\</span><span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># object with multiple value
+</span><span style="color:#75715e"></span>element(<span style="color:#e6db74">uut</span> <span style="color:#e6db74">MAP</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>value(<span style="color:#e6db74">KEY</span> <span style="color:#e6db74">k1</span> <span style="color:#e6db74">val1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>value(<span style="color:#e6db74">KEY</span> <span style="color:#e6db74">k2</span> <span style="color:#e6db74">val2</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>element(<span style="color:#e6db74">END</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#f92672">${</span>uut<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;{\&#34;</span><span style="color:#e6db74">k1\</span><span style="color:#e6db74">&#34;:\&#34;</span><span style="color:#e6db74">val1\</span><span style="color:#e6db74">&#34;,\&#34;</span><span style="color:#e6db74">k2\</span><span style="color:#e6db74">&#34;:\&#34;</span><span style="color:#e6db74">val2\</span><span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># list with single map
+</span><span style="color:#75715e"></span>element(<span style="color:#e6db74">uut</span> <span style="color:#e6db74">LIST</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>element()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>value(<span style="color:#e6db74">KEY</span> <span style="color:#e6db74">k1</span> <span style="color:#e6db74">1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>element(<span style="color:#e6db74">END</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>element(<span style="color:#e6db74">END</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>json_serialize(<span style="color:#e6db74">res</span> <span style="color:#f92672">${</span>uut<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;[{\&#34;</span><span style="color:#e6db74">k1\</span><span style="color:#e6db74">&#34;:\&#34;</span><span style="color:#e6db74">1\</span><span style="color:#e6db74">&#34;}]&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># deserialize a empty value
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">NOT</span> <span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># deserialize a empty object
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;{}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>ref_isvalid( <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span>  <span style="color:#e6db74">is_ref</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">is_ref</span> <span style="color:#e6db74">MESSAGE</span> <span style="color:#e6db74">&#34;expected res to be a ref&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># desirialize a empty array
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;[]&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>ref_isvalid( <span style="color:#f92672">${</span>res<span style="color:#f92672">}</span> <span style="color:#e6db74">is_ref</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">is_ref</span> <span style="color:#e6db74">MESSAGE</span> <span style="color:#e6db74">&#34;expected res to be a ref&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># deserialize a simple value
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;\&#34;</span><span style="color:#e6db74">teststring\</span><span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>res<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;teststring&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># deserialize a array with one value
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;[\&#34;</span><span style="color:#e6db74">1\</span><span style="color:#e6db74">&#34;]&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res[0]&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;1&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#deserialize a array with multiple values
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;[\&#34;</span><span style="color:#e6db74">1\</span><span style="color:#e6db74">&#34;, \&#34;</span><span style="color:#e6db74">2\</span><span style="color:#e6db74">&#34;]&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res[0]&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;1&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res[1]&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;2&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># deserialize a simple object with one value
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;{ \&#34;</span><span style="color:#e6db74">key\</span><span style="color:#e6db74">&#34; : \&#34;</span><span style="color:#e6db74">value\</span><span style="color:#e6db74">&#34;}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res.key&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;value&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># deserialize a simple object with multiple values
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;{ \&#34;</span><span style="color:#e6db74">key\</span><span style="color:#e6db74">&#34; : \&#34;</span><span style="color:#e6db74">value\</span><span style="color:#e6db74">&#34;, \&#34;</span><span style="color:#e6db74">key2\</span><span style="color:#e6db74">&#34; : \&#34;</span><span style="color:#e6db74">val2\</span><span style="color:#e6db74">&#34;}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res.key&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;value&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res.key2&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;val2&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># deserialize a simple nested structure
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;{ \&#34;</span><span style="color:#e6db74">key\</span><span style="color:#e6db74">&#34; : {\&#34;</span><span style="color:#e6db74">key3\</span><span style="color:#e6db74">&#34;:\&#34;</span><span style="color:#e6db74">myvalue\</span><span style="color:#e6db74">&#34; }, \&#34;</span><span style="color:#e6db74">key2\</span><span style="color:#e6db74">&#34; : \&#34;</span><span style="color:#e6db74">val2\</span><span style="color:#e6db74">&#34;}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res.key2&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;val2&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res.key.key3&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;myvalue&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># deserialize a nested structure containing both arrays and objects
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;{ \&#34;</span><span style="color:#e6db74">key\</span><span style="color:#e6db74">&#34; : [\&#34;</span><span style="color:#e6db74">1\</span><span style="color:#e6db74">&#34;, \&#34;</span><span style="color:#e6db74">2\</span><span style="color:#e6db74">&#34;], \&#34;</span><span style="color:#e6db74">key2\</span><span style="color:#e6db74">&#34; : \&#34;</span><span style="color:#e6db74">val2\</span><span style="color:#e6db74">&#34;}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res.key2&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;val2&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res.key[0]&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;1&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res.key[1]&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;2&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># deserialize a &#39;deeply&#39; nested structure and get a value
+</span><span style="color:#75715e"></span>json_deserialize(<span style="color:#e6db74">res</span> <span style="color:#e6db74">&#34;{ \&#34;</span><span style="color:#e6db74">key\</span><span style="color:#e6db74">&#34; : [{\&#34;</span><span style="color:#e6db74">k1\</span><span style="color:#e6db74">&#34;:\&#34;</span><span style="color:#e6db74">v1\</span><span style="color:#e6db74">&#34;}, \&#34;</span><span style="color:#e6db74">2\</span><span style="color:#e6db74">&#34;], \&#34;</span><span style="color:#e6db74">key2\</span><span style="color:#e6db74">&#34; : \&#34;</span><span style="color:#e6db74">val2\</span><span style="color:#e6db74">&#34;}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>map_navigate(<span style="color:#e6db74">val</span> <span style="color:#e6db74">&#34;res.key[0].k1&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>val<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;v1&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div>
 
                 
 
@@ -337,13 +380,13 @@ assert(${val} STREQUAL &ldquo;v1&rdquo;)</p>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/cmakepptemplategeneration/" data-toggle="tooltip" data-placement="top" title="cmakepp: Template Generation in CMake">&larr;
+                        <a href="/post/objectorientedcmakenextiteration/" data-toggle="tooltip" data-placement="top" title="Object Oriented CMake: Next Iteration">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/cppdynamicobject/" data-toggle="tooltip" data-placement="top" title="An Implementation of the Dynamic Object in C&#43;&#43;">Next
+                        <a href="/post/cppiscallabletypetrait/" data-toggle="tooltip" data-placement="top" title="`is_callable` type trait">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -380,6 +423,34 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                            c&#43;&#43;
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        
+                        
+                        
                         
                         
                         

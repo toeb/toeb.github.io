@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MVC on toeb&#39;s Blog</title>
+    <link>https://toeb.github.io/tags/mvc/</link>
+    <description>Recent content in MVC on toeb&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 05 Jan 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://toeb.github.io/tags/mvc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Enabling MVC5 intellisense in a ClassLibrary Project</title>
+      <link>https://toeb.github.io/post/enablingmvc5intellisensinclasslibraryproject/</link>
+      <pubDate>Sun, 05 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/enablingmvc5intellisensinclasslibraryproject/</guid>
+      <description>I’ve been searching and searching the internet for someone, somewhere who might know how to enable correct IntelliSense for cshtml (MVC 5.0) in VS2013 when developing in a ClassLibrary type project.
+This is the problem I was encountering:
+Missing Intellisense
+It’s all thanks to Mohammad Chehab, who was also stumped for a while (probably not as long as me), that I was able to find the solution. His blog post explains that one must change the output path for the class library to bin/ (instead of bin/) for Intellisense to work.</description>
+    </item>
+    
+  </channel>
+</rss>

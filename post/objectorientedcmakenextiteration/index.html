@@ -34,9 +34,9 @@
     
 
     
-    <meta name="description" content="">
-    <meta property="og:description" content="" />
-    <meta property="twitter:description" content="" />
+    <meta name="description" content="New Version of Cmakepp, old blogpost">
+    <meta property="og:description" content="New Version of Cmakepp, old blogpost" />
+    <meta property="twitter:description" content="New Version of Cmakepp, old blogpost" />
     
 
     
@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -174,6 +186,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        <a class="tag" href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
                     </div>
                     <h1>Object Oriented CMake: Next Iteration</h1>
                     <h2 class="subheading"></h2>
@@ -183,7 +203,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Tuesday, February 25, 2014
                         
                         
                         
@@ -208,160 +228,159 @@
                 post-container">
 
                 
-                <p>Object Oriented CMake: Next Iteration
-by thetoeb • 2014/02/25 • 3 Comments</p>
-<p>I worked on my object oriented extensions for CMake  and am on a much higher level of usability than before!</p>
+                <p>I worked on my object oriented extensions for CMake  and am on a much higher level of usability than before!</p>
 <p>try it at <a href="https://github.com/toeb/oo-cmake">https://github.com/toeb/oo-cmake</a></p>
 <p>and as always: Feedback is most welcome</p>
 <p>See the following object tutorial for ease of use: (for the current version look at the readme.md on github)</p>
-<h3 id="using-objects">using objects</h3>
-<pre><code>### =============
-# oo-cmake is very similar to javascript
-# I actually used the javascript reference to figure out how things could be done :)
-# oo-cmake is a pure object oriented language like javascript (only objects no types per se)
-# oo-cmake is currently file based and relies heavily on dynamic functions to be upfron about it:
-# oo-cmake is very slow (depending on what your doing)
-
-## creating a object
-## =================
-obj_new(myobject)
-# ${myobject} now is a reference to an object
-obj_exists(${myobject} _exists)
-assert(_exists)
-
-## deleting a object
-## =================
-# oo-cmake does not contains automatic memory management
-# you can however remove all objects by calling obj_cleanup 
-# (a very crude way of garbage collection) I would suggest calling it at the end of cmake.
-obj_new(object_to_delete)
-obj_delete(${object_to_delete})
-# object_to_delete still contains the same reference
-# but the object does not exists anymore and the following returns false
-obj_exists(${object_to_delete} _exists)
-assert(NOT _exists)
-
-## setting and setting property
-## ==================
-obj_new(myobject)
-# call obj_set passing the object reference
-# the propertyname 'key1' and the value 'val1'
-# everything beyond 'key1' is saved (as a list)
-obj_set(${myobject} key1 &quot;val1&quot;)
-#call obj_get passing the object refernce the result variable and
-# the key which is to be gotten
-obj_get(${myobject} theValue key1)
-assert(theValue)
-assert(${theValue} STREQUAL &quot;val1&quot;)
-
-## setting a function and calling it
-## =================================
-obj_new(obj)
-obj_set(${obj} last_name &quot;Becker&quot;)
-obj_set(${obj} first_name &quot;Tobias&quot;)
-#obj_setfunction accepts any function (cmake command, string function, file function, unique function (see function tutorial))
-# if you use a cmake function be sure that it will not be overwritten
-# the safest way to add a function is to use obj_declarefunction
-# you can either specify the key where it is to be stored or not
-# if you do not specify it the name of the function is used
-function(greet result)
-    # in the function you have read access to all fields of the proeprty
-    # as will as to 'this' which contains the reference to the object
-
-    # this sets the variable ${result} in PARENT_SCOPE (returning values in cmake)
-    set(${result} &quot;Hello ${first_name} ${last_name}!&quot; PARENT_SCOPE)
-
-endfunction()
-obj_setfunction(${obj} greet)
-obj_callmember(${obj} greet res)
-assert(res)
-assert(${res} STREQUAL &quot;Hello Tobias Becker!&quot;)
-# alternatively you can also use obj_declarefunction
-# this is actually the easiest way to define a function in code
-obj_declarefunction(${obj} say_goodbye)
-function(${say_goodbye} result)
-    set(${result} &quot;Goodbye ${first_name} ${last_name}!&quot; PARENT_SCOPE)
-endfunction()
-obj_callmember(${obj} say_goodbye res)
-assert(res)
-assert(res STREQUAL &quot;Goodbye Tobias Becker!&quot;)
-
-## built in methods
-## ================
-# obj_new creates a object which automatically inherits Object
-# Object contains some functions e.g. to_string, print, ...
-# 
-obj_new(obj)
-obj_callmember(${obj} print)
-
-# this prints all members
-# ie
-#{
-# print: [function], 
-# to_string: [function], 
-# __ctor__: [object :object_Y3dVWkChKi], 
-# __proto__: [object :object_AztQwnKoE7], 
-#}
-
-## constructors
-## ============
-# you can easily define a object type via constructor
-function(MyObject)
-    # declare a function on the prototype (which is accessible for all objects)
-    # inheriting from MyObject
-    obj_declarefunction(${__proto__} myMethod)
-    function(${myMethod} result)
-        set(${result} &quot;myMethod: ${myValue}&quot; PARENT_SCOPE)
-        this_set(myNewProperty &quot;this is a text ${myValue}&quot;)
-    endfunction()
-
-    # set a field for the object
-    this_set(myValue &quot;hello&quot;)
-endfunction()
-
-obj_new(obj MyObject)
-# type of object will now be MyObject
-obj_gettype(${obj} type)
-assert(type)
-assert(${type} STREQUAL MyObject)
-# call
-obj_callmember(${obj} myMethod res)
-assert(res)
-assert(${res} STREQUAL &quot;myMethod: hello&quot;)
-obj_set(${obj} myValue &quot;othervalue&quot;)
-obj_callmember(${obj} myMethod res)
-assert(res)
-assert(${res} STREQUAL &quot;myMethod: othervalue&quot;)
-obj_get(${obj} res myNewProperty)
-assert(res)
-assert(${res} STREQUAL &quot;this is a text othervalue&quot;)
-
-## functors
-## ========
-
-## binding a function
-## ==================
-# you can bind any function to an object without
-# setting it as property
-# causing the function to get access to 'this'
-# and all defined properties
-function(anyfunction)
-    this_callmember(print)
-endfunction()
-obj_new(obj)
-obj_bindcall(${obj} anyfunction)
-## print the object
-# alternatively you can bind the function to the object
-obj_bind(boundfu ${obj} anyfunction)
-call_function(${boundfu})
-# prints the object
-# alternatively you can bind and import then function
-# beware that you might overwrite a defined function if you append REDEFINE
-# 
-obj_bindimport(${obj} anyfunction myBoundFunc REDEFINE)
-myBoundFunc()
-# print the object</code></pre>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#75715e">### using objects
+</span><span style="color:#75715e">### =============
+</span><span style="color:#75715e"># oo-cmake is very similar to javascript
+</span><span style="color:#75715e"># I actually used the javascript reference to figure out how things could be done :)
+</span><span style="color:#75715e"># oo-cmake is a pure object oriented language like javascript (only objects no types per se)
+</span><span style="color:#75715e"># oo-cmake is currently file based and relies heavily on dynamic functions to be upfron about it:
+</span><span style="color:#75715e"># oo-cmake is very slow (depending on what your doing)
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## creating a object
+</span><span style="color:#75715e">## =================
+</span><span style="color:#75715e"></span>obj_new(<span style="color:#e6db74">myobject</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># ${myobject} now is a reference to an object
+</span><span style="color:#75715e"></span>obj_exists(<span style="color:#f92672">${</span>myobject<span style="color:#f92672">}</span> <span style="color:#e6db74">_exists</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">_exists</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## deleting a object
+</span><span style="color:#75715e">## =================
+</span><span style="color:#75715e"># oo-cmake does not contains automatic memory management
+</span><span style="color:#75715e"># you can however remove all objects by calling obj_cleanup 
+</span><span style="color:#75715e"># (a very crude way of garbage collection) I would suggest calling it at the end of cmake.
+</span><span style="color:#75715e"></span>obj_new(<span style="color:#e6db74">object_to_delete</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_delete(<span style="color:#f92672">${</span>object_to_delete<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># object_to_delete still contains the same reference
+</span><span style="color:#75715e"># but the object does not exists anymore and the following returns false
+</span><span style="color:#75715e"></span>obj_exists(<span style="color:#f92672">${</span>object_to_delete<span style="color:#f92672">}</span> <span style="color:#e6db74">_exists</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">NOT</span> <span style="color:#e6db74">_exists</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## setting and setting property
+</span><span style="color:#75715e">## ==================
+</span><span style="color:#75715e"></span>obj_new(<span style="color:#e6db74">myobject</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># call obj_set passing the object reference
+</span><span style="color:#75715e"># the propertyname &#39;key1&#39; and the value &#39;val1&#39;
+</span><span style="color:#75715e"># everything beyond &#39;key1&#39; is saved (as a list)
+</span><span style="color:#75715e"></span>obj_set(<span style="color:#f92672">${</span>myobject<span style="color:#f92672">}</span> <span style="color:#e6db74">key1</span> <span style="color:#e6db74">&#34;val1&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#call obj_get passing the object refernce the result variable and
+</span><span style="color:#75715e"># the key which is to be gotten
+</span><span style="color:#75715e"></span>obj_get(<span style="color:#f92672">${</span>myobject<span style="color:#f92672">}</span> <span style="color:#e6db74">theValue</span> <span style="color:#e6db74">key1</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">theValue</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>theValue<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;val1&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## setting a function and calling it
+</span><span style="color:#75715e">## =================================
+</span><span style="color:#75715e"></span>obj_new(<span style="color:#e6db74">obj</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_set(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">last_name</span> <span style="color:#e6db74">&#34;Becker&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_set(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">first_name</span> <span style="color:#e6db74">&#34;Tobias&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#obj_setfunction accepts any function (cmake command, string function, file function, unique function (see function tutorial))
+</span><span style="color:#75715e"># if you use a cmake function be sure that it will not be overwritten
+</span><span style="color:#75715e"># the safest way to add a function is to use obj_declarefunction
+</span><span style="color:#75715e"># you can either specify the key where it is to be stored or not
+</span><span style="color:#75715e"># if you do not specify it the name of the function is used
+</span><span style="color:#75715e"></span>function(<span style="color:#e6db74">greet</span> <span style="color:#e6db74">result</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e"># in the function you have read access to all fields of the proeprty
+</span><span style="color:#75715e"></span>    <span style="color:#75715e"># as will as to &#39;this&#39; which contains the reference to the object
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e"># this sets the variable ${result} in PARENT_SCOPE (returning values in cmake)
+</span><span style="color:#75715e"></span>    set(<span style="color:#f92672">${</span>result<span style="color:#f92672">}</span> <span style="color:#e6db74">&#34;Hello ${first_name} ${last_name}!&#34;</span> <span style="color:#e6db74">PARENT_SCOPE</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>endfunction()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_setfunction(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">greet</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_callmember(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">greet</span> <span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>res<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;Hello Tobias Becker!&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># alternatively you can also use obj_declarefunction
+</span><span style="color:#75715e"># this is actually the easiest way to define a function in code
+</span><span style="color:#75715e"></span>obj_declarefunction(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">say_goodbye</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>function(<span style="color:#f92672">${</span>say_goodbye<span style="color:#f92672">}</span> <span style="color:#e6db74">result</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    set(<span style="color:#f92672">${</span>result<span style="color:#f92672">}</span> <span style="color:#e6db74">&#34;Goodbye ${first_name} ${last_name}!&#34;</span> <span style="color:#e6db74">PARENT_SCOPE</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>endfunction()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_callmember(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">say_goodbye</span> <span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">res</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;Goodbye Tobias Becker!&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## built in methods
+</span><span style="color:#75715e">## ================
+</span><span style="color:#75715e"># obj_new creates a object which automatically inherits Object
+</span><span style="color:#75715e"># Object contains some functions e.g. to_string, print, ...
+</span><span style="color:#75715e"># 
+</span><span style="color:#75715e"></span>obj_new(<span style="color:#e6db74">obj</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_callmember(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">print</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># this prints all members
+</span><span style="color:#75715e"># ie
+</span><span style="color:#75715e">#{
+</span><span style="color:#75715e"># print: [function], 
+</span><span style="color:#75715e"># to_string: [function], 
+</span><span style="color:#75715e"># __ctor__: [object :object_Y3dVWkChKi], 
+</span><span style="color:#75715e"># __proto__: [object :object_AztQwnKoE7], 
+</span><span style="color:#75715e">#}
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## constructors
+</span><span style="color:#75715e">## ============
+</span><span style="color:#75715e"># you can easily define a object type via constructor
+</span><span style="color:#75715e"></span>function(<span style="color:#e6db74">MyObject</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e"># declare a function on the prototype (which is accessible for all objects)
+</span><span style="color:#75715e"></span>    <span style="color:#75715e"># inheriting from MyObject
+</span><span style="color:#75715e"></span>    obj_declarefunction(<span style="color:#f92672">${</span>__proto__<span style="color:#f92672">}</span> <span style="color:#e6db74">myMethod</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    function(<span style="color:#f92672">${</span>myMethod<span style="color:#f92672">}</span> <span style="color:#e6db74">result</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        set(<span style="color:#f92672">${</span>result<span style="color:#f92672">}</span> <span style="color:#e6db74">&#34;myMethod: ${myValue}&#34;</span> <span style="color:#e6db74">PARENT_SCOPE</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>        this_set(<span style="color:#e6db74">myNewProperty</span> <span style="color:#e6db74">&#34;this is a text ${myValue}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    endfunction()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e"># set a field for the object
+</span><span style="color:#75715e"></span>    this_set(<span style="color:#e6db74">myValue</span> <span style="color:#e6db74">&#34;hello&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>endfunction()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_new(<span style="color:#e6db74">obj</span> <span style="color:#e6db74">MyObject</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># type of object will now be MyObject
+</span><span style="color:#75715e"></span>obj_gettype(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">type</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">type</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>type<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">MyObject</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># call
+</span><span style="color:#75715e"></span>obj_callmember(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">myMethod</span> <span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>res<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;myMethod: hello&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_set(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">myValue</span> <span style="color:#e6db74">&#34;othervalue&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_callmember(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">myMethod</span> <span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>res<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;myMethod: othervalue&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_get(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">res</span> <span style="color:#e6db74">myNewProperty</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">res</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>res<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;this is a text othervalue&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## functors
+</span><span style="color:#75715e">## ========
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## binding a function
+</span><span style="color:#75715e">## ==================
+</span><span style="color:#75715e"># you can bind any function to an object without
+</span><span style="color:#75715e"># setting it as property
+</span><span style="color:#75715e"># causing the function to get access to &#39;this&#39;
+</span><span style="color:#75715e"># and all defined properties
+</span><span style="color:#75715e"></span>function(<span style="color:#e6db74">anyfunction</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    this_callmember(<span style="color:#e6db74">print</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>endfunction()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_new(<span style="color:#e6db74">obj</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>obj_bindcall(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">anyfunction</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">## print the object
+</span><span style="color:#75715e"># alternatively you can bind the function to the object
+</span><span style="color:#75715e"></span>obj_bind(<span style="color:#e6db74">boundfu</span> <span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">anyfunction</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>call_function(<span style="color:#f92672">${</span>boundfu<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># prints the object
+</span><span style="color:#75715e"># alternatively you can bind and import then function
+</span><span style="color:#75715e"># beware that you might overwrite a defined function if you append REDEFINE
+</span><span style="color:#75715e"># 
+</span><span style="color:#75715e"></span>obj_bindimport(<span style="color:#f92672">${</span>obj<span style="color:#f92672">}</span> <span style="color:#e6db74">anyfunction</span> <span style="color:#e6db74">myBoundFunc</span> <span style="color:#e6db74">REDEFINE</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>myBoundFunc()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># print the object
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div>
 
                 
 
@@ -369,13 +388,13 @@ myBoundFunc()
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/cpprenameablenamespaces/" data-toggle="tooltip" data-placement="top" title="Renameable Namespaces using the Preprocessor">&larr;
+                        <a href="/post/cmakeppobjectsandmaps/" data-toggle="tooltip" data-placement="top" title="Objects and Maps in CMake">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/normalizedattributenamesinangular/" data-toggle="tooltip" data-placement="top" title="Normalized Attribute Names in Angular">Next
+                        <a href="/post/cmakereadingandwritingjson/" data-toggle="tooltip" data-placement="top" title="cmakepp: Reading and Writing JSON">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -412,6 +431,34 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                            c&#43;&#43;
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        
+                        
+                        
                         
                         
                         

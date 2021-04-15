@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>frontend on toeb&#39;s Blog</title>
+    <link>https://toeb.github.io/categories/frontend/</link>
+    <description>Recent content in frontend on toeb&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 Jan 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://toeb.github.io/categories/frontend/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Normalized Attribute Names in Angular</title>
+      <link>https://toeb.github.io/post/normalizedattributenamesinangular/</link>
+      <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/normalizedattributenamesinangular/</guid>
+      <description>I have been doing some hard directive/ html markup work and I came across a problem where I needed the normalized html tag attribute names. (I was trying to create a html element but needed access to the normalized names without turning it into a directive)
+Angular.js normalizes names like “test-name” and “data-test-name” to “testName”. So I went ahead and extracted and wrapped the functions needed into the following function:</description>
+    </item>
+    
+    <item>
+      <title>Enabling MVC5 intellisense in a ClassLibrary Project</title>
+      <link>https://toeb.github.io/post/enablingmvc5intellisensinclasslibraryproject/</link>
+      <pubDate>Sun, 05 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/enablingmvc5intellisensinclasslibraryproject/</guid>
+      <description>I’ve been searching and searching the internet for someone, somewhere who might know how to enable correct IntelliSense for cshtml (MVC 5.0) in VS2013 when developing in a ClassLibrary type project.
+This is the problem I was encountering:
+Missing Intellisense
+It’s all thanks to Mohammad Chehab, who was also stumped for a while (probably not as long as me), that I was able to find the solution. His blog post explains that one must change the output path for the class library to bin/ (instead of bin/) for Intellisense to work.</description>
+    </item>
+    
+    <item>
+      <title>Typescript in V2013</title>
+      <link>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</link>
+      <pubDate>Wed, 18 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</guid>
+      <description>I know its a little obscure, but I recently needed to find out how to enable Typescript in a Visual Studio 2013 Class Library project, because per default this is not enabled. (probably a bug)
+Vanilla way of enabling TypeScript:
+Create a “Class Library” project Add a Typescript file (.ts) This is were the bug occurs, normally the TypeScript file should compile on save. However it does not. So after searching around and looking at the csproj file and comparing it to a MvcApplication csproj file I found out what the problem is:</description>
+    </item>
+    
+  </channel>
+</rss>

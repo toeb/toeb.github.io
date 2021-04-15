@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="is_callable type trait" />
-    <meta property="og:title" content="is_callable type trait" />
-    <meta property="twitter:title" content="is_callable type trait" />
+    <meta name="title" content="`is_callable` type trait" />
+    <meta property="og:title" content="`is_callable` type trait" />
+    <meta property="twitter:title" content="`is_callable` type trait" />
     
 
     
@@ -47,7 +47,7 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>is_callable type trait-Toeb Blog</title>
+    <title>`is_callable` type trait-Toeb Blog</title>
 
     <link rel="canonical" href="/post/cppiscallabletypetrait/">
 
@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -175,7 +187,7 @@
                     <div class="tags">
                         
                     </div>
-                    <h1>is_callable type trait</h1>
+                    <h1>`is_callable` type trait</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by 
@@ -183,7 +195,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Saturday, July 12, 2014
                         
                         
                         
@@ -208,63 +220,65 @@
                 post-container">
 
                 
-                <p>is_callable type trait
-by thetoeb • 2014/07/12 • 0 Comments</p>
-<p>I’ve developed a type_trait for checking if a type is callable, ie has defined a single operator(). Also on ideone</p>
-<p>Tell me if you like it or if you know of a better version :D
-/// function traits for member functions
-// gives you the class_type, return_type and arguments tuple for any member function (const and not const)
-template<typename T>
-struct func_traits{
-static const bool is_const_call = false;
-typedef void class_type;
-typedef void return_type;
-typedef void args_tuple;
-};
-// specialization for non const call member functions
-template &lt; typename TClass ,typename TRet, typename &hellip; TArgs&gt;
-struct func_traits&lt;TRet(TClass::<em>)(TArgs&hellip;)&gt;
-{
-static const bool is_const_call = false;
-typedef TClass class_type;
-typedef TRet return_type;
-typedef std::tuple&lt;TArgs&hellip;&gt; args_tuple;
-};
-// specialization for const call member function
-template &lt; typename TClass, typename TRet, typename &hellip; TArgs&gt;
-struct func_traits&lt;TRet(TClass::</em>)(TArgs&hellip;)const&gt;
-{
-static const bool is_const_call = true;
-typedef TClass class_type;
-typedef TRet return_type;
-typedef std::tuple&lt;TArgs&hellip;&gt; args_tuple;
-};</p>
-<p>// checks wether a single call operator exists by sfinae ideom
-template<typename T>
-struct is_callable{</p>
-<p>private:
-// if the argument type is deducable this function is used
-template<typename TX = T>
-static char check(typename func_traits&lt;decltype(&amp;TX::operator())&gt;::class_type);
-// else this function is used
-static double check(&hellip;);
-static T t;
-// if first function is used the call operator exists and the size is sizeof(char) instead of sizeof(double)
-enum{ _value = sizeof(check(t)) == sizeof(char) };
-public:
-const static bool value = _value;
-};</p>
-<p>int main() {
-// B is a functor class, A not callable
-class B{ public:void operator()(int i)const{} };
-class A{};
-// this order works  in MSVC 2013
-static_assert(is_callable<B>::value == true, &ldquo;should be true&rdquo;);
-static_assert(is_callable<A>::value == false, &ldquo;should be false&rdquo;);
-//
-return 0;
+                <p>I’ve developed a <code>type_trait</code> for checking if a type is callable, ie has defined a single <code>operator()</code>. Also on ideone</p>
+<p>Tell me if you like it or if you know of a better version :D</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">/// function traits for member functions 
+</span><span style="color:#75715e">// gives you the class_type, return_type and arguments tuple for any member function (const and not const)
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">func_traits</span>{
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> is_const_call <span style="color:#f92672">=</span> false;
+    <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">void</span> class_type;
+    <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">void</span> return_type;
+    <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">void</span> args_tuple;
+  };
+  <span style="color:#75715e">// specialization for non const call member functions
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> TClass ,<span style="color:#66d9ef">typename</span> TRet, <span style="color:#66d9ef">typename</span> ... TArgs<span style="color:#f92672">&gt;</span>
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">func_traits</span><span style="color:#f92672">&lt;</span>TRet(TClass<span style="color:#f92672">::*</span>)(TArgs...)<span style="color:#f92672">&gt;</span>
+  {
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> is_const_call <span style="color:#f92672">=</span> false;
+    <span style="color:#66d9ef">typedef</span> TClass class_type;
+    <span style="color:#66d9ef">typedef</span> TRet return_type;
+    <span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span>TArgs...<span style="color:#f92672">&gt;</span> args_tuple;
+  };
+  <span style="color:#75715e">// specialization for const call member function
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">typename</span> TClass, <span style="color:#66d9ef">typename</span> TRet, <span style="color:#66d9ef">typename</span> ... TArgs<span style="color:#f92672">&gt;</span>
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">func_traits</span><span style="color:#f92672">&lt;</span>TRet(TClass<span style="color:#f92672">::*</span>)(TArgs...)<span style="color:#66d9ef">const</span><span style="color:#f92672">&gt;</span>
+  {
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> is_const_call <span style="color:#f92672">=</span> true;
+    <span style="color:#66d9ef">typedef</span> TClass class_type;
+    <span style="color:#66d9ef">typedef</span> TRet return_type;
+    <span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span>TArgs...<span style="color:#f92672">&gt;</span> args_tuple;
+  };
+
+<span style="color:#75715e">// checks wether a single call operator exists by sfinae ideom
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">is_callable</span>{
+
+  <span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    <span style="color:#75715e">// if the argument type is deducable this function is used
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> TX <span style="color:#f92672">=</span> T<span style="color:#f92672">&gt;</span>
+    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">char</span> check(<span style="color:#66d9ef">typename</span> func_traits<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(<span style="color:#f92672">&amp;</span>TX<span style="color:#f92672">::</span><span style="color:#66d9ef">operator</span>())<span style="color:#f92672">&gt;::</span>class_type);
+    <span style="color:#75715e">// else this function is used
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">check</span>(...);
+    <span style="color:#66d9ef">static</span> T t;
+    <span style="color:#75715e">// if first function is used the call operator exists and the size is sizeof(char) instead of sizeof(double)
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">enum</span>{ _value <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(check(t)) <span style="color:#f92672">==</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">char</span>) };
+  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> value <span style="color:#f92672">=</span> _value;
+  };
+
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#75715e">// B is a functor class, A not callable
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span>{ <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span><span style="color:#66d9ef">void</span> <span style="color:#66d9ef">operator</span>()(<span style="color:#66d9ef">int</span> i)<span style="color:#66d9ef">const</span>{} };
+  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>{};
+  <span style="color:#75715e">// this order works  in MSVC 2013
+</span><span style="color:#75715e"></span>   <span style="color:#66d9ef">static_assert</span>(is_callable<span style="color:#f92672">&lt;</span>B<span style="color:#f92672">&gt;::</span>value <span style="color:#f92672">==</span> true, <span style="color:#e6db74">&#34;should be true&#34;</span>);
+   <span style="color:#66d9ef">static_assert</span>(is_callable<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;::</span>value <span style="color:#f92672">==</span> false, <span style="color:#e6db74">&#34;should be false&#34;</span>);
+    <span style="color:#75715e">// 
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
-Some Sources I queried when developing:</p>
+</code></pre></div><p>Some Sources I queried when developing:</p>
 <p><a href="http://stackoverflow.com/questions/5100015/c-metafunction-to-determine-whether-a-type-is-callable">http://stackoverflow.com/questions/5100015/c-metafunction-to-determine-whether-a-type-is-callable</a>
 <a href="http://functionalcpp.wordpress.com/2013/08/05/function-traits/">http://functionalcpp.wordpress.com/2013/08/05/function-traits/</a>
 … some more, can’t find…</p>
@@ -276,13 +290,13 @@ Some Sources I queried when developing:</p>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/enablingmvc5intellisensinclasslibraryproject/" data-toggle="tooltip" data-placement="top" title="Modern CMake Slides">&larr;
+                        <a href="/post/cmakereadingandwritingjson/" data-toggle="tooltip" data-placement="top" title="cmakepp: Reading and Writing JSON">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/enabletypescriptcompilationforvs2013classlibrary/" data-toggle="tooltip" data-placement="top" title="How to enable Typescript Compilation for a VS2013 Class Library Project">Next
+                        <a href="/post/cppdynamicallycallanything/" data-toggle="tooltip" data-placement="top" title="dynamically calling `any` thing in C&#43;&#43;">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -319,6 +333,34 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                            c&#43;&#43;
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        
+                        
+                        
                         
                         
                         

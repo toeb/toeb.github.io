@@ -28,15 +28,15 @@
     
 
     
-    <meta name="title" content="How to enable Typescript Compilation for a VS2013 Class Library Project" />
-    <meta property="og:title" content="How to enable Typescript Compilation for a VS2013 Class Library Project" />
-    <meta property="twitter:title" content="How to enable Typescript Compilation for a VS2013 Class Library Project" />
+    <meta name="title" content="Typescript in V2013" />
+    <meta property="og:title" content="Typescript in V2013" />
+    <meta property="twitter:title" content="Typescript in V2013" />
     
 
     
-    <meta name="description" content="">
-    <meta property="og:description" content="" />
-    <meta property="twitter:description" content="" />
+    <meta name="description" content="How to enable Typescript Compilation for a VS2013 Class Library Project">
+    <meta property="og:description" content="How to enable Typescript Compilation for a VS2013 Class Library Project" />
+    <meta property="twitter:description" content="How to enable Typescript Compilation for a VS2013 Class Library Project" />
     
 
     
@@ -47,7 +47,7 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>How to enable Typescript Compilation for a VS2013 Class Library Project-Toeb Blog</title>
+    <title>Typescript in V2013-Toeb Blog</title>
 
     <link rel="canonical" href="/post/enabletypescriptcompilationforvs2013classlibrary/">
 
@@ -113,7 +113,19 @@
                         </li>
                         
                         <li>
+                            <a href="/categories/c&#43;&#43;">c&#43;&#43;</a>
+                        </li>
+                        
+                        <li>
                             <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/frontend">frontend</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/obsolete">obsolete</a>
                         </li>
                         
                     
@@ -174,8 +186,12 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/ts" title="ts">
+                            ts
+                        </a>
+                        
                     </div>
-                    <h1>How to enable Typescript Compilation for a VS2013 Class Library Project</h1>
+                    <h1>Typescript in V2013</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by 
@@ -183,7 +199,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Wednesday, December 18, 2013
                         
                         
                         
@@ -208,31 +224,35 @@
                 post-container">
 
                 
-                <p>How to enable Typescript Compilation for a VS2013 Class Library Project
-by thetoeb • 2013/12/18 • 2 Comments</p>
-<p>I know its a little obscure, but I recently needed to find out how to enable Typescript in a Visual Studio 2013 Class Library project, because per default this is not enabled. (probably a bug)</p>
+                <p>I know its a little obscure, but I recently needed to find out how to enable Typescript in a Visual Studio 2013 Class Library project, because per default this is not enabled. (probably a bug)</p>
 <p>Vanilla way of enabling TypeScript:</p>
 <p>Create a “Class Library” project
 Add a Typescript file (.ts)
 This is were the bug occurs, normally the TypeScript file should compile on save.  However it does not. So after searching around and looking at the csproj file and comparing it to a MvcApplication csproj file I found out what the problem is:</p>
 <p>Visual Studio correctly adds the TypeScript props file at the top of your csproj. file:</p>
-<?xml version="1.0" encoding="utf-8"?>
-<p><Project 
-ToolsVersion="12.0" 
-DefaultTargets="Build" 
-xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-<Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" />
-<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-…</p>
-<p>(see first project import)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">
+<span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+<span style="color:#f92672">&lt;Project</span> 
+  <span style="color:#a6e22e">ToolsVersion=</span><span style="color:#e6db74">&#34;12.0&#34;</span> 
+  <span style="color:#a6e22e">DefaultTargets=</span><span style="color:#e6db74">&#34;Build&#34;</span> 
+  <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://schemas.microsoft.com/developer/msbuild/2003&#34;</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;Import</span> <span style="color:#a6e22e">Project=</span><span style="color:#e6db74">&#34;$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props&#34;</span> <span style="color:#f92672">/&gt;</span>
+  <span style="color:#f92672">&lt;Import</span> <span style="color:#a6e22e">Project=</span><span style="color:#e6db74">&#34;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&#34;</span> <span style="color:#a6e22e">Condition=</span><span style="color:#e6db74">&#34;Exists(&#39;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&#39;)&#34;</span> <span style="color:#f92672">/&gt;</span>
+…
+
+
+</code></pre></div><p>(see first project import)</p>
 <p>This allows your csproj file to use the <TypeScriptCompile> tag</p>
 <p>e.g.</p>
-<p><TypeScriptCompile Include="Angular\Accounting\AccountingTestDirective.ts" />
-Enabling compile on save is done by adding the missing</p>
-<p><Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" /></p>
-<p>after …</p>
-<p><Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-… at the end of the csproj file, before your own custom build tasks.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;TypeScriptCompile</span> <span style="color:#a6e22e">Include=</span><span style="color:#e6db74">&#34;Angular\Accounting\AccountingTestDirective.ts&#34;</span> <span style="color:#f92672">/&gt;</span>
+
+</code></pre></div><p>Enabling compile on save is done by adding the missing</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;Import</span> <span style="color:#a6e22e">Project=</span><span style="color:#e6db74">&#34;$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets&#34;</span> <span style="color:#f92672">/&gt;</span>
+ 
+</code></pre></div><p>after …</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml">  <span style="color:#f92672">&lt;Import</span> <span style="color:#a6e22e">Project=</span><span style="color:#e6db74">&#34;$(MSBuildToolsPath)\Microsoft.CSharp.targets&#34;</span> <span style="color:#f92672">/&gt;</span>
+
+</code></pre></div><p>… at the end of the csproj file, before your own custom build tasks.</p>
 <p>I believe this should have been done automatically. But now I know how to do it manually &gt;D</p>
 
 
@@ -242,13 +262,13 @@ Enabling compile on save is done by adding the missing</p>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/cppiscallabletypetrait/" data-toggle="tooltip" data-placement="top" title="is_callable type trait">&larr;
+                        <a href="/post/csharpfluentexceptionhandling/" data-toggle="tooltip" data-placement="top" title="A Fluent Way of Exception Handling">&larr;
                             Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/post/cppdynamicallycallanything/" data-toggle="tooltip" data-placement="top" title="dynamically calling “any” thing in C&#43;&#43;">Next
+                        <a href="/post/enablingmvc5intellisensinclasslibraryproject/" data-toggle="tooltip" data-placement="top" title="Enabling MVC5 intellisense in a ClassLibrary Project">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -285,6 +305,34 @@ async>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/c&#43;&#43;" title="c&#43;&#43;">
+                            c&#43;&#43;
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/cmakepp" title="cmakepp">
+                            cmakepp
+                        </a>
+                        
+                        
+                        
+                        
                         
                         
                         

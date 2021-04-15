@@ -17,159 +17,13 @@
     </item>
     
     <item>
-      <title>A Quick Way of Parsing versioned Web Asset Files</title>
-      <link>https://toeb.github.io/post/csharpparsingwebassetfiles/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/csharpparsingwebassetfiles/</guid>
-      <description>A Quick Way of Parsing versioned Web Asset Files by thetoeb • 2013/12/04 • 0 Comments
-To parse versioned web asset filenames ala jquery-1.4.min.js I wrote a simple class
-///  /// simple class for describing a file library like /// jquery-1.4.min.js /// bootstrap.min.css /// libname-1.0.0.0.tag1.tag2.tag3.extension /// &amp;hellip; etc /// contains methods for parsing these kind of filenames ///  public class FileLib { ///  /// regular expression for parsing the filename ///  public static readonly string libRegex = @&amp;quot;((?</description>
-    </item>
-    
-    <item>
-      <title>An Implementation of the Dynamic Object in C&#43;&#43;</title>
-      <link>https://toeb.github.io/post/cppdynamicobject/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/cppdynamicobject/</guid>
-      <description>An Implementation of the Dynamic Object in C++ by thetoeb • 2014/10/08 • 2 Comments
-You can find my implementation at https://github.com/toeb/cppdynamic it is licensed under the MIT license. I’d be happy for feedback and or optimizations :) Dynamic object are useful, especially in rapid prototyping, non-performance critical situations, and situations in which data/functions -bags are needed (non schema specific data). Also when serializing and deserializing dynamic objects can be a very valuable asset.</description>
-    </item>
-    
-    <item>
-      <title>cmakepp: Reading and Writing JSON</title>
-      <link>https://toeb.github.io/post/cmakereadingandwritingjson/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/cmakereadingandwritingjson/</guid>
-      <description>Reading and Writing JSON with CMake by thetoeb • 2014/03/05 • 2 Comments
-While working on a package manager for CMake I came across the problem of finding a suitable format for my package descriptor files. First I thought about and tried using plain old CMake file that simply sets variables and can be included to access its contents. It was very quick and easy to implement. Hierarchical data structures however where hard to implement and a none standard format makes it harder to exchange data with a webservice/other programs.</description>
-    </item>
-    
-    <item>
-      <title>cmakepp: Template Generation in CMake</title>
-      <link>https://toeb.github.io/post/cmakepptemplategeneration/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/cmakepptemplategeneration/</guid>
-      <description>cmakepp: Template Generation in CMake by thetoeb • 2015/02/11 • 0 Comments
-Find it at http://github.com/toeb/cmakepp
-Download cmakepp standalone file here
-As with all my work I appreciate all feedback given and am particularly happy about virtual internet points 🙂
-To the Post: While working on the documentation of cmakepp I grew wary of always doubling the documentation – one in the source code and a mirror in the README.md. Also I was frustrated when I refactored and renamed functions or changed signatures which is not uncommon – especially when working on a new feature.</description>
-    </item>
-    
-    <item>
-      <title>CTest Integration for VisualStudio</title>
-      <link>https://toeb.github.io/post/ctesttestadapter/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/ctesttestadapter/</guid>
-      <description>CTest Integration for VisualStudio by thetoeb • 2014/11/22 • 0 Comments
-Motivation I have long searched for an extension in VisualStudio which allows you to control kitware’s CTests via the Test Explorer. Since no such thing existed I have developed a workable proof of concept myself :D.
-This software is currently not in its finished state, It still needs polishing because it can be slow and is not well tested. However it works so if you want to give it a ride – go ahead.</description>
-    </item>
-    
-    <item>
-      <title>dynamically calling “any” thing in C&#43;&#43;</title>
-      <link>https://toeb.github.io/post/cppdynamicallycallanything/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/cppdynamicallycallanything/</guid>
-      <description>dynamically calling “any” thing in C++ by thetoeb • 2014/07/15 • 0 Comments
-Extending upon boost’s any class which stores a type and a void ptr to any type of value, I created a callable version were you can assign any function, lambda, memberfunction etc. to the any and call it dynamically. This is a basic and important step for runtime reflection which I’m currently working on. Tell me if you like what I did and if you have any improvements.</description>
-    </item>
-    
-    <item>
-      <title>How to enable Typescript Compilation for a VS2013 Class Library Project</title>
-      <link>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</guid>
-      <description>How to enable Typescript Compilation for a VS2013 Class Library Project by thetoeb • 2013/12/18 • 2 Comments
-I know its a little obscure, but I recently needed to find out how to enable Typescript in a Visual Studio 2013 Class Library project, because per default this is not enabled. (probably a bug)
-Vanilla way of enabling TypeScript:
-Create a “Class Library” project Add a Typescript file (.ts) This is were the bug occurs, normally the TypeScript file should compile on save.</description>
-    </item>
-    
-    <item>
-      <title>is_callable type trait</title>
-      <link>https://toeb.github.io/post/cppiscallabletypetrait/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/cppiscallabletypetrait/</guid>
-      <description>is_callable type trait by thetoeb • 2014/07/12 • 0 Comments
-I’ve developed a type_trait for checking if a type is callable, ie has defined a single operator(). Also on ideone
-Tell me if you like it or if you know of a better version :D /// function traits for member functions // gives you the class_type, return_type and arguments tuple for any member function (const and not const) templatestruct func_traits{ static const bool is_const_call = false; typedef void class_type; typedef void return_type; typedef void args_tuple; }; // specialization for non const call member functions template &amp;lt; typename TClass ,typename TRet, typename &amp;hellip; TArgs&amp;gt; struct func_traits&amp;lt;TRet(TClass::)(TArgs&amp;hellip;)&amp;gt; { static const bool is_const_call = false; typedef TClass class_type; typedef TRet return_type; typedef std::tuple&amp;lt;TArgs&amp;hellip;&amp;gt; args_tuple; }; // specialization for const call member function template &amp;lt; typename TClass, typename TRet, typename &amp;hellip; TArgs&amp;gt; struct func_traits&amp;lt;TRet(TClass::)(TArgs&amp;hellip;)const&amp;gt; { static const bool is_const_call = true; typedef TClass class_type; typedef TRet return_type; typedef std::tuple&amp;lt;TArgs&amp;hellip;&amp;gt; args_tuple; };</description>
-    </item>
-    
-    <item>
-      <title>Modern CMake Slides</title>
-      <link>https://toeb.github.io/post/enablingmvc5intellisensinclasslibraryproject/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/enablingmvc5intellisensinclasslibraryproject/</guid>
-      <description>Enabling MVC5 intellisense in a ClassLibrary Project by thetoeb • 2014/01/05 • 3 Comments
-I’ve been searching and searching the internet for someone, somewhere who might know how to enable correct IntelliSense for cshtml (MVC 5.0) in VS2013 when developing in a ClassLibrary type project.
-This is the problem I was encountering:
-Missing Intellisense
-It’s all thanks to Mohammad Chehab, who was also stumped for a while (probably not as long as me), that I was able to find the solution.</description>
-    </item>
-    
-    <item>
       <title>Modern CMake Slides</title>
       <link>https://toeb.github.io/post/moderncmakeslides/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
+      <pubDate>Tue, 30 Aug 2016 00:00:00 +0000</pubDate>
       
       <guid>https://toeb.github.io/post/moderncmakeslides/</guid>
       <description>I’ve held a Presentation about “modern CMake” at the C++ Meetup in Wiesbaden a week ago and wanted to share the slides with the Internet. I try to highlight the parts of a CMake project which I consider as modern (I guess there is room for interpretation here)
 I give a small introduction to CMake command line, script mode and then mostly about targets, scoping etc. Of course you cannot hear my voice but maybe the slides themselves can give you some insight.</description>
-    </item>
-    
-    <item>
-      <title>Normalized Attribute Names in Angular</title>
-      <link>https://toeb.github.io/post/normalizedattributenamesinangular/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/normalizedattributenamesinangular/</guid>
-      <description>FRONTEND Normalized Attribute Names in Angular by thetoeb • 2014/01/14 • 1 Comment
-I have been doing some hard directive/ html markup work and I came across a problem where I needed the normalized html tag attribute names. (I was trying to create a html element but needed access to the normalized names without turning it into a directive)
-Angular.js normalizes names like “test-name” and “data-test-name” to “testName”. So I went ahead and extracted and wrapped the functions needed into the following function:</description>
-    </item>
-    
-    <item>
-      <title>Object Oriented CMake: Next Iteration</title>
-      <link>https://toeb.github.io/post/objectorientedcmakenextiteration/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/objectorientedcmakenextiteration/</guid>
-      <description>Object Oriented CMake: Next Iteration by thetoeb • 2014/02/25 • 3 Comments
-I worked on my object oriented extensions for CMake and am on a much higher level of usability than before!
-try it at https://github.com/toeb/oo-cmake
-and as always: Feedback is most welcome
-See the following object tutorial for ease of use: (for the current version look at the readme.md on github)
-using objects ### ============= # oo-cmake is very similar to javascript # I actually used the javascript reference to figure out how things could be done :) # oo-cmake is a pure object oriented language like javascript (only objects no types per se) # oo-cmake is currently file based and relies heavily on dynamic functions to be upfron about it: # oo-cmake is very slow (depending on what your doing) ## creating a object ## ================= obj_new(myobject) # ${myobject} now is a reference to an object obj_exists(${myobject} _exists) assert(_exists) ## deleting a object ## ================= # oo-cmake does not contains automatic memory management # you can however remove all objects by calling obj_cleanup # (a very crude way of garbage collection) I would suggest calling it at the end of cmake.</description>
-    </item>
-    
-    <item>
-      <title>Renameable Namespaces using the Preprocessor</title>
-      <link>https://toeb.github.io/post/cpprenameablenamespaces/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/cpprenameablenamespaces/</guid>
-      <description>Renameable Namespaces using the Preprocessor by thetoeb • 2014/10/14 • 0 Comments
-Motivation If you are starting to work on a library and do not know exactly how your namespaces are going end up these macro helper are for you. I have written helpers that simplify using namespaces and lets you build up your namespaces with preprocessor defines. This allows you to quickly rename your namespaces which in turn makes it alot more flexible.</description>
-    </item>
-    
-    <item>
-      <title>Useful extensions for CMake</title>
-      <link>https://toeb.github.io/post/usefulextensionsforcmake/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/usefulextensionsforcmake/</guid>
-      <description>Useful extensions for CMake by thetoeb • 2014/09/05 • 0 Comments
-When using cmake for more than just simple projects it is lacking in various aspects. Some list and string functions are missing. Interaction with command line applications and the file system are harder than they need to be. Especially however using structured data (maps and objects) and more complex funtional programming is not easy at all. So a couple of months ago I started implementing some extensions for object oriented programming 1 2.</description>
     </item>
     
     <item>
@@ -179,6 +33,18 @@ When using cmake for more than just simple projects it is lacking in various asp
       
       <guid>https://toeb.github.io/post/cmakeppreflectingandmanipulatingcmakelists/</guid>
       <description>The basic CMakeLists.txt files for cmake based projects are usually very simple. Their manipulation lends itself to be automated and for this purpose I developed a parser for cmake script which allows you to manipulate it programatically from within cmake itself. On top of the cmake script parser I generated utility functions which allow you to manipulate CMakeLists.txt files while still allowing you to manually working on them. This functionality is wrapped by a command line interface which I present to you in this post.</description>
+    </item>
+    
+    <item>
+      <title>cmakepp: Template Generation in CMake</title>
+      <link>https://toeb.github.io/post/cmakepptemplategeneration/</link>
+      <pubDate>Wed, 11 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cmakepptemplategeneration/</guid>
+      <description>Find it at http://github.com/toeb/cmakepp
+Download cmakepp standalone file here
+As with all my work I appreciate all feedback given and am particularly happy about virtual internet points 🙂
+To the Post: While working on the documentation of cmakepp I grew wary of always doubling the documentation – one in the source code and a mirror in the README.md. Also I was frustrated when I refactored and renamed functions or changed signatures which is not uncommon – especially when working on a new feature.</description>
     </item>
     
     <item>
@@ -211,6 +77,25 @@ Since all cmake host OSs support multitasking from the command line it is possib
     </item>
     
     <item>
+      <title>CTest and TextExplorer</title>
+      <link>https://toeb.github.io/post/ctesttestadapter/</link>
+      <pubDate>Sat, 22 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/ctesttestadapter/</guid>
+      <description>Motivation I have long searched for an extension in VisualStudio which allows you to control kitware’s CTests via the Test Explorer. Since no such thing existed I have developed a workable proof of concept myself :D.
+This software is currently not in its finished state, It still needs polishing because it can be slow and is not well tested. However it works so if you want to give it a ride – go ahead.</description>
+    </item>
+    
+    <item>
+      <title>Renameable Namespaces using the Preprocessor</title>
+      <link>https://toeb.github.io/post/cpprenameablenamespaces/</link>
+      <pubDate>Tue, 14 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cpprenameablenamespaces/</guid>
+      <description>Motivation If you are starting to work on a library and do not know exactly how your namespaces are going end up these macro helper are for you. I have written helpers that simplify using namespaces and lets you build up your namespaces with preprocessor defines. This allows you to quickly rename your namespaces which in turn makes it alot more flexible. You can find the code on github. It is licensed under the MIT license.</description>
+    </item>
+    
+    <item>
       <title>Alternative `typedef` Syntax</title>
       <link>https://toeb.github.io/post/alternativetypedefsyntax/</link>
       <pubDate>Mon, 13 Oct 2014 00:00:00 +0000</pubDate>
@@ -219,6 +104,69 @@ Since all cmake host OSs support multitasking from the command line it is possib
       <description>Disclaimer: This post will be more interesting to you if you work with the preprocessor.
 Here you can find a preprocessor only solution for changing the typedef syntax from typedef int number_type; to int typedef_as number_type; – an alternative typedef Syntax.
 If your wondering where this might be useful let me tell you why I needed it: I was working on a preprocessor macro which defines a property – a field, a getter and a setter.</description>
+    </item>
+    
+    <item>
+      <title>Dynamic Object in C&#43;&#43;</title>
+      <link>https://toeb.github.io/post/cppdynamicobject/</link>
+      <pubDate>Wed, 08 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cppdynamicobject/</guid>
+      <description>You can find my implementation at https://github.com/toeb/cppdynamic it is licensed under the MIT license. I’d be happy for feedback and or optimizations :) Dynamic object are useful, especially in rapid prototyping, non-performance critical situations, and situations in which data/functions -bags are needed (non schema specific data). Also when serializing and deserializing dynamic objects can be a very valuable asset.
+Dynamic programming languages inherently support this. e.g.
+var obj = {}; obj.</description>
+    </item>
+    
+    <item>
+      <title>Useful extensions for CMake</title>
+      <link>https://toeb.github.io/post/usefulextensionsforcmake/</link>
+      <pubDate>Fri, 05 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/usefulextensionsforcmake/</guid>
+      <description>When using cmake for more than just simple projects it is lacking in various aspects. Some list and string functions are missing. Interaction with command line applications and the file system are harder than they need to be. Especially however using structured data (maps and objects) and more complex funtional programming is not easy at all. So a couple of months ago I started implementing some extensions for object oriented programming 1 2.</description>
+    </item>
+    
+    <item>
+      <title>dynamically calling `any` thing in C&#43;&#43;</title>
+      <link>https://toeb.github.io/post/cppdynamicallycallanything/</link>
+      <pubDate>Tue, 15 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cppdynamicallycallanything/</guid>
+      <description>Extending upon boost’s any class which stores a type and a void ptr to any type of value, I created a callable version were you can assign any function, lambda, memberfunction etc. to the any and call it dynamically. This is a basic and important step for runtime reflection which I’m currently working on. Tell me if you like what I did and if you have any improvements.
+You can look at the running example at ideone</description>
+    </item>
+    
+    <item>
+      <title>`is_callable` type trait</title>
+      <link>https://toeb.github.io/post/cppiscallabletypetrait/</link>
+      <pubDate>Sat, 12 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cppiscallabletypetrait/</guid>
+      <description>I’ve developed a type_trait for checking if a type is callable, ie has defined a single operator(). Also on ideone
+Tell me if you like it or if you know of a better version :D
+/// function traits for member functions // gives you the class_type, return_type and arguments tuple for any member function (const and not const)  template&amp;lt;typename T&amp;gt; struct func_traits{ static const bool is_const_call = false; typedef void class_type; typedef void return_type; typedef void args_tuple; }; // specialization for non const call member functions  template &amp;lt; typename TClass ,typename TRet, typename .</description>
+    </item>
+    
+    <item>
+      <title>cmakepp: Reading and Writing JSON</title>
+      <link>https://toeb.github.io/post/cmakereadingandwritingjson/</link>
+      <pubDate>Wed, 05 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cmakereadingandwritingjson/</guid>
+      <description>While working on a package manager for CMake I came across the problem of finding a suitable format for my package descriptor files. First I thought about and tried using plain old CMake file that simply sets variables and can be included to access its contents. It was very quick and easy to implement. Hierarchical data structures however where hard to implement and a none standard format makes it harder to exchange data with a webservice/other programs.</description>
+    </item>
+    
+    <item>
+      <title>Object Oriented CMake: Next Iteration</title>
+      <link>https://toeb.github.io/post/objectorientedcmakenextiteration/</link>
+      <pubDate>Tue, 25 Feb 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/objectorientedcmakenextiteration/</guid>
+      <description>I worked on my object oriented extensions for CMake and am on a much higher level of usability than before!
+try it at https://github.com/toeb/oo-cmake
+and as always: Feedback is most welcome
+See the following object tutorial for ease of use: (for the current version look at the readme.md on github)
+### using objects ### ============= # oo-cmake is very similar to javascript # I actually used the javascript reference to figure out how things could be done :) # oo-cmake is a pure object oriented language like javascript (only objects no types per se) # oo-cmake is currently file based and relies heavily on dynamic functions to be upfron about it: # oo-cmake is very slow (depending on what your doing) ## creating a object ## ================= obj_new(myobject)# ${myobject} now is a reference to an object obj_exists(${myobject} _exists)assert(_exists)## deleting a object ## ================= # oo-cmake does not contains automatic memory management # you can however remove all objects by calling obj_cleanup # (a very crude way of garbage collection) I would suggest calling it at the end of cmake.</description>
     </item>
     
     <item>
@@ -233,12 +181,55 @@ It’s too bad that Kitware decided to use their own language (with very little 
     </item>
     
     <item>
+      <title>Normalized Attribute Names in Angular</title>
+      <link>https://toeb.github.io/post/normalizedattributenamesinangular/</link>
+      <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/normalizedattributenamesinangular/</guid>
+      <description>I have been doing some hard directive/ html markup work and I came across a problem where I needed the normalized html tag attribute names. (I was trying to create a html element but needed access to the normalized names without turning it into a directive)
+Angular.js normalizes names like “test-name” and “data-test-name” to “testName”. So I went ahead and extracted and wrapped the functions needed into the following function:</description>
+    </item>
+    
+    <item>
+      <title>Enabling MVC5 intellisense in a ClassLibrary Project</title>
+      <link>https://toeb.github.io/post/enablingmvc5intellisensinclasslibraryproject/</link>
+      <pubDate>Sun, 05 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/enablingmvc5intellisensinclasslibraryproject/</guid>
+      <description>I’ve been searching and searching the internet for someone, somewhere who might know how to enable correct IntelliSense for cshtml (MVC 5.0) in VS2013 when developing in a ClassLibrary type project.
+This is the problem I was encountering:
+Missing Intellisense
+It’s all thanks to Mohammad Chehab, who was also stumped for a while (probably not as long as me), that I was able to find the solution. His blog post explains that one must change the output path for the class library to bin/ (instead of bin/) for Intellisense to work.</description>
+    </item>
+    
+    <item>
+      <title>Typescript in V2013</title>
+      <link>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</link>
+      <pubDate>Wed, 18 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</guid>
+      <description>I know its a little obscure, but I recently needed to find out how to enable Typescript in a Visual Studio 2013 Class Library project, because per default this is not enabled. (probably a bug)
+Vanilla way of enabling TypeScript:
+Create a “Class Library” project Add a Typescript file (.ts) This is were the bug occurs, normally the TypeScript file should compile on save. However it does not. So after searching around and looking at the csproj file and comparing it to a MvcApplication csproj file I found out what the problem is:</description>
+    </item>
+    
+    <item>
       <title>A Fluent Way of Exception Handling</title>
       <link>https://toeb.github.io/post/csharpfluentexceptionhandling/</link>
       <pubDate>Mon, 09 Dec 2013 00:00:00 +0000</pubDate>
       
       <guid>https://toeb.github.io/post/csharpfluentexceptionhandling/</guid>
       <description>While doing some filesystem work I encountered alot of AccessViolationExceptions because a file is being opened to write multiple times. Even after closing the file explicitly a short timeframe exists in which the file could not be opened again. The simplest approach for me was to retry openening the file until it worked. To allow a more easy and more general way to handle exceptions I developed a small extensible try-repeat-framework which allows me to configure waiting and repeating strategies and also to only react to specific exceptions.</description>
+    </item>
+    
+    <item>
+      <title>Parsing Web Asset Files</title>
+      <link>https://toeb.github.io/post/csharpparsingwebassetfiles/</link>
+      <pubDate>Wed, 04 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/csharpparsingwebassetfiles/</guid>
+      <description>To parse versioned web asset filenames ala jquery-1.4.min.js I wrote a simple class
+/// &amp;lt;summary&amp;gt; /// simple class for describing a file library like /// jquery-1.4.min.js /// bootstrap.min.css /// libname-1.0.0.0.tag1.tag2.tag3.extension /// ... etc /// contains methods for parsing these kind of filenames /// &amp;lt;/summary&amp;gt; public class FileLib { /// &amp;lt;summary&amp;gt;  /// regular expression for parsing the filename  /// &amp;lt;/summary&amp;gt;  public static readonly string libRegex = @&amp;#34;((?&amp;lt;libname&amp;gt;[^.-]*)-?)((?&amp;lt;major&amp;gt;d+))?(.(?&amp;lt;minor&amp;gt;d+)(.(?&amp;lt;revision&amp;gt;d+)(.(?&amp;lt;build&amp;gt;d+))?)?)?(.(?&amp;lt;tags&amp;gt;.+))*&amp;#34;; /// &amp;lt;summary&amp;gt;  /// parses a path as a lib  /// &amp;lt;/summary&amp;gt;  /// &amp;lt;param name=&amp;#34;path&amp;#34;&amp;gt;&amp;lt;/param&amp;gt;  /// &amp;lt;returns&amp;gt;&amp;lt;/returns&amp;gt;  public static FileLib ParsePath(string path) { var filename = Path.</description>
     </item>
     
   </channel>
