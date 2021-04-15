@@ -60,16 +60,6 @@ You can find my implementation at https://github.com/toeb/cppdynamic it is licen
     </item>
     
     <item>
-      <title>CMake and the Filesystem</title>
-      <link>https://toeb.github.io/post/cmakeppfilesystem/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/cmakeppfilesystem/</guid>
-      <description>BUILD, CMAKE, PROGRAMMING CMake and the Filesystem by thetoeb • 2014/11/27 • 0 Comments
-Filesystem I have always been a bit confused when working with cmake’s file functions and the logic behind paths (sometimes they are found sometimes they are not…) For ease of use I reimplemented a own path managing system which behaves very similar to powershell and bash (see ss64.com) it is based around a global path stack and path qualification.</description>
-    </item>
-    
-    <item>
       <title>cmakepp: Reading and Writing JSON</title>
       <link>https://toeb.github.io/post/cmakereadingandwritingjson/</link>
       <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
@@ -124,6 +114,16 @@ Extending upon boost’s any class which stores a type and a void ptr to any typ
     </item>
     
     <item>
+      <title>Heterogeneous Package Search and Retrieval in CMake</title>
+      <link>https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/</link>
+      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
+      
+      <guid>https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/</guid>
+      <description>Heterogeneous Package Search and Retrieval in CMake by thetoeb • 2015/02/04 • 2 Comments
+Finding and Retrieving third party sources, tools and binaries is currently a hot subject for C++. There are quite a few solutions (biicode, cpm, hunter, …) Also there is github, bitbucket, source balls etc. Further there are many package managers for many different platforms which also can contain packages (apt-get, chocolatey, nuget, npm, pip, ….). So everything is very decentralized and heterogeneous.</description>
+    </item>
+    
+    <item>
       <title>How to enable Typescript Compilation for a VS2013 Class Library Project</title>
       <link>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</link>
       <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
@@ -144,16 +144,6 @@ Create a “Class Library” project Add a Typescript file (.ts) This is were th
       <description>is_callable type trait by thetoeb • 2014/07/12 • 0 Comments
 I’ve developed a type_trait for checking if a type is callable, ie has defined a single operator(). Also on ideone
 Tell me if you like it or if you know of a better version :D /// function traits for member functions // gives you the class_type, return_type and arguments tuple for any member function (const and not const) templatestruct func_traits{ static const bool is_const_call = false; typedef void class_type; typedef void return_type; typedef void args_tuple; }; // specialization for non const call member functions template &amp;lt; typename TClass ,typename TRet, typename &amp;hellip; TArgs&amp;gt; struct func_traits&amp;lt;TRet(TClass::)(TArgs&amp;hellip;)&amp;gt; { static const bool is_const_call = false; typedef TClass class_type; typedef TRet return_type; typedef std::tuple&amp;lt;TArgs&amp;hellip;&amp;gt; args_tuple; }; // specialization for const call member function template &amp;lt; typename TClass, typename TRet, typename &amp;hellip; TArgs&amp;gt; struct func_traits&amp;lt;TRet(TClass::)(TArgs&amp;hellip;)const&amp;gt; { static const bool is_const_call = true; typedef TClass class_type; typedef TRet return_type; typedef std::tuple&amp;lt;TArgs&amp;hellip;&amp;gt; args_tuple; };</description>
-    </item>
-    
-    <item>
-      <title>Modern CMake Slides</title>
-      <link>https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/</link>
-      <pubDate>Tue, 30 Aug 2016 23:24:46 +0200</pubDate>
-      
-      <guid>https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/</guid>
-      <description>I’ve held a Presentation about “modern CMake” at the C++ Meetup in Wiesbaden a week ago and wanted to share the slides with the Internet. I try to highlight the parts of a CMake project which I consider as modern (I guess there is room for interpretation here)
-I give a small introduction to CMake command line, script mode and then mostly about targets, scoping etc. Of course you cannot hear my voice but maybe the slides themselves can give you some insight.</description>
     </item>
     
     <item>
@@ -245,6 +235,15 @@ Motivation If you are starting to work on a library and do not know exactly how 
       <guid>https://toeb.github.io/post/usefulextensionsforcmake/</guid>
       <description>Useful extensions for CMake by thetoeb • 2014/09/05 • 0 Comments
 When using cmake for more than just simple projects it is lacking in various aspects. Some list and string functions are missing. Interaction with command line applications and the file system are harder than they need to be. Especially however using structured data (maps and objects) and more complex funtional programming is not easy at all. So a couple of months ago I started implementing some extensions for object oriented programming 1 2.</description>
+    </item>
+    
+    <item>
+      <title>CMake and the Filesystem</title>
+      <link>https://toeb.github.io/post/cmakeppfilesystem/</link>
+      <pubDate>Thu, 27 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/cmakeppfilesystem/</guid>
+      <description>Filesystem I have always been a bit confused when working with cmake’s file functions and the logic behind paths (sometimes they are found sometimes they are not…) For ease of use I reimplemented a own path managing system which behaves very similar to powershell and bash (see ss64.com) it is based around a global path stack and path qualification. All of my functions which work with paths use this system.</description>
     </item>
     
   </channel>

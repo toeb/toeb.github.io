@@ -110,7 +110,19 @@
                     
                         
                         <li>
-                            <a href="/categories/tech">tech</a>
+                            <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/compiler">compiler</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/programming">programming</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/script">script</a>
                         </li>
                         
                     
@@ -194,20 +206,16 @@
             cmakepp: Expression Syntax
         </h2>
 	
-        <h3 class="post-subtitle">
-            subtlt
-        </h3>
-	
         <div class="post-content-preview">
 	    
-            descr
+            Discussion of an Alternative Syntax for CMake
         
        
 
         </div>
     </a>
     <p class="post-meta">
-    Posted by      &#34;&#34; Monday, June 4, 2018
+    Posted by      &#34;toeb&#34; Monday, June 4, 2018
     
     
     </p>
@@ -300,30 +308,6 @@ If your wondering where this might be useful let me tell you why I needed it: I 
 	    
             An Implementation of the Dynamic Object in C++ by thetoeb • 2014/10/08 • 2 Comments
 You can find my implementation at https://github.com/toeb/cppdynamic it is licensed under the MIT license. I’d be happy for feedback and or optimizations :) Dynamic object are useful, especially in rapid prototyping, non-performance critical situations, and situations in which data/functions -bags are needed (non schema specific data). Also when serializing and deserializing dynamic objects can be a very valuable asset.
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by toeb&#39;s Blog Tuesday, August 30, 2016
-    
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppfilesystem/">
-        <h2 class="post-title">
-            CMake and the Filesystem
-        </h2>
-	
-        <div class="post-content-preview">
-	    
-            BUILD, CMAKE, PROGRAMMING CMake and the Filesystem by thetoeb • 2014/11/27 • 0 Comments
-Filesystem I have always been a bit confused when working with cmake’s file functions and the logic behind paths (sometimes they are found sometimes they are not…) For ease of use I reimplemented a own path managing system which behaves very similar to powershell and bash (see ss64.com) it is based around a global path stack and path qualification.
         
        
 
@@ -463,6 +447,30 @@ Extending upon boost’s any class which stores a type and a void ptr to any typ
 <hr>
 
 <div class="post-preview">
+    <a href="https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/">
+        <h2 class="post-title">
+            Heterogeneous Package Search and Retrieval in CMake
+        </h2>
+	
+        <div class="post-content-preview">
+	    
+            Heterogeneous Package Search and Retrieval in CMake by thetoeb • 2015/02/04 • 2 Comments
+Finding and Retrieving third party sources, tools and binaries is currently a hot subject for C++. There are quite a few solutions (biicode, cpm, hunter, …) Also there is github, bitbucket, source balls etc. Further there are many package managers for many different platforms which also can contain packages (apt-get, chocolatey, nuget, npm, pip, ….). So everything is very decentralized and heterogeneous.
+        
+       
+
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by toeb&#39;s Blog Tuesday, August 30, 2016
+    
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/">
         <h2 class="post-title">
             How to enable Typescript Compilation for a VS2013 Class Library Project
@@ -499,30 +507,6 @@ Create a “Class Library” project Add a Typescript file (.ts) This is were th
             is_callable type trait by thetoeb • 2014/07/12 • 0 Comments
 I’ve developed a type_trait for checking if a type is callable, ie has defined a single operator(). Also on ideone
 Tell me if you like it or if you know of a better version :D /// function traits for member functions // gives you the class_type, return_type and arguments tuple for any member function (const and not const) templatestruct func_traits{ static const bool is_const_call = false; typedef void class_type; typedef void return_type; typedef void args_tuple; }; // specialization for non const call member functions template &lt; typename TClass ,typename TRet, typename &hellip; TArgs&gt; struct func_traits&lt;TRet(TClass::)(TArgs&hellip;)&gt; { static const bool is_const_call = false; typedef TClass class_type; typedef TRet return_type; typedef std::tuple&lt;TArgs&hellip;&gt; args_tuple; }; // specialization for const call member function template &lt; typename TClass, typename TRet, typename &hellip; TArgs&gt; struct func_traits&lt;TRet(TClass::)(TArgs&hellip;)const&gt; { static const bool is_const_call = true; typedef TClass class_type; typedef TRet return_type; typedef std::tuple&lt;TArgs&hellip;&gt; args_tuple; };
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by toeb&#39;s Blog Tuesday, August 30, 2016
-    
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/">
-        <h2 class="post-title">
-            Modern CMake Slides
-        </h2>
-	
-        <div class="post-content-preview">
-	    
-            I’ve held a Presentation about “modern CMake” at the C++ Meetup in Wiesbaden a week ago and wanted to share the slides with the Internet. I try to highlight the parts of a CMake project which I consider as modern (I guess there is room for interpretation here)
-I give a small introduction to CMake command line, script mode and then mostly about targets, scoping etc. Of course you cannot hear my voice but maybe the slides themselves can give you some insight.
         
        
 
@@ -740,6 +724,29 @@ When using cmake for more than just simple projects it is lacking in various asp
 </div>
 <hr>
 
+<div class="post-preview">
+    <a href="https://toeb.github.io/post/cmakeppfilesystem/">
+        <h2 class="post-title">
+            CMake and the Filesystem
+        </h2>
+	
+        <div class="post-content-preview">
+	    
+            Discussion of an Alternative Syntax for CMake
+        
+       
+
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by      &#34;toeb&#34; Thursday, November 27, 2014
+    
+    
+    </p>
+
+</div>
+<hr>
+
 
             
 
@@ -762,8 +769,6 @@ When using cmake for more than just simple projects it is lacking in various asp
         <h5>FEATURED TAGS</h5>
         <div class="tags">
              
-            
-                
             
                 
             

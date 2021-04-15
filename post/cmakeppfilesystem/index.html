@@ -34,9 +34,9 @@
     
 
     
-    <meta name="description" content="">
-    <meta property="og:description" content="" />
-    <meta property="twitter:description" content="" />
+    <meta name="description" content="Discussion of an Alternative Syntax for CMake">
+    <meta property="og:description" content="Discussion of an Alternative Syntax for CMake" />
+    <meta property="twitter:description" content="Discussion of an Alternative Syntax for CMake" />
     
 
     
@@ -109,7 +109,19 @@
                     
                         
                         <li>
-                            <a href="/categories/tech">tech</a>
+                            <a href="/categories/cmake">cmake</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/compiler">compiler</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/programming">programming</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/script">script</a>
                         </li>
                         
                     
@@ -170,16 +182,20 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/cmake" title="cmake">
+                            cmake
+                        </a>
+                        
                     </div>
                     <h1>CMake and the Filesystem</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by 
                         
-                                toeb&#39;s Blog
+                                 &#34;toeb&#34;
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Thursday, November 27, 2014
                         
                         
                         
@@ -204,89 +220,101 @@
                 post-container">
 
                 
-                <p>BUILD, CMAKE, PROGRAMMING
-CMake and the Filesystem
-by thetoeb • 2014/11/27 • 0 Comments</p>
-<p>Filesystem
-I have always been a bit confused when working with cmake’s file functions and the logic behind paths (sometimes they are found sometimes they are not…) For ease of use I reimplemented a own path managing system which behaves very similar to powershell and bash (see ss64.com) it is based around a global path stack and path qualification. All of my functions which work with paths use this system.</p>
-<p>How to get it.
-The filesystem extensions are part of oo-cmake a enhancement suite to cmake written in pure cmake. Either clone oo-cmake’s git repository or follow the instructions at cutil which includes oo-cmake.</p>
+                <h1 id="filesystem">Filesystem</h1>
+<p>I have always been a bit confused when working with cmake’s file functions and the logic behind paths (sometimes they are found sometimes they are not…) For ease of use I reimplemented a own path managing system which behaves very similar to powershell and bash (see ss64.com) it is based around a global path stack and path qualification. All of my functions which work with paths use this system.</p>
+<h2 id="how-to-get-it">How to get it.</h2>
+<p>The filesystem extensions are part of oo-cmake a enhancement suite to cmake written in pure cmake. Either clone oo-cmake’s git repository or follow the instructions at cutil which includes oo-cmake.</p>
 <p>I prefer you use the second method as it installs aliases to run the icmake command which lets you test the functions interactively.</p>
-<p>Example
-To better show you what I mean I created the following example:</p>
-<h1 id="as-soon-as-you-include-oo-cmakecmake-the-current-directory-is-set-to">as soon as you include <code>oo-cmake.cmake</code> the current directory is set to</h1>
-<h1 id="cmake_source_dir-which-is-the-directory-from-which-you-script-file">&ldquo;${CMAKE_SOURCE_DIR}&rdquo; which is the directory from which you script file</h1>
-<h1 id="is-called-in-script-mode-cmake--p-or-the-directory-of-the-root">is called in script mode (<code>cmake -P</code>) or the directory of the root</h1>
-<h1 id="cmakeliststxt-file-in-configure-and-build-steps"><code>CMakeLists.txt</code> file in configure and build steps.</h1>
-<p>pwd() # returns the current dir
-ans(path)</p>
-<p>assert(&quot;${path}&quot; STREQUAL &ldquo;${CMAKE_SOURCE_DIR}&quot;)</p>
-<p>pushd(&ldquo;dir1&rdquo; &ndash;create) # goto  ${CMAKE_SOURCE_DIR}/dir1; Create if not exists
-ans(path)
-assert(&quot;${path}&rdquo; STREQUAL &ldquo;${CMAKE_SOURCE_DIR}/dir1&rdquo;)</p>
-<p>fwrite(&ldquo;README.md&rdquo; &ldquo;This is the readme file.&quot;) # creates the file README.md in dir1
-assert(EXISTS &ldquo;${CMAKE_SOURCE_DIR}/dir1/README.md&rdquo;)</p>
-<p>pushd(dir2 &ndash;create) # goto ${CMAKE_SOURCE_DIR}/dir1/dir2 and create it if it does not exist
-fwrite(&ldquo;README2.md&rdquo; &ldquo;This is another readme file&rdquo;)</p>
-<p>cd(../..) # use relative path specifiers to navigate path stack
-ans(path)</p>
-<p>assert(${path} STREQUAL &ldquo;${CMAKE_SOURCE_DIR}&quot;) # up up -&gt; we are where we started</p>
-<p>popd() # path stack is popped. path before was ${CMAKE_SOURCE_DIR}/dir1
-ans(path)</p>
-<p>assert(${path} STREQUAL &ldquo;${CMAKE_SOURCE_DIR}/dir1&rdquo;)</p>
-<p>mkdir(&ldquo;dir3&rdquo;)
-cd(dir3)</p>
-<h1 id="current-dir-is-now-cmake_source_dirdir1dir3">current dir is now ${CMAKE_SOURCE_DIR}/dir1/dir3</h1>
-<h1 id="execute-uses-the-current-pwd-as-the-working-dir-so-the-following">execute() uses the current pwd() as the working dir so the following</h1>
-<h1 id="clones-the-oo-cmake-repo-into-cmake_source_dirdir1dir3">clones the oo-cmake repo into ${CMAKE_SOURCE_DIR}/dir1/dir3</h1>
-<p>git(clone <a href="https://github.com/toeb/oo-cmake.git">https://github.com/toeb/oo-cmake.git</a> &ldquo;.&quot;)</p>
-<h1 id="remove-all-files-and-folders">remove all files and folders</h1>
-<p>rm(.)</p>
-<p>popd() # pwd is now ${CMAKE_SOURCE_DIR} again and stack is empty
-Functions and Datatypes
-<windows path> a windows path possibly with and possibly with drive name C:\Users\Tobi\README.md
-<relative path> a simple relative path ‘../dir2/./test.txt’
-<qualified path> a fully qualified path depending on OS it only contains forward slashes and is cmake’s get_filename_component(result &ldquo;${input} REAL_PATH) returns. All symlinks are resolved. It is absolute
-<unqualified path> ::= <windows path>|<relative path>|<qualified path>
-path(<unqualified path>)-&gt;<qualified path> qualifies a path and returns it. if path is relative (with no drive letter under windows or no initial / on unix) it will be qualified with the current directory pwd()
-pwd()-&gt; <qualified path> returns the top of the path stack. relative paths are relative to pwd()
-cd(<unqualified> [&ndash;create]) -&gt; <qualified path> changes the top of the path stack. returns the <qualified path> corresonding to input. if &ndash;create is specified the directory will be created if it does not exist. if cd() is navigated towards a non existing directory and &ndash;create is not specified it will cause a FATAL_ERROR
-pushd(<unqualified path> [&ndash;create]) -&gt; <qualified path> works the same cd() except that it pushes the top of the path stack down instead of replacing it
-popd()-&gt;<qualified path> removes the top of the path stack and returns the new top path
-dirs()-&gt; <qualified path>[] returns all paths in the path stack from bottom to top
-file functions
-fread(<unqualified path>)-&gt;<string> returns the contents of the specified file
-lines(<unqualified path>)-&gt;<string>[] returns the contents of the specified file in a list of lines
-download(<uri> [&lt;target:unqualified path&gt;] [&ndash;progress]) downloads the file to target, if target is an existing directory the downloaded filename will be extracted from uri else path is treated as the target filepath
-fappend(<unqualified path> <a href="content:string">content:string</a>)-&gt;void appends the specified content to the target file
-fwrite(<unqualified path> <a href="content:string">content:string</a>)-&gt;void writes the content to the target file (overwriting it)
-parent_dir(<unqualified path>)-&gt;<qualified path> returns the parent directory of the specified path
-file_timestamp(<unqualified path>)-&gt;<timestampstring> returns the timestamp string for the specified path yyyy-MM-ddThh:mm:ss
-ls([<unqualified path>])-&gt;<qualified path>[] returns files and subfolders of specified path
-mkdir(<unqualified path>)-&gt;<qualfied path> creates the specified dir and returns its qualified path
-mkdirs(<unqualified path>&hellip;)-&gt;<qualified path>[] creates all of the directories specified
-mktemp([<unqualified path>])-&gt;<qualified path> creates a temporary directory optionally you can specify where this directory is created (by default it is created in TMP_DIR)
-mv(<sourcefile> <targetfile>|[<sourcefile> &hellip;] <existing targetdir>)-&gt;void moves the specifeid path to the specified target if last argument is an existing directory all previous files will be moved there else only two arguments are allowed
-paths([<unqualified path> &hellip;])-&gt;<qualified path>[] returns the qualified path for every unqualified path received as input
-touch(<unqualified path> [&ndash;nocreate])-&gt;<qualified path> touches the specified file creating it if it does not exist. if &ndash;nocreate is specified the file will not be created if it does not exist. the qualified path for the specified file is returned
-home_dir()-&gt;<qualified path> returns the users home directory
-home_path(<relative path>)-&gt;<qualified path> returns fully qualified path relative to the user’s home directory
-… (more functions are coming whenver they are needed)</p>
-
+<h2 id="example">Example</h2>
+<p>To better show you what I mean I created the following example:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#75715e"># as soon as you include `oo-cmake.cmake` the current directory is set to 
+</span><span style="color:#75715e"># &#34;${CMAKE_SOURCE_DIR}&#34; which is the directory from which you script file 
+</span><span style="color:#75715e"># is called in script mode (`cmake -P`) or the directory of the root 
+</span><span style="color:#75715e"># `CMakeLists.txt` file in configure and build steps.
+</span><span style="color:#75715e"></span>pwd() <span style="color:#75715e"># returns the current dir
+</span><span style="color:#75715e"></span>ans(<span style="color:#e6db74">path</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;${path}&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;${CMAKE_SOURCE_DIR}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>pushd(<span style="color:#e6db74">&#34;dir1&#34;</span> <span style="color:#e6db74">--create</span>) <span style="color:#75715e"># goto  ${CMAKE_SOURCE_DIR}/dir1; Create if not exists
+</span><span style="color:#75715e"></span>ans(<span style="color:#e6db74">path</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#e6db74">&#34;${path}&#34;</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;${CMAKE_SOURCE_DIR}/dir1&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>fwrite(<span style="color:#e6db74">&#34;README.md&#34;</span> <span style="color:#e6db74">&#34;This is the readme file.&#34;</span>) <span style="color:#75715e"># creates the file README.md in dir1
+</span><span style="color:#75715e"></span>assert(<span style="color:#e6db74">EXISTS</span> <span style="color:#e6db74">&#34;${CMAKE_SOURCE_DIR}/dir1/README.md&#34;</span>) <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>pushd(<span style="color:#e6db74">dir2</span> <span style="color:#e6db74">--create</span>) <span style="color:#75715e"># goto ${CMAKE_SOURCE_DIR}/dir1/dir2 and create it if it does not exist
+</span><span style="color:#75715e"></span>fwrite(<span style="color:#e6db74">&#34;README2.md&#34;</span> <span style="color:#e6db74">&#34;This is another readme file&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>cd(<span style="color:#e6db74">../..</span>) <span style="color:#75715e"># use relative path specifiers to navigate path stack
+</span><span style="color:#75715e"></span>ans(<span style="color:#e6db74">path</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>path<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;${CMAKE_SOURCE_DIR}&#34;</span>) <span style="color:#75715e"># up up -&gt; we are where we started
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>popd() <span style="color:#75715e"># path stack is popped. path before was ${CMAKE_SOURCE_DIR}/dir1
+</span><span style="color:#75715e"></span>ans(<span style="color:#e6db74">path</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>assert(<span style="color:#f92672">${</span>path<span style="color:#f92672">}</span> <span style="color:#e6db74">STREQUAL</span> <span style="color:#e6db74">&#34;${CMAKE_SOURCE_DIR}/dir1&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>mkdir(<span style="color:#e6db74">&#34;dir3&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>cd(<span style="color:#e6db74">dir3</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># current dir is now ${CMAKE_SOURCE_DIR}/dir1/dir3
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># execute() uses the current pwd() as the working dir so the following
+</span><span style="color:#75715e"># clones the oo-cmake repo into ${CMAKE_SOURCE_DIR}/dir1/dir3
+</span><span style="color:#75715e"></span>git(<span style="color:#e6db74">clone</span> <span style="color:#e6db74">https://github.com/toeb/oo-cmake.git</span> <span style="color:#e6db74">&#34;.&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># remove all files and folders
+</span><span style="color:#75715e"></span>rm(<span style="color:#e6db74">.</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>popd() <span style="color:#75715e"># pwd is now ${CMAKE_SOURCE_DIR} again and stack is empty
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="functions-and-datatypes">Functions and Datatypes</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake"><span style="color:#960050;background-color:#1e0010">&lt;windows</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">windows</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">possibly</span> <span style="color:#960050;background-color:#1e0010">with</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">possibly</span> <span style="color:#960050;background-color:#1e0010">with</span> <span style="color:#960050;background-color:#1e0010">drive</span> <span style="color:#960050;background-color:#1e0010">name</span> <span style="color:#960050;background-color:#1e0010">C:\Users\Tobi\README.md
+</span><span style="color:#960050;background-color:#1e0010">&lt;relative</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">simple</span> <span style="color:#960050;background-color:#1e0010">relative</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">‘../dir2/./test.txt’
+</span><span style="color:#960050;background-color:#1e0010">&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">fully</span> <span style="color:#960050;background-color:#1e0010">qualified</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">depending</span> <span style="color:#960050;background-color:#1e0010">on</span> <span style="color:#960050;background-color:#1e0010">OS</span> <span style="color:#960050;background-color:#1e0010">it</span> <span style="color:#960050;background-color:#1e0010">only</span> <span style="color:#960050;background-color:#1e0010">contains</span> <span style="color:#960050;background-color:#1e0010">forward</span> <span style="color:#960050;background-color:#1e0010">slashes</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">cmake’s</span> get_filename_component(<span style="color:#e6db74">result</span> <span style="color:#960050;background-color:#1e0010">&#34;</span><span style="color:#f92672">${</span>input<span style="color:#f92672">}</span> <span style="color:#e6db74">REAL_PATH</span>) <span style="color:#960050;background-color:#1e0010">returns.</span> <span style="color:#960050;background-color:#1e0010">All</span> <span style="color:#960050;background-color:#1e0010">symlinks</span> <span style="color:#960050;background-color:#1e0010">are</span> <span style="color:#960050;background-color:#1e0010">resolved.</span> <span style="color:#960050;background-color:#1e0010">It</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">absolute
+</span><span style="color:#960050;background-color:#1e0010">&lt;unqualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">::=</span> <span style="color:#960050;background-color:#1e0010">&lt;windows</span> <span style="color:#960050;background-color:#1e0010">path&gt;|&lt;relative</span> <span style="color:#960050;background-color:#1e0010">path&gt;|&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;
+</span><span style="color:#960050;background-color:#1e0010"></span>path(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">qualifies</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">it.</span> <span style="color:#960050;background-color:#1e0010">if</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">is</span> relative (<span style="color:#e6db74">with</span> <span style="color:#e6db74">no</span> <span style="color:#e6db74">drive</span> <span style="color:#e6db74">letter</span> <span style="color:#e6db74">under</span> <span style="color:#e6db74">windows</span> <span style="color:#e6db74">or</span> <span style="color:#e6db74">no</span> <span style="color:#e6db74">initial</span> <span style="color:#e6db74">/</span> <span style="color:#e6db74">on</span> <span style="color:#e6db74">unix</span>) <span style="color:#960050;background-color:#1e0010">it</span> <span style="color:#960050;background-color:#1e0010">will</span> <span style="color:#960050;background-color:#1e0010">be</span> <span style="color:#960050;background-color:#1e0010">qualified</span> <span style="color:#960050;background-color:#1e0010">with</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">current</span> <span style="color:#960050;background-color:#1e0010">directory</span> pwd()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>pwd()<span style="color:#960050;background-color:#1e0010">-&gt;</span> <span style="color:#960050;background-color:#1e0010">&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">top</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">stack.</span> <span style="color:#960050;background-color:#1e0010">relative</span> <span style="color:#960050;background-color:#1e0010">paths</span> <span style="color:#960050;background-color:#1e0010">are</span> <span style="color:#960050;background-color:#1e0010">relative</span> <span style="color:#960050;background-color:#1e0010">to</span> pwd()<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>cd(<span style="color:#e6db74">&lt;unqualified&gt;</span> <span style="color:#e6db74">[--create]</span>) <span style="color:#960050;background-color:#1e0010">-&gt;</span> <span style="color:#960050;background-color:#1e0010">&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">changes</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">top</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">stack.</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">corresonding</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">input.</span> <span style="color:#960050;background-color:#1e0010">if</span> <span style="color:#960050;background-color:#1e0010">--create</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">directory</span> <span style="color:#960050;background-color:#1e0010">will</span> <span style="color:#960050;background-color:#1e0010">be</span> <span style="color:#960050;background-color:#1e0010">created</span> <span style="color:#960050;background-color:#1e0010">if</span> <span style="color:#960050;background-color:#1e0010">it</span> <span style="color:#960050;background-color:#1e0010">does</span> <span style="color:#960050;background-color:#1e0010">not</span> <span style="color:#960050;background-color:#1e0010">exist.</span> <span style="color:#960050;background-color:#1e0010">if</span> cd() <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">navigated</span> <span style="color:#960050;background-color:#1e0010">towards</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">non</span> <span style="color:#960050;background-color:#1e0010">existing</span> <span style="color:#960050;background-color:#1e0010">directory</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">--create</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">not</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">it</span> <span style="color:#960050;background-color:#1e0010">will</span> <span style="color:#960050;background-color:#1e0010">cause</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">FATAL_ERROR
+</span><span style="color:#960050;background-color:#1e0010"></span>pushd(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span> <span style="color:#e6db74">[--create]</span>) <span style="color:#960050;background-color:#1e0010">-&gt;</span> <span style="color:#960050;background-color:#1e0010">&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">works</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">same</span> cd() <span style="color:#960050;background-color:#1e0010">except</span> <span style="color:#960050;background-color:#1e0010">that</span> <span style="color:#960050;background-color:#1e0010">it</span> <span style="color:#960050;background-color:#1e0010">pushes</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">top</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">stack</span> <span style="color:#960050;background-color:#1e0010">down</span> <span style="color:#960050;background-color:#1e0010">instead</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">replacing</span> <span style="color:#960050;background-color:#1e0010">it
+</span><span style="color:#960050;background-color:#1e0010"></span>popd()<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">removes</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">top</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">stack</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">new</span> <span style="color:#960050;background-color:#1e0010">top</span> <span style="color:#960050;background-color:#1e0010">path
+</span><span style="color:#960050;background-color:#1e0010"></span>dirs()<span style="color:#960050;background-color:#1e0010">-&gt;</span> <span style="color:#960050;background-color:#1e0010">&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;[]</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">all</span> <span style="color:#960050;background-color:#1e0010">paths</span> <span style="color:#960050;background-color:#1e0010">in</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">stack</span> <span style="color:#960050;background-color:#1e0010">from</span> <span style="color:#960050;background-color:#1e0010">bottom</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">top
+</span><span style="color:#960050;background-color:#1e0010">file</span> <span style="color:#960050;background-color:#1e0010">functions
+</span><span style="color:#960050;background-color:#1e0010"></span>fread(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;string&gt;</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">contents</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">file
+</span><span style="color:#960050;background-color:#1e0010"></span>lines(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;string&gt;[]</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">contents</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">file</span> <span style="color:#960050;background-color:#1e0010">in</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">list</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">lines
+</span><span style="color:#960050;background-color:#1e0010"></span>download(<span style="color:#e6db74">&lt;uri&gt;</span> <span style="color:#e6db74">[&lt;target:unqualified</span> <span style="color:#e6db74">path&gt;]</span> <span style="color:#e6db74">[--progress]</span>) <span style="color:#960050;background-color:#1e0010">downloads</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">file</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">target,</span> <span style="color:#960050;background-color:#1e0010">if</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">an</span> <span style="color:#960050;background-color:#1e0010">existing</span> <span style="color:#960050;background-color:#1e0010">directory</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">downloaded</span> <span style="color:#960050;background-color:#1e0010">filename</span> <span style="color:#960050;background-color:#1e0010">will</span> <span style="color:#960050;background-color:#1e0010">be</span> <span style="color:#960050;background-color:#1e0010">extracted</span> <span style="color:#960050;background-color:#1e0010">from</span> <span style="color:#960050;background-color:#1e0010">uri</span> <span style="color:#960050;background-color:#1e0010">else</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">treated</span> <span style="color:#960050;background-color:#1e0010">as</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">filepath
+</span><span style="color:#960050;background-color:#1e0010"></span>fappend(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span> <span style="color:#e6db74">&lt;content:string&gt;</span>)<span style="color:#960050;background-color:#1e0010">-&gt;void</span> <span style="color:#960050;background-color:#1e0010">appends</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">content</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">file
+</span><span style="color:#960050;background-color:#1e0010"></span>fwrite(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span> <span style="color:#e6db74">&lt;content:string&gt;</span>)<span style="color:#960050;background-color:#1e0010">-&gt;void</span> <span style="color:#960050;background-color:#1e0010">writes</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">content</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">target</span> file (<span style="color:#e6db74">overwriting</span> <span style="color:#e6db74">it</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>parent_dir(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">parent</span> <span style="color:#960050;background-color:#1e0010">directory</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">path
+</span><span style="color:#960050;background-color:#1e0010"></span>file_timestamp(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;timestampstring&gt;</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">timestamp</span> <span style="color:#960050;background-color:#1e0010">string</span> <span style="color:#960050;background-color:#1e0010">for</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">yyyy-MM-ddThh:mm:ss
+</span><span style="color:#960050;background-color:#1e0010"></span>ls(<span style="color:#e6db74">[&lt;unqualified</span> <span style="color:#e6db74">path&gt;]</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;[]</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">files</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">subfolders</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">path
+</span><span style="color:#960050;background-color:#1e0010"></span>mkdir(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualfied</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">creates</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">dir</span> <span style="color:#960050;background-color:#1e0010">and</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">its</span> <span style="color:#960050;background-color:#1e0010">qualified</span> <span style="color:#960050;background-color:#1e0010">path
+</span><span style="color:#960050;background-color:#1e0010"></span>mkdirs(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;...</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;[]</span> <span style="color:#960050;background-color:#1e0010">creates</span> <span style="color:#960050;background-color:#1e0010">all</span> <span style="color:#960050;background-color:#1e0010">of</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">directories</span> <span style="color:#960050;background-color:#1e0010">specified
+</span><span style="color:#960050;background-color:#1e0010"></span>mktemp(<span style="color:#e6db74">[&lt;unqualified</span> <span style="color:#e6db74">path&gt;]</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">creates</span> <span style="color:#960050;background-color:#1e0010">a</span> <span style="color:#960050;background-color:#1e0010">temporary</span> <span style="color:#960050;background-color:#1e0010">directory</span> <span style="color:#960050;background-color:#1e0010">optionally</span> <span style="color:#960050;background-color:#1e0010">you</span> <span style="color:#960050;background-color:#1e0010">can</span> <span style="color:#960050;background-color:#1e0010">specify</span> <span style="color:#960050;background-color:#1e0010">where</span> <span style="color:#960050;background-color:#1e0010">this</span> <span style="color:#960050;background-color:#1e0010">directory</span> <span style="color:#960050;background-color:#1e0010">is</span> created (<span style="color:#e6db74">by</span> <span style="color:#e6db74">default</span> <span style="color:#e6db74">it</span> <span style="color:#e6db74">is</span> <span style="color:#e6db74">created</span> <span style="color:#e6db74">in</span> <span style="color:#e6db74">TMP_DIR</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>mv(<span style="color:#e6db74">&lt;sourcefile&gt;</span> <span style="color:#e6db74">&lt;targetfile&gt;|[&lt;sourcefile&gt;</span> <span style="color:#e6db74">...]</span> <span style="color:#e6db74">&lt;existing</span> <span style="color:#e6db74">targetdir&gt;</span>)<span style="color:#960050;background-color:#1e0010">-&gt;void</span> <span style="color:#960050;background-color:#1e0010">moves</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">specifeid</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">target</span> <span style="color:#960050;background-color:#1e0010">if</span> <span style="color:#960050;background-color:#1e0010">last</span> <span style="color:#960050;background-color:#1e0010">argument</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">an</span> <span style="color:#960050;background-color:#1e0010">existing</span> <span style="color:#960050;background-color:#1e0010">directory</span> <span style="color:#960050;background-color:#1e0010">all</span> <span style="color:#960050;background-color:#1e0010">previous</span> <span style="color:#960050;background-color:#1e0010">files</span> <span style="color:#960050;background-color:#1e0010">will</span> <span style="color:#960050;background-color:#1e0010">be</span> <span style="color:#960050;background-color:#1e0010">moved</span> <span style="color:#960050;background-color:#1e0010">there</span> <span style="color:#960050;background-color:#1e0010">else</span> <span style="color:#960050;background-color:#1e0010">only</span> <span style="color:#960050;background-color:#1e0010">two</span> <span style="color:#960050;background-color:#1e0010">arguments</span> <span style="color:#960050;background-color:#1e0010">are</span> <span style="color:#960050;background-color:#1e0010">allowed
+</span><span style="color:#960050;background-color:#1e0010"></span>paths(<span style="color:#e6db74">[&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span> <span style="color:#e6db74">...]</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;[]</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">qualified</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">for</span> <span style="color:#960050;background-color:#1e0010">every</span> <span style="color:#960050;background-color:#1e0010">unqualified</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">received</span> <span style="color:#960050;background-color:#1e0010">as</span> <span style="color:#960050;background-color:#1e0010">input
+</span><span style="color:#960050;background-color:#1e0010"></span>touch(<span style="color:#e6db74">&lt;unqualified</span> <span style="color:#e6db74">path&gt;</span> <span style="color:#e6db74">[--nocreate]</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">touches</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">file</span> <span style="color:#960050;background-color:#1e0010">creating</span> <span style="color:#960050;background-color:#1e0010">it</span> <span style="color:#960050;background-color:#1e0010">if</span> <span style="color:#960050;background-color:#1e0010">it</span> <span style="color:#960050;background-color:#1e0010">does</span> <span style="color:#960050;background-color:#1e0010">not</span> <span style="color:#960050;background-color:#1e0010">exist.</span> <span style="color:#960050;background-color:#1e0010">if</span> <span style="color:#960050;background-color:#1e0010">--nocreate</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">file</span> <span style="color:#960050;background-color:#1e0010">will</span> <span style="color:#960050;background-color:#1e0010">not</span> <span style="color:#960050;background-color:#1e0010">be</span> <span style="color:#960050;background-color:#1e0010">created</span> <span style="color:#960050;background-color:#1e0010">if</span> <span style="color:#960050;background-color:#1e0010">it</span> <span style="color:#960050;background-color:#1e0010">does</span> <span style="color:#960050;background-color:#1e0010">not</span> <span style="color:#960050;background-color:#1e0010">exist.</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">qualified</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">for</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">specified</span> <span style="color:#960050;background-color:#1e0010">file</span> <span style="color:#960050;background-color:#1e0010">is</span> <span style="color:#960050;background-color:#1e0010">returned
+</span><span style="color:#960050;background-color:#1e0010"></span>home_dir()<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">users</span> <span style="color:#960050;background-color:#1e0010">home</span> <span style="color:#960050;background-color:#1e0010">directory
+</span><span style="color:#960050;background-color:#1e0010"></span>home_path(<span style="color:#e6db74">&lt;relative</span> <span style="color:#e6db74">path&gt;</span>)<span style="color:#960050;background-color:#1e0010">-&gt;&lt;qualified</span> <span style="color:#960050;background-color:#1e0010">path&gt;</span> <span style="color:#960050;background-color:#1e0010">returns</span> <span style="color:#960050;background-color:#1e0010">fully</span> <span style="color:#960050;background-color:#1e0010">qualified</span> <span style="color:#960050;background-color:#1e0010">path</span> <span style="color:#960050;background-color:#1e0010">relative</span> <span style="color:#960050;background-color:#1e0010">to</span> <span style="color:#960050;background-color:#1e0010">the</span> <span style="color:#960050;background-color:#1e0010">user’s</span> <span style="color:#960050;background-color:#1e0010">home</span> <span style="color:#960050;background-color:#1e0010">directory
+</span><span style="color:#960050;background-color:#1e0010">…</span> <span style="color:#960050;background-color:#1e0010">(more</span> <span style="color:#960050;background-color:#1e0010">functions</span> <span style="color:#960050;background-color:#1e0010">are</span> <span style="color:#960050;background-color:#1e0010">coming</span> <span style="color:#960050;background-color:#1e0010">whenver</span> <span style="color:#960050;background-color:#1e0010">they</span> <span style="color:#960050;background-color:#1e0010">are</span> <span style="color:#960050;background-color:#1e0010">needed)
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div>
 
                 
 
                 <hr>
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/post/cmakereadingandwritingjson/" data-toggle="tooltip" data-placement="top" title="cmakepp: Reading and Writing JSON">&larr;
-                            Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/post/cppdynamicobject/" data-toggle="tooltip" data-placement="top" title="An Implementation of the Dynamic Object in C&#43;&#43;">Next
+                        <a href="/post/usefulextensionsforcmake/" data-toggle="tooltip" data-placement="top" title="Useful extensions for CMake">Next
                             Post &rarr;</a>
                     </li>
                     
@@ -294,6 +322,19 @@ home_path(<relative path>)-&gt;<qualified path> returns fully qualified path rel
 
                 
 <div id="disqus-comment"></div>
+
+
+
+<script src="https://utteranc.es/client.js"
+repo="toeb/devblog"
+issue-term="pathname"
+label="comment"
+theme="github-light"
+crossorigin="anonymous"
+async>
+</script>
+
+
 
 
 
@@ -310,8 +351,6 @@ home_path(<relative path>)-&gt;<qualified path> returns fully qualified path rel
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        
-                        
                         
                         
                         

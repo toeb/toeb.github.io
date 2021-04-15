@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="Renameable Namespaces using the Preprocessor" />
-    <meta property="og:title" content="Renameable Namespaces using the Preprocessor" />
-    <meta property="twitter:title" content="Renameable Namespaces using the Preprocessor" />
+    <meta name="title" content="cmake" />
+    <meta property="og:title" content="cmake" />
+    <meta property="twitter:title" content="cmake" />
     
 
     
@@ -47,9 +47,9 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Renameable Namespaces using the Preprocessor-Toeb Blog</title>
+    <title>cmake-Toeb Blog</title>
 
-    <link rel="canonical" href="/post/cpprenameablenamespaces/">
+    <link rel="canonical" href="/categories/cmake/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -169,33 +169,14 @@
 
 
 
-
-<style type="text/css">
-    header.intro-header {
-        background-image: url('/images/carbon.png')
-    }
-</style>
-<header class="intro-header">
+<header class="intro-header" style="background-image: url('/images/carbon.png')">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                    </div>
-                    <h1>Renameable Namespaces using the Preprocessor</h1>
-                    <h2 class="subheading"></h2>
-                    <span class="meta">
-                        Posted by 
-                        
-                                toeb&#39;s Blog
-                         
-                        on 
-                        Tuesday, August 30, 2016
-                        
-                        
-                        
-                    </span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>Software Engineering </h1>
+                    
+		    <span class="subheading">random thoughts</span>
                 </div>
             </div>
         </div>
@@ -204,128 +185,187 @@
 
 
 
-
-<article>
-    <div class="container">
-        <div class="row">
-
+  
+<div class="container">
+    <div class="row">
+        
+        
+   	    <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container
+        ">
             
-            <div class="
-                col-lg-11 col-lg-offset-1
-                col-md-10 col-md-offset-1
-                post-container">
 
-                
-                <p>Renameable Namespaces using the Preprocessor
-by thetoeb • 2014/10/14 • 0 Comments</p>
-<p>Motivation
-If you are starting to work on a library and do not know exactly how your namespaces are going end up these macro helper are for you. I have written helpers that simplify using namespaces and lets you build up your namespaces with preprocessor defines. This allows you to quickly rename your namespaces which in turn makes it alot more flexible. You can find the code on github. It is licensed under the MIT license.</p>
-<p>The reason why I wanted to have renameable, dynamically generated namespaces was to allow me to statically link multiple versions of the same library and to achieve this I needed to to prepend a versioned namespace e.g. wrap all namespaces in another namespace. This could have been achieved by wrapping the all include files in another namespace but some edge cases did not allow me to do it this way. So I chose to make the namespaces “dynamic” (as in compile time dynamic) which I could control with a single preprocessor define.</p>
-<p>Documentation
-I provide you with the following macros:</p>
-<p>NS_BEGIN(&hellip;)
-NS_END(&hellip;)
-NS(&hellip;)
-NS_USE(&hellip;)<br>
-Instead of using namespace X{ namespace Y{ &hellip; } } you write NS_BEGIN(X,Y) &hellip; NS_END(X,Y) these macros expand to the namespace definitions and allow you to use preprocessor defines to name your namespaces.</p>
-<p>A nice side effect is that your code is not indented anymore by your IDE which, in my opinion, makes the code harder to read as get more and more nested namespaces. Also you can explicitly see where your namespace ends which is very helpful in long files – I always seem to get mixed up with too many braces…</p>
-<p>Of course your personal preferences may differ, but if you refactor without expensive tools defining your namespaces with these macros helps a lot as you only have to change it once. Furthermore you could easily add a build task that replaces these macros with the hard coded namespaces if you release your source code/ headers. (or leave them in, especially if you want your library users to be able to change the namespace as well).</p>
-<p>Besides beginning and ending a namespace you can also use NS(X,Y) to reference a namespace as it is expanded to X::Y. Another shorthand which is useful is NS_USE(X,Y) which just creates a using namespace statement: using namespace X::Y.</p>
-<p>Of course you can also mix the macro based namespace and hard coded namespace statement to your hearts content.</p>
-<p>Example
-Here is an example application that shows you how to use these macros:</p>
-<p>#include &lt;cppnamespace/cppnamespace.h&gt;
-/// defines which for naming the namespaces, allows the parameterized buildup of naming schemes
-#define BASE_NAMESPACE matlib<br>
-#define MATRIX_NAMESPACE BASE_NAMESPACE, matrix
-#define VECTOR_NAMESPACE BASE_NAMESPACE, vector</p>
-<p>NS_BEGIN(MATRIX_NAMESPACE)
-// equivalent to namespace matlib{ namespace matrix{
-struct Matrix{
-auto operator()(int i, int j)-&gt;double;
-};
-NS_END(MATRIX_NAMESPACE)
-//equivalent to }}</p>
-<p>NS_BEGIN(VECTOR_NAMESPACE)
-struct Vector : public NS(MATRIX_NAMESPACE)::Matrix{ // a vector is a matrix the namespace is accessed via NS(&hellip;) macro
-auto operator()(int i)-&gt;double;
-};</p>
-<p>NS_END(VECTOR_NAMESPACE)</p>
-<p>int main(){
-// using directive to access Vector
-NS_USE(VECTOR_NAMESPACE);</p>
-<p>Vector v;
-//global qualification for matrix - also works without using the preprocessor (but makes the code more brittle)
-::matlib::matrix::Matrix m;</p>
-<p>}
-Limitations:</p>
-<p>Due to NS_REDUCE you can at most nest 100 namespaces (which is in itself absurd ;))
-I am happy for any critiques in form of comments, stars, upvotes, likes, etc. Especially if you find this useful let me know! I am aware there is only a niche audience for this kind of preprocessor stuff – but I do like to share :)</p>
+<div class="post-preview">
+    <a href="https://toeb.github.io/post/cmakeppexpressionsyntax/">
+        <h2 class="post-title">
+            cmakepp: Expression Syntax
+        </h2>
+	
+        <div class="post-content-preview">
+	    
+            Discussion of an Alternative Syntax for CMake
+        
+       
 
-
-                
-
-                <hr>
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/post/usefulextensionsforcmake/" data-toggle="tooltip" data-placement="top" title="Useful extensions for CMake">&larr;
-                            Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/post/cmakeppparallelprocesses/" data-toggle="tooltip" data-placement="top" title="Parallel Processes in CMake">Next
-                            Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-<div id="disqus-comment"></div>
-
-
-
-<script src="https://utteranc.es/client.js"
-repo="toeb/devblog"
-issue-term="pathname"
-label="comment"
-theme="github-light"
-crossorigin="anonymous"
-async>
-</script>
-
-
-
-
-
-            </div>
-            
-            <div class="
-                col-lg-11 col-lg-offset-1
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                        
-                        
-                        
-                        
-                    </div>
-                </section>
-                
-
-                
-                
-            </div>
         </div>
-    </div>
-</article>
+    </a>
+    <p class="post-meta">
+    Posted by      &#34;toeb&#34; Monday, June 4, 2018
+    
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="https://toeb.github.io/post/cmakeppfilesystem/">
+        <h2 class="post-title">
+            CMake and the Filesystem
+        </h2>
+	
+        <div class="post-content-preview">
+	    
+            Discussion of an Alternative Syntax for CMake
+        
+       
+
+        </div>
+    </a>
+    <p class="post-meta">
+    Posted by      &#34;toeb&#34; Thursday, November 27, 2014
+    
+    
+    </p>
+
+</div>
+<hr>
+
+
+            
+
+
+
+       	</div>
+        
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+             
+            
+                
+            
+        </div>
+    </section>
+    
+
+    
+	
+    <section class="visible-md visible-lg">
+	<hr><h5><a href="/top/about">ABOUT ME</a></h5>
+        <div class="short-about">
+            
+            <a href="/top/about">
+               <img src="/images/avatar.png" alt="avatar" style="cursor: pointer" />
+            </a>
+            
+            
+                <p>Just a Software Engineer...</p>
+            
+           
+           <ul class="list-inline"> 
+               
+               <li>
+                   <a href='/categories/cmake/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/toeb">
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
+                       <span class="fa-stack fa-lg">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+            
+                    <li>
+                        <a target="_blank" href="https://www.reddit.com/user/toebi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+            
+               
+               
+               
+               
+                </ul>
+            </div>
+    </section>
+	
+    
+    
+
+    
+    
+</div>
+
+	</div>
+</div>
+
 
 
 
@@ -337,7 +377,7 @@ async>
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                       <a href='/categories/cmake/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
