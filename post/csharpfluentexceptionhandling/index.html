@@ -34,9 +34,9 @@
     
 
     
-    <meta name="description" content="">
-    <meta property="og:description" content="" />
-    <meta property="twitter:description" content="" />
+    <meta name="description" content="Strategies to handle exceptions">
+    <meta property="og:description" content="Strategies to handle exceptions" />
+    <meta property="twitter:description" content="Strategies to handle exceptions" />
     
 
     
@@ -191,7 +191,7 @@
                                 toeb&#39;s Blog
                          
                         on 
-                        Tuesday, August 30, 2016
+                        Monday, December 9, 2013
                         
                         
                         
@@ -216,52 +216,53 @@
                 post-container">
 
                 
-                <p>A Fluent Way of Exception Handling
-by thetoeb • 2013/12/09 • 4 Comments</p>
-<p>While doing some filesystem work I encountered alot of AccessViolationExceptions because a file is being opened to write multiple times.  Even after closing the file explicitly a short timeframe exists in which the file could not be opened again.  The simplest approach for me was to retry openening the file until it worked.  To allow a more easy and more general way to handle exceptions I developed a small extensible try-repeat-framework which allows me to configure waiting and repeating strategies and also to only react to specific exceptions.  I have written it with a fluent interface which allows easy usage:</p>
-<p>New: I created a Repository on Github : <a href="https://github.com/toeb/fluentexceptions">https://github.com/toeb/fluentexceptions</a> Even newer: you can now install it via nuget:  PM&gt; Install-Package Core.Trying</p>
+                <p>While doing some filesystem work I encountered alot of AccessViolationExceptions because a file is being opened to write multiple times.  Even after closing the file explicitly a short timeframe exists in which the file could not be opened again.  The simplest approach for me was to retry openening the file until it worked.  To allow a more easy and more general way to handle exceptions I developed a small extensible try-repeat-framework which allows me to configure waiting and repeating strategies and also to only react to specific exceptions.  I have written it with a fluent interface which allows easy usage:</p>
+<p>New: I created a Repository on Github : <a href="https://github.com/toeb/fluentexceptions">https://github.com/toeb/fluentexceptions</a> Even newer: you can now install it via nuget:  <code>PM&gt; Install-Package Core.Trying</code></p>
 <p>Example 1:</p>
-<p>var configuration = new Try()
-// do not throw exceptions
-// when action continouosly fails
-.BeQuiet(true)
-// only expectAccessViolationExceptions
-.Expect<AccessViolationException>()
-// repeat at most 5 times or until
-// 1s of waiting time has passed
-.Repeat(5, 1000)
-// when actions fails backoff exponentially
-// e.g. first wait 10 ms then 100 ms then 1000ms
-.BackoffExponentially();
-//configuration is reusable
-var result = configuration.Execute(() =&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#66d9ef">var</span> configuration = <span style="color:#66d9ef">new</span> Try()
+  <span style="color:#75715e">// do not throw exceptions 
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// when action continouosly fails
+</span><span style="color:#75715e"></span>  .BeQuiet(<span style="color:#66d9ef">true</span>)
+  <span style="color:#75715e">// only expectAccessViolationExceptions
+</span><span style="color:#75715e"></span>  .Expect&lt;AccessViolationException&gt;()
+  <span style="color:#75715e">// repeat at most 5 times or until 
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 1s of waiting time has passed
+</span><span style="color:#75715e"></span>  .Repeat(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1000</span>)
+  <span style="color:#75715e">// when actions fails backoff exponentially
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// e.g. first wait 10 ms then 100 ms then 1000ms
+</span><span style="color:#75715e"></span>  .BackoffExponentially();
+
+<span style="color:#75715e">//configuration is reusable
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> result = configuration.Execute(() =&gt;
 {
-/*something which potentially throws */
-});</p>
-<pre><code>  if (result)
-  {
-    // success
-    Console.Write(&quot;number of retries: &quot;);
-    Console.WriteLine(result.FailedCount);
-  }
-  else
-  {
-    // failure
-    Console.Write(&quot;time spent waiting [ms]: &quot;);
-    Console.WriteLine(result.WaitedTime);
-    Console.Write(&quot;number of retries: &quot;);
-    Console.WriteLine(result.FailedCount);
-    Console.Write(&quot;last throw exception message: &quot;);
-    Console.WriteLine(result.LastException.Message);
-  }
-</code></pre>
-<p>Example 2:</p>
-<p>// default configuration handles any exception
-// repeats 4 times at most and exponentially backs off
-Try.Default.Execute(() =&gt; {
-/<em>some action which potentially throws</em>/
+  <span style="color:#75715e">/*something which potentially throws */</span>
 });
-let me know if you think it is useful…  Be warned that this type of repeat on exception strategy should not be applied blindly …</p>
+
+<span style="color:#66d9ef">if</span> (result)
+{
+  <span style="color:#75715e">// success
+</span><span style="color:#75715e"></span>  Console.Write(<span style="color:#e6db74">&#34;number of retries: &#34;</span>);
+  Console.WriteLine(result.FailedCount);
+}
+<span style="color:#66d9ef">else</span>
+{
+  <span style="color:#75715e">// failure
+</span><span style="color:#75715e"></span>  Console.Write(<span style="color:#e6db74">&#34;time spent waiting [ms]: &#34;</span>);
+  Console.WriteLine(result.WaitedTime);
+  Console.Write(<span style="color:#e6db74">&#34;number of retries: &#34;</span>);
+  Console.WriteLine(result.FailedCount);
+  Console.Write(<span style="color:#e6db74">&#34;last throw exception message: &#34;</span>);
+  Console.WriteLine(result.LastException.Message);
+}
+
+</code></pre></div><p>Example 2:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#75715e">// default configuration handles any exception
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// repeats 4 times at most and exponentially backs off
+</span><span style="color:#75715e"></span>  Try.Default.Execute(() =&gt; {
+    <span style="color:#75715e">/*some action which potentially throws*/</span>
+  });
+
+</code></pre></div><p>let me know if you think it is useful…  Be warned that this type of repeat on exception strategy should not be applied blindly …</p>
 <p>I developed the library because I needed it but some terminology was researched.  consulted sources:</p>
 <p><a href="http://msdn.microsoft.com/en-us/library/hh680905(v=pandp.50)">http://msdn.microsoft.com/en-us/library/hh680905(v=pandp.50)</a>
 <a href="http://stackoverflow.com/questions/1563191/c-sharp-cleanest-way-to-write-retry-logic">http://stackoverflow.com/questions/1563191/c-sharp-cleanest-way-to-write-retry-logic</a></p>
@@ -272,14 +273,9 @@ let me know if you think it is useful…  Be warned that this type of repeat on 
                 <hr>
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/post/csharpparsingwebassetfiles/" data-toggle="tooltip" data-placement="top" title="A Quick Way of Parsing versioned Web Asset Files">&larr;
-                            Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/post/cmakeppexpressionsyntax/" data-toggle="tooltip" data-placement="top" title="cmakepp: Expression Syntax">Next
+                        <a href="/post/cmakeppfilesystem/" data-toggle="tooltip" data-placement="top" title="CMake and the Filesystem">Next
                             Post &rarr;</a>
                     </li>
                     
