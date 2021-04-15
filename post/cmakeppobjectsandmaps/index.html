@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="tag1" />
-    <meta property="og:title" content="tag1" />
-    <meta property="twitter:title" content="tag1" />
+    <meta name="title" content="Objects and Maps in CMake" />
+    <meta property="og:title" content="Objects and Maps in CMake" />
+    <meta property="twitter:title" content="Objects and Maps in CMake" />
     
 
     
@@ -47,9 +47,9 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>tag1-Toeb Blog</title>
+    <title>Objects and Maps in CMake-Toeb Blog</title>
 
-    <link rel="canonical" href="/tags/tag1/">
+    <link rel="canonical" href="/post/cmakeppobjectsandmaps/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -157,14 +157,33 @@
 
 
 
-<header class="intro-header" style="background-image: url('/images/carbon.png')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/carbon.png')
+    }
+</style>
+<header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Software Engineering </h1>
-                    
-		    <span class="subheading">random thoughts</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>Objects and Maps in CMake</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                toeb&#39;s Blog
+                         
+                        on 
+                        Tuesday, August 30, 2016
+                        
+                        
+                        
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,170 +192,143 @@
 
 
 
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
 
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppexpressionsyntax/">
-        <h2 class="post-title">
-            cmakepp: Expression Syntax
-        </h2>
-	
-        <h3 class="post-subtitle">
-            subtlt
-        </h3>
-	
-        <div class="post-content-preview">
-	    
-            descr
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by      &#34;&#34; Monday, June 4, 2018
-    
-    
-    </p>
-
-</div>
-<hr>
-
+<article>
+    <div class="container">
+        <div class="row">
 
             
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
 
-
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>FEATURED TAGS</h5>
-        <div class="tags">
-             
-            
                 
-            
-                
-            
-        </div>
-    </section>
-    
+                <p>Objects and Maps in CMake
+by thetoeb • 2014/02/16 • 7 Comments</p>
+<p>Get it at <a href="https://github.com/toeb/oo-cmake">https://github.com/toeb/oo-cmake</a> and tell me if you like it</p>
+<p>For more complex build system features oo programming would be a major boon. So I took it upon myself to create a usable and tested oo-extension for cmake (in pure CMake) so I could continue developing and extending my plattform independent tooling support (cutil) .</p>
+<p>It’s too bad that Kitware decided to use their own language (with very little high level language features) for their build system product because CMakes project generation capabilties are unparalleled .  I can understand that it seemed like a good idea at first ( the CMake scripting Language is platform independent and easier to use than make or bash or cmd also it was not intended to do complicated things). I however strongly believe that building a programm should be as easy as possible and therefore a high level language should have been used. CMake’s creators Bill Hoffman and Kenneth Martin have said that they would have done this differently if they had to do it again (<a href="http://www.aosabook.org/en/cmake.html">http://www.aosabook.org/en/cmake.html</a>)</p>
+<p>Of course CMake does not offer language features for a very sleak usage but the with these functions you can use prototypical inheritance, maps, methods, objects, lists, properties, references, etc. which are at the basis of every oo language.</p>
+<p>Even if you do not want to do inheritance in CMake you can use these functions for Maps (Dictionaries)</p>
+<p>People familiar with JavaScript will be familiar with this approach to object orientation.</p>
+<p>Here is a simple example</p>
+<p>cmake_minimum_required(VERSION 2.8)</p>
+<h1 id="include-standalone-version-of-oo-cmake">include standalone version of oo-cmake</h1>
+<h1 id="when-not-using-cutil-this--includes-the-function-files-as-well-as">when not using cutil this  includes the function files as well as</h1>
+<h1 id="the-dependent-functions">the dependent functions</h1>
+<p>include(&quot;../oo-cmake.cmake&quot;)</p>
+<p>message(&ldquo;creating a simple inheritance example&rdquo;)</p>
+<p>#create animal object
+obj_create(animal)</p>
+<h1 id="set-object-method-eat">set object method eat</h1>
+<h1 id="this-method-prints-out-which-food-the-animal-is-eating">this method prints out which food the animal is eating</h1>
+<h1 id="existing-functions-can-also-be-appliead-via-obj_bindcallref-func-arg1-arg2-arg3">existing functions can also be appliead via obj_bindcall(${ref} func arg1 arg2 arg3)</h1>
+<p>obj_set(
+${animal}   #reference to animal object
+&ldquo;eat&rdquo;       #name of property
+RAW         # RAW indictates that the data is to be treated as a raw string not a list (hinders evaluation)
+&ldquo;function(eat this)
+obj_get(${this} food food)
+message(&ldquo;I am eating ${food}&quot;)
+endfunction()&rdquo;
+)</p>
+<h1 id="create-mamal-object">create mamal object</h1>
+<p>obj_create(mamal)
+obj_setprototype(${mamal} ${animal})</p>
+<p>#create bird object
+obj_create(bird)                    #create instance
+obj_setprototype(${bird} ${animal}) #set prototype animal
+obj_set(${bird} food Birdfood)      #set bird&rsquo;s food property to &ldquo;Birdfood&rdquo;</p>
+<p>#create dog object
+obj_create(dog)                     #create instance
+obj_setprototype(${dog} ${mamal})   #set prototype mamal
+obj_set(${dog} food Dogfood)        #set dogs food property to &ldquo;Dogfood&rdquo;</p>
+<p>#create cat object
+obj_create(cat)                     #create instance
+obj_setprototype(${cat} ${mamal})   #set prototype mamal
+obj_set(${cat} food Catfood)        #set cat&rsquo;s food property to &ldquo;Catfood&rdquo;</p>
+<h1 id="call-eat-function-for-different-objects">call eat function for different objects</h1>
+<p>obj_callmember(${bird} eat)
+obj_callmember(${dog} eat)
+obj_callmember(${cat} eat)</p>
+<p>#output should be
+#I am eating Birdfood
+#I am eating Dogfood
+#I am eating Catfood
+You can use the following commands</p>
+<p>obj_create(out_ref [objectpath]) #returns a ref to a new object. this object is persistent and will exist until obj_delete is called, internally the object is represented by a folder
+obj_delete(in_ref) # deletes a object (deletes the folder internally)
+obj_find(refOrId) # searches for a named object or id
+obj_get(ref value key) # gets a property ${value} = ref[key] the prototype chain is considered
+obj_set(ref key value) # sets a property ref[key] = value
+obj_getref(ref prop_ref key) # returns the reference to a property (a file)
+obj_getownproperty(ref value key) # returns the value for property if the property belongs to ref
+obj_setownproperty(ref key value) # sets the own property ref[key] =value
+obj_has(ref result key) # sets result to true if ref[key] exists
+obj_hasownproperty(ref result key) # sets result to true if ref[key] exists and is owned by ref
+obj_callmember(ref methodname args&hellip;) # calls a stored memberfunction (first argument passed is ref)
+obj_bindcall(ref methodname args&hellip;) # calls a defined function setting first argument to ref
+obj_setprototype(ref proto_ref) # sets the prototype for ref
+obj_getprototype(ref proto_ref) # returns the prototyp for ref
+obj_settype(ref type) # sets the type for ref
+obj_gettype(ref type) # gets the type for ref
+obj_getkeys(ref keys) # returns all defined properties for ref
+obj_getownkeys(ref keys) # returns all defined properties that ref owns</p>
 
-    
-	
-    <section class="visible-md visible-lg">
-	<hr><h5><a href="/top/about">ABOUT ME</a></h5>
-        <div class="short-about">
-            
-            <a href="/top/about">
-               <img src="/images/avatar.png" alt="avatar" style="cursor: pointer" />
-            </a>
-            
-            
-                <p>Just a Software Engineer...</p>
-            
-           
-           <ul class="list-inline"> 
-               
-               <li>
-                   <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://github.com/toeb">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-                    <li>
-                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/cmakeppparallelprocesses/" data-toggle="tooltip" data-placement="top" title="Parallel Processes in CMake">&larr;
+                            Previous Post</a>
                     </li>
-            
-            
-                    <li>
-                        <a target="_blank" href="https://www.reddit.com/user/toebi">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/objectorientedcmakenextiteration/" data-toggle="tooltip" data-placement="top" title="Object Oriented CMake: Next Iteration">Next
+                            Post &rarr;</a>
                     </li>
-            
-            
-               
-               
-               
-               
+                    
                 </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
             </div>
-    </section>
-	
-    
-    
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-    
-    
-</div>
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
 
-	</div>
-</div>
-
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
 
 
 
@@ -348,7 +340,7 @@
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>

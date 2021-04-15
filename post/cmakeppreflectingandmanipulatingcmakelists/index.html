@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177198277-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-177198277-1');
+    </script>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="toeb&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://toeb.github.io//images/carbon.png">
+    <meta property="twitter:image" content="https://toeb.github.io//images/carbon.png" />
+    
+
+    
+    <meta name="title" content="cmakepp: reflecting and manipulating CMakeLists" />
+    <meta property="og:title" content="cmakepp: reflecting and manipulating CMakeLists" />
+    <meta property="twitter:title" content="cmakepp: reflecting and manipulating CMakeLists" />
+    
+
+    
+    <meta name="description" content="">
+    <meta property="og:description" content="" />
+    <meta property="twitter:description" content="" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="thetoeb, toeb, blog, programming">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>cmakepp: reflecting and manipulating CMakeLists-Toeb Blog</title>
+
+    <link rel="canonical" href="/post/cmakeppreflectingandmanipulatingcmakelists/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">toeb&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/carbon.png')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>cmakepp: reflecting and manipulating CMakeLists</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                toeb&#39;s Blog
+                         
+                        on 
+                        Tuesday, August 30, 2016
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>cmakepp: reflecting and manipulating CMakeLists
+by thetoeb • 2015/03/19 • 2 Comments</p>
+<p>The basic CMakeLists.txt files for cmake based projects are usually very simple. Their manipulation lends itself to be automated and for this purpose I developed a parser for cmake script which allows you to manipulate it programatically from within cmake itself. On top of the cmake script parser I generated utility functions which allow you to manipulate CMakeLists.txt files while still allowing you to manually working on them. This functionality is wrapped by a command line interface which I present to you in this post. You can find this part of cmakepp here. Feel free to try and please give me feedback if you like it or find any bugs.</p>
+<p>With this sample I want to show you how you can manipulate a CMakeList.txt using the command line interface cml (an alias for your shell of choice which is installed when you install cmakepp). The command line interface simply wraps functions which you could also use from cmake directly.</p>
+<p>Step 1 – Starting from Scratch
+The first thing to do is to create an initial CMakeLists.txt file in the directory of your project.</p>
+<h1 id="create-a-new-directory">create a new directory</h1>
+<p>./&gt; mkdir my_project
+./&gt; cd my_project
+my_project/&gt; cml init
+These commands result in a new CMakeLists file in the current directory. The projects name is derived by taking the parent directory’s name. As you can see the code is just vanilla cmake and you can modify it manually as ever you see fit.</p>
+<p>CMakeLists.txt:</p>
+<p>cmake_minimum_required(VERSION 3.2.1)</p>
+<p>project(my_project)
+Step 2 – Adding a target
+The first thing you might want to do is to add a target. Let’s say we want a library called my_lib and an executable called my_exe.</p>
+<h1 id="add-the-target">add the target</h1>
+<p>my_project/&gt; cml target add my_lib
+my_project/&gt; cml target add my_exe executable
+Now you can see the scaffolding for a cmake library and executable target inside the CMakeLists.txt. You might have also noticed that what was generated is not a valid CMakeLists.txt because there are no source files specified for the lib and the exe. However this only causes an error if you generate it. So we need to add source files which leads us to the next section.</p>
+<p>CMakeLists.txt:</p>
+<p>cmake_minimum_required(VERSION 3.2.1)</p>
+<p>project(my_project)</p>
+<p>add_library(my_lib)</p>
+<p>add_executable(my_exe)
+Step 3 – Adding source files, include directories and dependencies
+Using the command line tool you can easily add files, folders and values to the targets. The corresponding properties are automatically created or removed. Be sure to add at least something as sources.</p>
+<h2 id="add-source-files-to-the-my_lib-target-from-a-sub-directory-the-files-have-to-exist">add source files to the my_lib target from a sub-directory (the files have to exist)</h2>
+<p>my_project/src/my_lib/&gt; cml target my_lib sources append my_lib.cpp</p>
+<h2 id="add-source-file-from-another-directory-using-a-glob-expression">add source file from another directory using a glob expression</h2>
+<p>my_project/includes/my_lib_inc/&gt; cml target my_lib sources append my_lib*.h</p>
+<h2 id="add-source-file-to-my_exe">add source file to my_exe</h2>
+<p>my_project/&gt; cml target my_exe sources append src/main.cpp</p>
+<h2 id="add-an-include-directory-to-the-my_lib-target">add an include directory to the my_lib target</h2>
+<p>my_project/include/&gt; cml target my_lib includes append my_lib_inc</p>
+<h2 id="add-my_lib-dependency-to-my_exe">add my_lib dependency to my_exe</h2>
+<p>my_project/include/&gt; cml target my_exe links append my_lib
+All these modifications culminate in the CMakelists.txt as follows: CMakeLists.txt:</p>
+<p>cmake_minimum_required(VERSION 3.2.1)</p>
+<p>project(my_project)</p>
+<p>add_library(my_lib
+src/my_lib/my_lib.cpp
+includes/my_lib_inc/my_lib1.h
+includes/my_lib_inc/my_lib2.h
+)
+target_include_directories(my_lib PUBLIC include/my_lib_inc)</p>
+<p>add_executable(my_exe src/main.cpp)
+target_link_libraries(my_exe my_lib)
+Now we have a working CMake project with two targets of which one depends on the other. There are more possibilities than appending values to the targets properties. You can also remove, set, filter, clear them but alas their is still much functionality to be added.</p>
+<p>Step 4 – Renaming Targets and Changing their Type
+Renaming targets and changing their type is also a breeze with the reflection tool. Let’s rename the change the type my_exe to library and rename it to the_executable:</p>
+<p>my_project/&gt; cml target my_exe rename the_executable
+my_project/&gt; cml target the_executable type library
+CMakeLists.txt:</p>
+<p>cmake_minimum_required(VERSION 3.2.1)</p>
+<p>project(my_project)</p>
+<p>add_library(my_lib
+src/my_lib/my_lib.cpp
+includes/my_lib_inc/my_lib1.h
+includes/my_lib_inc/my_lib2.h
+)
+target_include_directories(my_lib PUBLIC include/my_lib_inc)</p>
+<p>add_library(the_executable src/main.cpp)
+target_link_libraries(the_executable my_lib)
+Step 5 – Generating the Project
+This step is just for completeness sake. Do as you would normally do with any cmake project.</p>
+<p>my_project/&gt; mkdir build
+my_project/&gt; cd build
+my_project/build/&gt; cmake ..
+my_project/build/&gt; cmake &ndash;build .</p>
+<h2 id="show-that-the-project-generated-correctly-in-my-case-for-visual-studio">show that the project generated correctly (in my case for Visual Studio)</h2>
+<p>my_project/build/&gt; ls
+[
+&ldquo;./my_project/build/ALL_BUILD.vcxproj&rdquo;,
+&ldquo;./my_project/build/ALL_BUILD.vcxproj.filters&rdquo;,
+&ldquo;./my_project/build/CMakeCache.txt&rdquo;,
+&ldquo;./my_project/build/CMakeFiles&rdquo;,
+&ldquo;./my_project/build/cmake_install.cmake&rdquo;,
+&ldquo;./my_project/build/Debug&rdquo;,
+&ldquo;./my_project/build/my_lib.dir&rdquo;,
+&ldquo;./my_project/build/my_lib.vcxproj&rdquo;,
+&ldquo;./my_project/build/my_lib.vcxproj.filters&rdquo;,
+&ldquo;./my_project/build/my_project.sln&rdquo;,
+&ldquo;./my_project/build/the_executable.dir&rdquo;,
+&ldquo;./my_project/build/the_executable.vcxproj&rdquo;,
+&ldquo;./my_project/build/the_executable.vcxproj.filters&rdquo;,
+&ldquo;./my_project/build/Win32&rdquo;,
+&ldquo;./my_project/build/ZERO_CHECK.vcxproj&rdquo;,
+&ldquo;./my_project/build/ZERO_CHECK.vcxproj.filters&rdquo;
+]
+Now the project is ready for use.</p>
+<p>Conclusion
+As you can see I have added a lot of functionality to cmakepp which allows you to use cmake script reflection to modify cmake code. Of course there are Caveats – like speed: A command call can take upwards of a second or 2 for a normal sized CMakeLists.txt because the token parser and the search procedures all are O(n) (n being the number of tokens parsed).</p>
+<p>This functionality is very interesting to me because programatically altering cmake files will allow you (and me) to create project scaffolders and generators (like yeoman for web/javascript) which give you an easy start with any new cmake based project and later allows you to simply add files, target etc. Since it is written in pure cmake this is platform independent and could even be used by IDEs to update the CMakeLists files automatically without destroying custom code. The final destination for this is to have generator templates which scaffold your whole project and create standard/vanilla cmake files. Especially combination with my/a package manager this can become very powerful. All functionality described here and much more can also be used from within cmake itself.</p>
+<p>If you are more interested in the available commands go to the documentation of cmakelists_cli in the github repository.</p>
+<p>Future development will allow more complete and easier use of the command line client – more powerful commands, automatic deductions, formatting, …</p>
+<p>Thanks for reading my Post and feel free to gift me with up votes or critique or issues or ….</p>
+
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/cmakepptemplategeneration/" data-toggle="tooltip" data-placement="top" title="cmakepp: Template Generation in CMake">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/cmakereadingandwritingjson/" data-toggle="tooltip" data-placement="top" title="cmakepp: Reading and Writing JSON">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:redacted@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/toeb">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://www.reddit.com/user/toebi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; toeb&#39;s Blog 2021
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

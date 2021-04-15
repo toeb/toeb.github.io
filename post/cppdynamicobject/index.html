@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="tag1" />
-    <meta property="og:title" content="tag1" />
-    <meta property="twitter:title" content="tag1" />
+    <meta name="title" content="An Implementation of the Dynamic Object in C&#43;&#43;" />
+    <meta property="og:title" content="An Implementation of the Dynamic Object in C&#43;&#43;" />
+    <meta property="twitter:title" content="An Implementation of the Dynamic Object in C&#43;&#43;" />
     
 
     
@@ -47,9 +47,9 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>tag1-Toeb Blog</title>
+    <title>An Implementation of the Dynamic Object in C&#43;&#43;-Toeb Blog</title>
 
-    <link rel="canonical" href="/tags/tag1/">
+    <link rel="canonical" href="/post/cppdynamicobject/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -157,14 +157,33 @@
 
 
 
-<header class="intro-header" style="background-image: url('/images/carbon.png')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/carbon.png')
+    }
+</style>
+<header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Software Engineering </h1>
-                    
-		    <span class="subheading">random thoughts</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>An Implementation of the Dynamic Object in C&#43;&#43;</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                toeb&#39;s Blog
+                         
+                        on 
+                        Tuesday, August 30, 2016
+                        
+                        
+                        
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,170 +192,172 @@
 
 
 
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
 
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppexpressionsyntax/">
-        <h2 class="post-title">
-            cmakepp: Expression Syntax
-        </h2>
-	
-        <h3 class="post-subtitle">
-            subtlt
-        </h3>
-	
-        <div class="post-content-preview">
-	    
-            descr
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by      &#34;&#34; Monday, June 4, 2018
-    
-    
-    </p>
-
-</div>
-<hr>
-
+<article>
+    <div class="container">
+        <div class="row">
 
             
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
 
-
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>FEATURED TAGS</h5>
-        <div class="tags">
-             
-            
                 
-            
-                
-            
-        </div>
-    </section>
-    
+                <p>An Implementation of the Dynamic Object in C++
+by thetoeb • 2014/10/08 • 2 Comments</p>
+<p>You can find my implementation at <a href="https://github.com/toeb/cppdynamic">https://github.com/toeb/cppdynamic</a> it is licensed under the MIT license. I’d be happy for feedback and or optimizations :)
+Dynamic object are useful, especially in rapid prototyping, non-performance critical situations, and situations in which data/functions -bags are needed (non schema specific data). Also when serializing and deserializing dynamic objects can be a very valuable asset.</p>
+<p>Dynamic programming languages inherently support this. e.g.</p>
+<p>var obj = {};
+obj.a = &lsquo;asd&rsquo;;
+obj.b = {};
+obj.b.c = 3;
+obj.d = function(i,j){ return i+j;}
+C# Also supports dynamic objects utilizing the dynamic keyword:</p>
+<p>dynamic obj = new ExpandoObject();
+obj.a = &ldquo;asd&rdquo;;
+obj.b = new ExpandObject();
+obj.b.c = 3;
+obj.d = (int i, int j)=&gt;i+j;
+I tried as to stay close to c#’s dynamic objects when trying to implement them for c++. Of course I could not alter the language so I have to use the indexer operator operator[](const std::string &amp;)</p>
+<p>My syntax is as follows:</p>
+<p>DynamicObject obj;
+obj[&ldquo;a&rdquo;] = &ldquo;asd&rdquo;;
+obj[&ldquo;b&rdquo;] = DynamicObject();
+obj[&ldquo;b&rdquo;][&ldquo;c&rdquo;] = 3;
+obj[&ldquo;d&rdquo;] = [](int i, int j){return i+j;};
+Here is a working example of what you can do:</p>
+<p>#include &lt;core.dynamic.h&gt;
+#include &lt;assert.h&gt;</p>
+<p>int main(){
+{
+// dynamic object can be a fundamental type
+dynamic::DynamicObject uut = 33;
+assert(33 == (int)uut);</p>
+<pre><code>}
+</code></pre>
+<p>{
+// dynamic object can be a complex type
+dynamic::DynamicObject uut = std::string(&ldquo;hello&rdquo;);
+assert(&ldquo;hello&rdquo; == (std::string)uut);
+}
+{
+// dynamic object can be reassigned
+dynamic::DynamicObject uut = 33;
+assert(33 == (int)uut);
+uut = std::string(&ldquo;hello&rdquo;);
+assert(&ldquo;hello&rdquo; == (std::string)uut);
+}
+{
+//dynamic object can be a functor
+dynamic::DynamicObject uut = [](int i, int j){return i + j; };
+int result = uut(3, 4);
+assert(result == 7);
+}</p>
+<p>{
+// dynamic object can be an expando object
+dynamic::DynamicObject uut;
+uut[&ldquo;prop1&rdquo;] = 33;
+uut[&ldquo;prop2&rdquo;] = std::string(&ldquo;hello&rdquo;);
+uut[&ldquo;prop3&rdquo;][&ldquo;prop31&rdquo;] = 5;
+uut[&ldquo;prop4&rdquo;] = [](int i, int j){return i + j; };
+int prop1 = uut[&ldquo;prop1&rdquo;];
+std::string prop2 = uut[&ldquo;prop2&rdquo;];
+int prop31 = uut[&ldquo;prop3&rdquo;][&ldquo;prop31&rdquo;];
+int result = uut[&ldquo;prop4&rdquo;](5, 6);</p>
+<pre><code>assert(prop1 == 33);
+assert(prop2 == &quot;hello&quot;);
+assert(prop31 == 5);
+assert(result == 11);
+</code></pre>
+<p>}</p>
+<p>{
+// you can create a custom dynamic object implementation:
+class MyImp : public dynamic::DynamicObjectImplementationBase{
+protected:
+virtual bool tryMemberGet(const get_member_context &amp; context, result_type &amp; result)override
+{
+if (context.name == &ldquo;prop1&rdquo;){
+result = 44;
+return true;
+}
+if (context.name == &ldquo;prop2&rdquo;){
+result = std::string(&ldquo;asd&rdquo;);
+return true;
+}</p>
+<pre><code>    return false;
+  }
+};
+// initialization is still a bit complex 
+dynamic::DynamicObject uut = 
+  std::dynamic_pointer_cast&lt;dynamic::IDynamicObjectImplementation&gt;(std::make_shared&lt;MyImp&gt;());
+int a = uut[&quot;prop1&quot;];
+std::string b = uut[&quot;prop2&quot;];
 
-    
-	
-    <section class="visible-md visible-lg">
-	<hr><h5><a href="/top/about">ABOUT ME</a></h5>
-        <div class="short-about">
-            
-            <a href="/top/about">
-               <img src="/images/avatar.png" alt="avatar" style="cursor: pointer" />
-            </a>
-            
-            
-                <p>Just a Software Engineer...</p>
-            
-           
-           <ul class="list-inline"> 
-               
-               <li>
-                   <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://github.com/toeb">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-                    <li>
-                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+assert(a == 44);
+assert(b == &quot;asd&quot;);
+</code></pre>
+<p>}</p>
+<p>}
+Caveats:</p>
+<p>Functors with multiple overloads of operator() cannot be used as members or values (the is_callable&lt;&gt; and func_traits&lt;&gt; type traits would need to be specialized for the corresonding type.) This is especially sad, because no compiler independent version for std::bind return functors are usable.
+Method modifiers except nonconst and const are not implemented.
+Since c++ is statically typed working around it can be hard at times, however it is possible thanks to operator overloading. Especially operator(), operator[], operator T() are usefull to allow dynamic objects.</p>
+
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/cmakeppfilesystem/" data-toggle="tooltip" data-placement="top" title="CMake and the Filesystem">&larr;
+                            Previous Post</a>
                     </li>
-            
-            
-                    <li>
-                        <a target="_blank" href="https://www.reddit.com/user/toebi">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/alternativetypedefsyntax/" data-toggle="tooltip" data-placement="top" title="Alternative `typedef` Syntax">Next
+                            Post &rarr;</a>
                     </li>
-            
-            
-               
-               
-               
-               
+                    
                 </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
             </div>
-    </section>
-	
-    
-    
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-    
-    
-</div>
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
 
-	</div>
-</div>
-
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
 
 
 
@@ -348,7 +369,7 @@
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>

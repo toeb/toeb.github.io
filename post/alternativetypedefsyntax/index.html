@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="tag1" />
-    <meta property="og:title" content="tag1" />
-    <meta property="twitter:title" content="tag1" />
+    <meta name="title" content="Alternative `typedef` Syntax" />
+    <meta property="og:title" content="Alternative `typedef` Syntax" />
+    <meta property="twitter:title" content="Alternative `typedef` Syntax" />
     
 
     
@@ -47,9 +47,9 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>tag1-Toeb Blog</title>
+    <title>Alternative `typedef` Syntax-Toeb Blog</title>
 
-    <link rel="canonical" href="/tags/tag1/">
+    <link rel="canonical" href="/post/alternativetypedefsyntax/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -157,14 +157,33 @@
 
 
 
-<header class="intro-header" style="background-image: url('/images/carbon.png')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/carbon.png')
+    }
+</style>
+<header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Software Engineering </h1>
-                    
-		    <span class="subheading">random thoughts</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>Alternative `typedef` Syntax</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                toeb&#39;s Blog
+                         
+                        on 
+                        Tuesday, August 30, 2016
+                        
+                        
+                        
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,170 +192,95 @@
 
 
 
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
 
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppexpressionsyntax/">
-        <h2 class="post-title">
-            cmakepp: Expression Syntax
-        </h2>
-	
-        <h3 class="post-subtitle">
-            subtlt
-        </h3>
-	
-        <div class="post-content-preview">
-	    
-            descr
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by      &#34;&#34; Monday, June 4, 2018
-    
-    
-    </p>
-
-</div>
-<hr>
-
+<article>
+    <div class="container">
+        <div class="row">
 
             
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
 
-
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>FEATURED TAGS</h5>
-        <div class="tags">
-             
-            
                 
-            
-                
-            
-        </div>
-    </section>
-    
+                <p>An Alternative typedef Syntax using the C++ Preprocessor
+by thetoeb • 2014/10/13 • 3 Comments</p>
+<p>Disclaimer: This post will be more interesting to you if you work with the preprocessor.</p>
+<p>Here you can find a preprocessor only solution for changing the typedef syntax from typedef int number_type; to int typedef_as number_type; – an alternative typedef Syntax.</p>
+<p>If your wondering where this might be useful let me tell you why I needed it: I was working on a preprocessor macro which defines a property – a field, a getter and a setter. The easiest syntax I was able to achieve was the following: typedef int property(MyValue) which expanded into something similar to this:</p>
+<p>typedef int MyValuePropertyType;
+MyValuePropertyType _MyValue;
+MyValuePropertyType getMyValue()const{return _MyValue;}
+void setMyValue(const MyValuePropertyType &amp; value){_MyValue = value;}
+The typedef at the beginning was not aesthetically pleasing and I wanted to get rid of it so that I would get the same functionality but with this syntax: int property(MyValue). (By the way – I do not like passing the name to the macro either, but there is no workaround for that) So I am terribly proud that I can now present to you the solution for my typedef_as macro. /s (seriously: someone might find it useful for similar situations while working with the preprocessor):</p>
+<p>// helper for getting preceeding type
+#define TYPEDEF_AS_HELPER_NAME(NAME) _<em>hiddenHelper</em>##NAME</p>
+<p>// inner macro for preceeding type typedef
+#define TYPEDEF_AS_(NAME)<br>
+static inline TYPEDEF_AS_HELPER_NAME(NAME)(){throw &ldquo;never call me&rdquo;;};<br>
+typedef decltype(TYPEDEF_AS_HELPER_NAME(NAME)())</p>
+<p>// typedef_as
+// changes the original typdef syntax from: <code>typedef &lt;type&gt; &lt;type alias&gt;</code> to <code>&lt;type&gt; typedef_as &lt;type_alias&gt;</code>
+#define typedef_as TYPEDEF_AS_(__##__LINE__)
+What this code does basically is to declare a static method method which returns the specified type. Then it takes this method’s decltype to start a typedef statement which you only need to complete with the name of the type alias. It uses the __LINE__ macro to create a unqiue name for the static helper method.</p>
+<p>Caveats:</p>
+<p>you should not use it in multiple header files outside of a class as naming conflicts can occur if you have two headerfiles and define the typedef at the same line and the namespace is the same.
+Feel free to use it (no dependencies, public domain) wherever you want. I’m always happy for feedback and upvotes :)</p>
 
-    
-	
-    <section class="visible-md visible-lg">
-	<hr><h5><a href="/top/about">ABOUT ME</a></h5>
-        <div class="short-about">
-            
-            <a href="/top/about">
-               <img src="/images/avatar.png" alt="avatar" style="cursor: pointer" />
-            </a>
-            
-            
-                <p>Just a Software Engineer...</p>
-            
-           
-           <ul class="list-inline"> 
-               
-               <li>
-                   <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://github.com/toeb">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-                    <li>
-                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/cppdynamicobject/" data-toggle="tooltip" data-placement="top" title="An Implementation of the Dynamic Object in C&#43;&#43;">&larr;
+                            Previous Post</a>
                     </li>
-            
-            
-                    <li>
-                        <a target="_blank" href="https://www.reddit.com/user/toebi">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/csharpparsingwebassetfiles/" data-toggle="tooltip" data-placement="top" title="A Quick Way of Parsing versioned Web Asset Files">Next
+                            Post &rarr;</a>
                     </li>
-            
-            
-               
-               
-               
-               
+                    
                 </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
             </div>
-    </section>
-	
-    
-    
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-    
-    
-</div>
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
 
-	</div>
-</div>
-
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
 
 
 
@@ -348,7 +292,7 @@
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>

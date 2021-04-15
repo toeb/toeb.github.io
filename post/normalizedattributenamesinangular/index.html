@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="tag1" />
-    <meta property="og:title" content="tag1" />
-    <meta property="twitter:title" content="tag1" />
+    <meta name="title" content="Normalized Attribute Names in Angular" />
+    <meta property="og:title" content="Normalized Attribute Names in Angular" />
+    <meta property="twitter:title" content="Normalized Attribute Names in Angular" />
     
 
     
@@ -47,9 +47,9 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>tag1-Toeb Blog</title>
+    <title>Normalized Attribute Names in Angular-Toeb Blog</title>
 
-    <link rel="canonical" href="/tags/tag1/">
+    <link rel="canonical" href="/post/normalizedattributenamesinangular/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -157,14 +157,33 @@
 
 
 
-<header class="intro-header" style="background-image: url('/images/carbon.png')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/carbon.png')
+    }
+</style>
+<header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Software Engineering </h1>
-                    
-		    <span class="subheading">random thoughts</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>Normalized Attribute Names in Angular</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                toeb&#39;s Blog
+                         
+                        on 
+                        Tuesday, August 30, 2016
+                        
+                        
+                        
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,170 +192,102 @@
 
 
 
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
 
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppexpressionsyntax/">
-        <h2 class="post-title">
-            cmakepp: Expression Syntax
-        </h2>
-	
-        <h3 class="post-subtitle">
-            subtlt
-        </h3>
-	
-        <div class="post-content-preview">
-	    
-            descr
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by      &#34;&#34; Monday, June 4, 2018
-    
-    
-    </p>
-
-</div>
-<hr>
-
+<article>
+    <div class="container">
+        <div class="row">
 
             
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
 
-
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>FEATURED TAGS</h5>
-        <div class="tags">
-             
-            
                 
-            
-                
-            
-        </div>
-    </section>
-    
+                <p>FRONTEND
+Normalized Attribute Names in Angular
+by thetoeb • 2014/01/14 • 1 Comment</p>
+<p>I have been doing some hard directive/ html markup work and I came across a problem where I needed the normalized html tag attribute names.   (I was trying to create a html element but needed access to the normalized names without turning it into a directive)</p>
+<p>Angular.js normalizes names like “test-name” and “data-test-name” to “testName”.  So I went ahead and extracted and wrapped the functions needed into the following function:</p>
+<p>/** normalizes attribute names ,  stolen from angular.js */
+function normalizeAttributeName(attributeName) {
+// copied from angular.js v1.2.2
+// (c) 2010-2012 Google, Inc. <a href="http://angularjs.org">http://angularjs.org</a>
+// License: MIT
+// modified by me :D
+var SPECIAL_CHARS_REGEXP = /([:-_]+(.))/g;
+var MOZ_HACK_REGEXP = /^moz([A-Z])/;</p>
+<pre><code> function camelCase(name) {
+   return name.
+     replace(SPECIAL_CHARS_REGEXP, function (_, separator, letter, offset) {
+       return offset ? letter.toUpperCase() : letter;
+     }).
+     replace(MOZ_HACK_REGEXP, 'Moz$1');
+ }
 
-    
-	
-    <section class="visible-md visible-lg">
-	<hr><h5><a href="/top/about">ABOUT ME</a></h5>
-        <div class="short-about">
-            
-            <a href="/top/about">
-               <img src="/images/avatar.png" alt="avatar" style="cursor: pointer" />
-            </a>
-            
-            
-                <p>Just a Software Engineer...</p>
-            
-           
-           <ul class="list-inline"> 
-               
-               <li>
-                   <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://github.com/toeb">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-                    <li>
-                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+ var PREFIX_REGEXP = /^(x[:-_]|data[:-_])/i;
+
+ function directiveNormalize(name) {
+   return camelCase(name.replace(PREFIX_REGEXP, ''));
+ }
+ return directiveNormalize(attributeName);
+</code></pre>
+<p>}
+I did not find out how this could be done by just calling an angular api so  if you know how, please let me know :D</p>
+
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/objectorientedcmakenextiteration/" data-toggle="tooltip" data-placement="top" title="Object Oriented CMake: Next Iteration">&larr;
+                            Previous Post</a>
                     </li>
-            
-            
-                    <li>
-                        <a target="_blank" href="https://www.reddit.com/user/toebi">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/moderncmakeslides/" data-toggle="tooltip" data-placement="top" title="Modern CMake Slides">Next
+                            Post &rarr;</a>
                     </li>
-            
-            
-               
-               
-               
-               
+                    
                 </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
             </div>
-    </section>
-	
-    
-    
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-    
-    
-</div>
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
 
-	</div>
-</div>
-
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
 
 
 
@@ -348,7 +299,7 @@
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>

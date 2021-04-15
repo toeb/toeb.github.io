@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="tag1" />
-    <meta property="og:title" content="tag1" />
-    <meta property="twitter:title" content="tag1" />
+    <meta name="title" content="Modern CMake Slides" />
+    <meta property="og:title" content="Modern CMake Slides" />
+    <meta property="twitter:title" content="Modern CMake Slides" />
     
 
     
@@ -47,9 +47,9 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>tag1-Toeb Blog</title>
+    <title>Modern CMake Slides-Toeb Blog</title>
 
-    <link rel="canonical" href="/tags/tag1/">
+    <link rel="canonical" href="/post/enablingmvc5intellisensinclasslibraryproject/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -157,14 +157,33 @@
 
 
 
-<header class="intro-header" style="background-image: url('/images/carbon.png')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/carbon.png')
+    }
+</style>
+<header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Software Engineering </h1>
-                    
-		    <span class="subheading">random thoughts</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>Modern CMake Slides</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                toeb&#39;s Blog
+                         
+                        on 
+                        Tuesday, August 30, 2016
+                        
+                        
+                        
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,170 +192,123 @@
 
 
 
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
 
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppexpressionsyntax/">
-        <h2 class="post-title">
-            cmakepp: Expression Syntax
-        </h2>
-	
-        <h3 class="post-subtitle">
-            subtlt
-        </h3>
-	
-        <div class="post-content-preview">
-	    
-            descr
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by      &#34;&#34; Monday, June 4, 2018
-    
-    
-    </p>
-
-</div>
-<hr>
-
+<article>
+    <div class="container">
+        <div class="row">
 
             
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
 
-
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>FEATURED TAGS</h5>
-        <div class="tags">
-             
-            
                 
-            
-                
-            
-        </div>
-    </section>
-    
+                <p>Enabling MVC5 intellisense in a ClassLibrary Project
+by thetoeb • 2014/01/05 • 3 Comments</p>
+<p>I’ve been searching and searching the internet for someone, somewhere who might know how to enable correct IntelliSense for cshtml (MVC 5.0) in VS2013 when developing in a ClassLibrary type project.</p>
+<p>This is the problem I was encountering:</p>
+<p>Missing Intellisense</p>
+<p>It’s all thanks to Mohammad Chehab, who was also stumped for a while (probably not as long as me), that I was able to find the solution.  His blog post explains that one must change the output path for the class library to bin/ (instead of bin/<release>)  for Intellisense  to work.</p>
+<p>So now I can show you the steps for creating a ClassLibrary with cshtml (MVC5 Style):</p>
+<p>Create or open an existing class library project (if you open an existing one be sure to remove the MVC5 nuget package)
+Add the MVC (5.0) nuget package (right click project in solution explorer -&gt; Manage NuGet Packages -&gt; search for MVC and install “Microsoft ASP.NET MVC”)
+Close any and all open .cshtml files
+Right click project -&gt; Properties -&gt; Build -&gt; change Output path to “bin/”
+Add the following minimal Web.config to the root of your class library project ( the web config file is solely needed for intellisense. Configuration (via Web.config) should be done in the WebApplication hosting your ClassLibrary assembly)
+Clean and Build the solution.
+Open cshtml file
+Voila
+Web.config</p>
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <sectionGroup name="system.web.webPages.razor" type="System.Web.WebPages.Razor.Configuration.RazorWebSectionGroup, System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35">
+      <section name="host" type="System.Web.WebPages.Razor.Configuration.HostSection, System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" />
+      <section name="pages" type="System.Web.WebPages.Razor.Configuration.RazorPagesSection, System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <appSettings>
+    <add key="webpages:Version" value="3.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+  </appSettings>
+<p>&lt;system.web&gt;
+<compilation debug="true" targetFramework="4.5" />
+&lt;/system.web&gt;</p>
+<p>&lt;system.web.webPages.razor&gt;
+<host factoryType="System.Web.Mvc.MvcWebRazorHostFactory, System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+<pages pageBaseType="System.Web.Mvc.WebViewPage">
+<namespaces>
+<add namespace="System.Web.Mvc" />
+<add namespace="System.Web.Mvc.Ajax" />
+<add namespace="System.Web.Mvc.Html" />
+<add namespace="System.Web.Optimization"/>
+<add namespace="System.Web.Routing" />
+<!-- add other namespaces for views here -->
+<!-- e.g. your own project's, Lib.Views.Etc -->
+</namespaces>
+</pages>
+&lt;/system.web.webPages.razor&gt;
+</configuration>
+One would expect for intellisense for a .cshtml files to work after step 2. However the other steps need to be performed before Intellisense works for  directives like @model or the base page (which contains Model, ViewBag, etc. )</p>
+<p>The result looks like it is supposed to:</p>
+<p>Correct Intellisense</p>
+<p>You may download an example solution here: <a href="http://goo.gl/Jx2cXg">http://goo.gl/Jx2cXg</a></p>
+<p>As to the reason why this does not work correctly:  I believe the intellisense provider for cshtml files compiles these in the background using the web.config s it finds in the solution and expects the resulting .dll s to be stored in the bin directory (which is the default output directory for WebApplication projects) However Class libraries have different subfolders depending on the build type  (bin/Debug, bin/Release, bin/<buildtype> ) and thus the IntellisenseProvider cannot find these files.  I think the Intellisense/MVC/Razor/ASP.NET developement team could fix this easily, however it is a rare bug because putting Views into separate assemblies is currently an edge case for MVC.  (hopefully not in the future)</p>
 
-    
-	
-    <section class="visible-md visible-lg">
-	<hr><h5><a href="/top/about">ABOUT ME</a></h5>
-        <div class="short-about">
-            
-            <a href="/top/about">
-               <img src="/images/avatar.png" alt="avatar" style="cursor: pointer" />
-            </a>
-            
-            
-                <p>Just a Software Engineer...</p>
-            
-           
-           <ul class="list-inline"> 
-               
-               <li>
-                   <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://github.com/toeb">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-                    <li>
-                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/moderncmakeslides/" data-toggle="tooltip" data-placement="top" title="Modern CMake Slides">&larr;
+                            Previous Post</a>
                     </li>
-            
-            
-                    <li>
-                        <a target="_blank" href="https://www.reddit.com/user/toebi">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/cmakeppheterogenouspackagesearchandretrieval/" data-toggle="tooltip" data-placement="top" title="Modern CMake Slides">Next
+                            Post &rarr;</a>
                     </li>
-            
-            
-               
-               
-               
-               
+                    
                 </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
             </div>
-    </section>
-	
-    
-    
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-    
-    
-</div>
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
 
-	</div>
-</div>
-
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
 
 
 
@@ -348,7 +320,7 @@
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>

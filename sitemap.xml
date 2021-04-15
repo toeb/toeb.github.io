@@ -2,10 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://toeb.github.io/post/testpage/</loc>
+    <loc>https://toeb.github.io/categories/</loc>
     <lastmod>2018-06-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://toeb.github.io/categories/</loc>
+    <loc>https://toeb.github.io/post/cmakeppexpressionsyntax/</loc>
     <lastmod>2018-06-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://toeb.github.io/post/</loc>
@@ -25,5 +25,68 @@
   </url><url>
     <loc>https://toeb.github.io/</loc>
     <lastmod>2018-06-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/csharpfluentexceptionhandling/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/csharpparsingwebassetfiles/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/alternativetypedefsyntax/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cppdynamicobject/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cmakeppfilesystem/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cmakereadingandwritingjson/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cmakeppreflectingandmanipulatingcmakelists/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cmakepptemplategeneration/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/ctesttestadapter/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cppdynamicallycallanything/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/enabletypescriptcompilationforvs2013classlibrary/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cppiscallabletypetrait/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cmakeppheterogenouspackagesearchandretrieval/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/enablingmvc5intellisensinclasslibraryproject/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/moderncmakeslides/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/normalizedattributenamesinangular/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/objectorientedcmakenextiteration/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cmakeppobjectsandmaps/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cmakeppparallelprocesses/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/cpprenameablenamespaces/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
+  </url><url>
+    <loc>https://toeb.github.io/post/usefulextensionsforcmake/</loc>
+    <lastmod>2016-08-30T23:24:46+02:00</lastmod>
   </url>
 </urlset>

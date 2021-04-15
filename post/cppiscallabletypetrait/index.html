@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="tag1" />
-    <meta property="og:title" content="tag1" />
-    <meta property="twitter:title" content="tag1" />
+    <meta name="title" content="is_callable type trait" />
+    <meta property="og:title" content="is_callable type trait" />
+    <meta property="twitter:title" content="is_callable type trait" />
     
 
     
@@ -47,9 +47,9 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>tag1-Toeb Blog</title>
+    <title>is_callable type trait-Toeb Blog</title>
 
-    <link rel="canonical" href="/tags/tag1/">
+    <link rel="canonical" href="/post/cppiscallabletypetrait/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -157,14 +157,33 @@
 
 
 
-<header class="intro-header" style="background-image: url('/images/carbon.png')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/carbon.png')
+    }
+</style>
+<header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Software Engineering </h1>
-                    
-		    <span class="subheading">random thoughts</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>is_callable type trait</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                toeb&#39;s Blog
+                         
+                        on 
+                        Tuesday, August 30, 2016
+                        
+                        
+                        
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,170 +192,132 @@
 
 
 
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
 
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppexpressionsyntax/">
-        <h2 class="post-title">
-            cmakepp: Expression Syntax
-        </h2>
-	
-        <h3 class="post-subtitle">
-            subtlt
-        </h3>
-	
-        <div class="post-content-preview">
-	    
-            descr
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by      &#34;&#34; Monday, June 4, 2018
-    
-    
-    </p>
-
-</div>
-<hr>
-
+<article>
+    <div class="container">
+        <div class="row">
 
             
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
 
-
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>FEATURED TAGS</h5>
-        <div class="tags">
-             
-            
                 
-            
-                
-            
-        </div>
-    </section>
-    
+                <p>is_callable type trait
+by thetoeb • 2014/07/12 • 0 Comments</p>
+<p>I’ve developed a type_trait for checking if a type is callable, ie has defined a single operator(). Also on ideone</p>
+<p>Tell me if you like it or if you know of a better version :D
+/// function traits for member functions
+// gives you the class_type, return_type and arguments tuple for any member function (const and not const)
+template<typename T>
+struct func_traits{
+static const bool is_const_call = false;
+typedef void class_type;
+typedef void return_type;
+typedef void args_tuple;
+};
+// specialization for non const call member functions
+template &lt; typename TClass ,typename TRet, typename &hellip; TArgs&gt;
+struct func_traits&lt;TRet(TClass::<em>)(TArgs&hellip;)&gt;
+{
+static const bool is_const_call = false;
+typedef TClass class_type;
+typedef TRet return_type;
+typedef std::tuple&lt;TArgs&hellip;&gt; args_tuple;
+};
+// specialization for const call member function
+template &lt; typename TClass, typename TRet, typename &hellip; TArgs&gt;
+struct func_traits&lt;TRet(TClass::</em>)(TArgs&hellip;)const&gt;
+{
+static const bool is_const_call = true;
+typedef TClass class_type;
+typedef TRet return_type;
+typedef std::tuple&lt;TArgs&hellip;&gt; args_tuple;
+};</p>
+<p>// checks wether a single call operator exists by sfinae ideom
+template<typename T>
+struct is_callable{</p>
+<p>private:
+// if the argument type is deducable this function is used
+template<typename TX = T>
+static char check(typename func_traits&lt;decltype(&amp;TX::operator())&gt;::class_type);
+// else this function is used
+static double check(&hellip;);
+static T t;
+// if first function is used the call operator exists and the size is sizeof(char) instead of sizeof(double)
+enum{ _value = sizeof(check(t)) == sizeof(char) };
+public:
+const static bool value = _value;
+};</p>
+<p>int main() {
+// B is a functor class, A not callable
+class B{ public:void operator()(int i)const{} };
+class A{};
+// this order works  in MSVC 2013
+static_assert(is_callable<B>::value == true, &ldquo;should be true&rdquo;);
+static_assert(is_callable<A>::value == false, &ldquo;should be false&rdquo;);
+//
+return 0;
+}
+Some Sources I queried when developing:</p>
+<p><a href="http://stackoverflow.com/questions/5100015/c-metafunction-to-determine-whether-a-type-is-callable">http://stackoverflow.com/questions/5100015/c-metafunction-to-determine-whether-a-type-is-callable</a>
+<a href="http://functionalcpp.wordpress.com/2013/08/05/function-traits/">http://functionalcpp.wordpress.com/2013/08/05/function-traits/</a>
+… some more, can’t find…</p>
 
-    
-	
-    <section class="visible-md visible-lg">
-	<hr><h5><a href="/top/about">ABOUT ME</a></h5>
-        <div class="short-about">
-            
-            <a href="/top/about">
-               <img src="/images/avatar.png" alt="avatar" style="cursor: pointer" />
-            </a>
-            
-            
-                <p>Just a Software Engineer...</p>
-            
-           
-           <ul class="list-inline"> 
-               
-               <li>
-                   <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://github.com/toeb">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-                    <li>
-                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/cmakeppheterogenouspackagesearchandretrieval/" data-toggle="tooltip" data-placement="top" title="Modern CMake Slides">&larr;
+                            Previous Post</a>
                     </li>
-            
-            
-                    <li>
-                        <a target="_blank" href="https://www.reddit.com/user/toebi">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/enabletypescriptcompilationforvs2013classlibrary/" data-toggle="tooltip" data-placement="top" title="How to enable Typescript Compilation for a VS2013 Class Library Project">Next
+                            Post &rarr;</a>
                     </li>
-            
-            
-               
-               
-               
-               
+                    
                 </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
             </div>
-    </section>
-	
-    
-    
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-    
-    
-</div>
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
 
-	</div>
-</div>
-
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
 
 
 
@@ -348,7 +329,7 @@
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>

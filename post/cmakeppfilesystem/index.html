@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177198277-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-177198277-1');
+    </script>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="toeb&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://toeb.github.io//images/carbon.png">
+    <meta property="twitter:image" content="https://toeb.github.io//images/carbon.png" />
+    
+
+    
+    <meta name="title" content="CMake and the Filesystem" />
+    <meta property="og:title" content="CMake and the Filesystem" />
+    <meta property="twitter:title" content="CMake and the Filesystem" />
+    
+
+    
+    <meta name="description" content="">
+    <meta property="og:description" content="" />
+    <meta property="twitter:description" content="" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="thetoeb, toeb, blog, programming">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>CMake and the Filesystem-Toeb Blog</title>
+
+    <link rel="canonical" href="/post/cmakeppfilesystem/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">toeb&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/carbon.png')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>CMake and the Filesystem</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                toeb&#39;s Blog
+                         
+                        on 
+                        Tuesday, August 30, 2016
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>BUILD, CMAKE, PROGRAMMING
+CMake and the Filesystem
+by thetoeb • 2014/11/27 • 0 Comments</p>
+<p>Filesystem
+I have always been a bit confused when working with cmake’s file functions and the logic behind paths (sometimes they are found sometimes they are not…) For ease of use I reimplemented a own path managing system which behaves very similar to powershell and bash (see ss64.com) it is based around a global path stack and path qualification. All of my functions which work with paths use this system.</p>
+<p>How to get it.
+The filesystem extensions are part of oo-cmake a enhancement suite to cmake written in pure cmake. Either clone oo-cmake’s git repository or follow the instructions at cutil which includes oo-cmake.</p>
+<p>I prefer you use the second method as it installs aliases to run the icmake command which lets you test the functions interactively.</p>
+<p>Example
+To better show you what I mean I created the following example:</p>
+<h1 id="as-soon-as-you-include-oo-cmakecmake-the-current-directory-is-set-to">as soon as you include <code>oo-cmake.cmake</code> the current directory is set to</h1>
+<h1 id="cmake_source_dir-which-is-the-directory-from-which-you-script-file">&ldquo;${CMAKE_SOURCE_DIR}&rdquo; which is the directory from which you script file</h1>
+<h1 id="is-called-in-script-mode-cmake--p-or-the-directory-of-the-root">is called in script mode (<code>cmake -P</code>) or the directory of the root</h1>
+<h1 id="cmakeliststxt-file-in-configure-and-build-steps"><code>CMakeLists.txt</code> file in configure and build steps.</h1>
+<p>pwd() # returns the current dir
+ans(path)</p>
+<p>assert(&quot;${path}&quot; STREQUAL &ldquo;${CMAKE_SOURCE_DIR}&quot;)</p>
+<p>pushd(&ldquo;dir1&rdquo; &ndash;create) # goto  ${CMAKE_SOURCE_DIR}/dir1; Create if not exists
+ans(path)
+assert(&quot;${path}&rdquo; STREQUAL &ldquo;${CMAKE_SOURCE_DIR}/dir1&rdquo;)</p>
+<p>fwrite(&ldquo;README.md&rdquo; &ldquo;This is the readme file.&quot;) # creates the file README.md in dir1
+assert(EXISTS &ldquo;${CMAKE_SOURCE_DIR}/dir1/README.md&rdquo;)</p>
+<p>pushd(dir2 &ndash;create) # goto ${CMAKE_SOURCE_DIR}/dir1/dir2 and create it if it does not exist
+fwrite(&ldquo;README2.md&rdquo; &ldquo;This is another readme file&rdquo;)</p>
+<p>cd(../..) # use relative path specifiers to navigate path stack
+ans(path)</p>
+<p>assert(${path} STREQUAL &ldquo;${CMAKE_SOURCE_DIR}&quot;) # up up -&gt; we are where we started</p>
+<p>popd() # path stack is popped. path before was ${CMAKE_SOURCE_DIR}/dir1
+ans(path)</p>
+<p>assert(${path} STREQUAL &ldquo;${CMAKE_SOURCE_DIR}/dir1&rdquo;)</p>
+<p>mkdir(&ldquo;dir3&rdquo;)
+cd(dir3)</p>
+<h1 id="current-dir-is-now-cmake_source_dirdir1dir3">current dir is now ${CMAKE_SOURCE_DIR}/dir1/dir3</h1>
+<h1 id="execute-uses-the-current-pwd-as-the-working-dir-so-the-following">execute() uses the current pwd() as the working dir so the following</h1>
+<h1 id="clones-the-oo-cmake-repo-into-cmake_source_dirdir1dir3">clones the oo-cmake repo into ${CMAKE_SOURCE_DIR}/dir1/dir3</h1>
+<p>git(clone <a href="https://github.com/toeb/oo-cmake.git">https://github.com/toeb/oo-cmake.git</a> &ldquo;.&quot;)</p>
+<h1 id="remove-all-files-and-folders">remove all files and folders</h1>
+<p>rm(.)</p>
+<p>popd() # pwd is now ${CMAKE_SOURCE_DIR} again and stack is empty
+Functions and Datatypes
+<windows path> a windows path possibly with and possibly with drive name C:\Users\Tobi\README.md
+<relative path> a simple relative path ‘../dir2/./test.txt’
+<qualified path> a fully qualified path depending on OS it only contains forward slashes and is cmake’s get_filename_component(result &ldquo;${input} REAL_PATH) returns. All symlinks are resolved. It is absolute
+<unqualified path> ::= <windows path>|<relative path>|<qualified path>
+path(<unqualified path>)-&gt;<qualified path> qualifies a path and returns it. if path is relative (with no drive letter under windows or no initial / on unix) it will be qualified with the current directory pwd()
+pwd()-&gt; <qualified path> returns the top of the path stack. relative paths are relative to pwd()
+cd(<unqualified> [&ndash;create]) -&gt; <qualified path> changes the top of the path stack. returns the <qualified path> corresonding to input. if &ndash;create is specified the directory will be created if it does not exist. if cd() is navigated towards a non existing directory and &ndash;create is not specified it will cause a FATAL_ERROR
+pushd(<unqualified path> [&ndash;create]) -&gt; <qualified path> works the same cd() except that it pushes the top of the path stack down instead of replacing it
+popd()-&gt;<qualified path> removes the top of the path stack and returns the new top path
+dirs()-&gt; <qualified path>[] returns all paths in the path stack from bottom to top
+file functions
+fread(<unqualified path>)-&gt;<string> returns the contents of the specified file
+lines(<unqualified path>)-&gt;<string>[] returns the contents of the specified file in a list of lines
+download(<uri> [&lt;target:unqualified path&gt;] [&ndash;progress]) downloads the file to target, if target is an existing directory the downloaded filename will be extracted from uri else path is treated as the target filepath
+fappend(<unqualified path> <a href="content:string">content:string</a>)-&gt;void appends the specified content to the target file
+fwrite(<unqualified path> <a href="content:string">content:string</a>)-&gt;void writes the content to the target file (overwriting it)
+parent_dir(<unqualified path>)-&gt;<qualified path> returns the parent directory of the specified path
+file_timestamp(<unqualified path>)-&gt;<timestampstring> returns the timestamp string for the specified path yyyy-MM-ddThh:mm:ss
+ls([<unqualified path>])-&gt;<qualified path>[] returns files and subfolders of specified path
+mkdir(<unqualified path>)-&gt;<qualfied path> creates the specified dir and returns its qualified path
+mkdirs(<unqualified path>&hellip;)-&gt;<qualified path>[] creates all of the directories specified
+mktemp([<unqualified path>])-&gt;<qualified path> creates a temporary directory optionally you can specify where this directory is created (by default it is created in TMP_DIR)
+mv(<sourcefile> <targetfile>|[<sourcefile> &hellip;] <existing targetdir>)-&gt;void moves the specifeid path to the specified target if last argument is an existing directory all previous files will be moved there else only two arguments are allowed
+paths([<unqualified path> &hellip;])-&gt;<qualified path>[] returns the qualified path for every unqualified path received as input
+touch(<unqualified path> [&ndash;nocreate])-&gt;<qualified path> touches the specified file creating it if it does not exist. if &ndash;nocreate is specified the file will not be created if it does not exist. the qualified path for the specified file is returned
+home_dir()-&gt;<qualified path> returns the users home directory
+home_path(<relative path>)-&gt;<qualified path> returns fully qualified path relative to the user’s home directory
+… (more functions are coming whenver they are needed)</p>
+
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/cmakereadingandwritingjson/" data-toggle="tooltip" data-placement="top" title="cmakepp: Reading and Writing JSON">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/cppdynamicobject/" data-toggle="tooltip" data-placement="top" title="An Implementation of the Dynamic Object in C&#43;&#43;">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:redacted@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/toeb">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://www.reddit.com/user/toebi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; toeb&#39;s Blog 2021
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

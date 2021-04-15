@@ -8,13 +8,12 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 04 Jun 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://toeb.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>An Example Post - Hallo Alex</title>
-      <link>https://toeb.github.io/post/testpage/</link>
+      <title>cmakepp: Expression Syntax</title>
+      <link>https://toeb.github.io/post/cmakeppexpressionsyntax/</link>
       <pubDate>Mon, 04 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://toeb.github.io/post/testpage/</guid>
-      <description>some header Hallo Wlet
-public class Test { public static void Main() { } public int Test{get;set;} } class Test { public: static void Main() { } int&amp;amp; Test(){ throw std::exception();} } </description>
+      <guid>https://toeb.github.io/post/cmakeppexpressionsyntax/</guid>
+      <description>“CMake’s syntax is not sexy.” Is a statement that probably everyone can understand. It does not allow the developer rudimentary constructs which almost all other languages have. But because CMake’s language is astonishingly flexible I was able to create a lexer and parser and interpreter for a custom 100 % compatible syntax which (once “JIT transpiled”) is also fast. I call it cmakepp expressions or expr for short. I want to emphasize that all of this is written in 100% compatible cmake code and you can use it without the need to preprocess any cmake files or adding any dependencies (except cmakepp).</description>
     </item>
     
   </channel>

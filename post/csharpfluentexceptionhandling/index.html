@@ -28,9 +28,9 @@
     
 
     
-    <meta name="title" content="tag1" />
-    <meta property="og:title" content="tag1" />
-    <meta property="twitter:title" content="tag1" />
+    <meta name="title" content="A Fluent Way of Exception Handling" />
+    <meta property="og:title" content="A Fluent Way of Exception Handling" />
+    <meta property="twitter:title" content="A Fluent Way of Exception Handling" />
     
 
     
@@ -47,9 +47,9 @@
     <meta name="keyword"  content="thetoeb, toeb, blog, programming">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>tag1-Toeb Blog</title>
+    <title>A Fluent Way of Exception Handling-Toeb Blog</title>
 
-    <link rel="canonical" href="/tags/tag1/">
+    <link rel="canonical" href="/post/csharpfluentexceptionhandling/">
 
     <link rel="stylesheet" href="/css/iDisqus.min.css"/>
 	
@@ -157,14 +157,33 @@
 
 
 
-<header class="intro-header" style="background-image: url('/images/carbon.png')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/carbon.png')
+    }
+</style>
+<header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Software Engineering </h1>
-                    
-		    <span class="subheading">random thoughts</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>A Fluent Way of Exception Handling</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                                toeb&#39;s Blog
+                         
+                        on 
+                        Tuesday, August 30, 2016
+                        
+                        
+                        
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,170 +192,121 @@
 
 
 
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
 
-<div class="post-preview">
-    <a href="https://toeb.github.io/post/cmakeppexpressionsyntax/">
-        <h2 class="post-title">
-            cmakepp: Expression Syntax
-        </h2>
-	
-        <h3 class="post-subtitle">
-            subtlt
-        </h3>
-	
-        <div class="post-content-preview">
-	    
-            descr
-        
-       
-
-        </div>
-    </a>
-    <p class="post-meta">
-    Posted by      &#34;&#34; Monday, June 4, 2018
-    
-    
-    </p>
-
-</div>
-<hr>
-
+<article>
+    <div class="container">
+        <div class="row">
 
             
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
 
-
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>FEATURED TAGS</h5>
-        <div class="tags">
-             
-            
                 
-            
-                
-            
-        </div>
-    </section>
-    
+                <p>A Fluent Way of Exception Handling
+by thetoeb • 2013/12/09 • 4 Comments</p>
+<p>While doing some filesystem work I encountered alot of AccessViolationExceptions because a file is being opened to write multiple times.  Even after closing the file explicitly a short timeframe exists in which the file could not be opened again.  The simplest approach for me was to retry openening the file until it worked.  To allow a more easy and more general way to handle exceptions I developed a small extensible try-repeat-framework which allows me to configure waiting and repeating strategies and also to only react to specific exceptions.  I have written it with a fluent interface which allows easy usage:</p>
+<p>New: I created a Repository on Github : <a href="https://github.com/toeb/fluentexceptions">https://github.com/toeb/fluentexceptions</a> Even newer: you can now install it via nuget:  PM&gt; Install-Package Core.Trying</p>
+<p>Example 1:</p>
+<p>var configuration = new Try()
+// do not throw exceptions
+// when action continouosly fails
+.BeQuiet(true)
+// only expectAccessViolationExceptions
+.Expect<AccessViolationException>()
+// repeat at most 5 times or until
+// 1s of waiting time has passed
+.Repeat(5, 1000)
+// when actions fails backoff exponentially
+// e.g. first wait 10 ms then 100 ms then 1000ms
+.BackoffExponentially();
+//configuration is reusable
+var result = configuration.Execute(() =&gt;
+{
+/*something which potentially throws */
+});</p>
+<pre><code>  if (result)
+  {
+    // success
+    Console.Write(&quot;number of retries: &quot;);
+    Console.WriteLine(result.FailedCount);
+  }
+  else
+  {
+    // failure
+    Console.Write(&quot;time spent waiting [ms]: &quot;);
+    Console.WriteLine(result.WaitedTime);
+    Console.Write(&quot;number of retries: &quot;);
+    Console.WriteLine(result.FailedCount);
+    Console.Write(&quot;last throw exception message: &quot;);
+    Console.WriteLine(result.LastException.Message);
+  }
+</code></pre>
+<p>Example 2:</p>
+<p>// default configuration handles any exception
+// repeats 4 times at most and exponentially backs off
+Try.Default.Execute(() =&gt; {
+/<em>some action which potentially throws</em>/
+});
+let me know if you think it is useful…  Be warned that this type of repeat on exception strategy should not be applied blindly …</p>
+<p>I developed the library because I needed it but some terminology was researched.  consulted sources:</p>
+<p><a href="http://msdn.microsoft.com/en-us/library/hh680905(v=pandp.50)">http://msdn.microsoft.com/en-us/library/hh680905(v=pandp.50)</a>
+<a href="http://stackoverflow.com/questions/1563191/c-sharp-cleanest-way-to-write-retry-logic">http://stackoverflow.com/questions/1563191/c-sharp-cleanest-way-to-write-retry-logic</a></p>
 
-    
-	
-    <section class="visible-md visible-lg">
-	<hr><h5><a href="/top/about">ABOUT ME</a></h5>
-        <div class="short-about">
-            
-            <a href="/top/about">
-               <img src="/images/avatar.png" alt="avatar" style="cursor: pointer" />
-            </a>
-            
-            
-                <p>Just a Software Engineer...</p>
-            
-           
-           <ul class="list-inline"> 
-               
-               <li>
-                   <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://github.com/toeb">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               <li>
-                   <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
-                       <span class="fa-stack fa-lg">
-                           <i class="fa fa-circle fa-stack-2x"></i>
-                           <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                       </span>
-                   </a>
-               </li>
-               
-               
-               
-                    <li>
-                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/csharpparsingwebassetfiles/" data-toggle="tooltip" data-placement="top" title="A Quick Way of Parsing versioned Web Asset Files">&larr;
+                            Previous Post</a>
                     </li>
-            
-            
-                    <li>
-                        <a target="_blank" href="https://www.reddit.com/user/toebi">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/cmakeppexpressionsyntax/" data-toggle="tooltip" data-placement="top" title="cmakepp: Expression Syntax">Next
+                            Post &rarr;</a>
                     </li>
-            
-            
-               
-               
-               
-               
+                    
                 </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
             </div>
-    </section>
-	
-    
-    
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-    
-    
-</div>
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
 
-	</div>
-</div>
-
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
 
 
 
@@ -348,7 +318,7 @@
                 <ul class="list-inline text-center">
                    
                    <li>
-                       <a href='/tags/tag1/index.xml' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fa fa-circle fa-stack-2x"></i>
                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
