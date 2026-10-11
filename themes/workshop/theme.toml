@@ -1,0 +1,4 @@
+name = "workshop"
+license = "MIT"
+description = "Dark workshop-notebook theme: cutting-mat grid, part-label tags, one accent."
+min_version = "0.120.0"

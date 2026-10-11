@@ -1,0 +1,20 @@
+{{ define "main" }}
+<article>
+  {{- if eq .Section "post" }}
+  <span class="label mono">Entry {{ partial "entry-number.html" . }}{{ with .Params.tags }} · {{ delimit (first 3 .) " · " }}{{ end }}</span>
+  {{- end }}
+  <h1>{{ .Title }}</h1>
+  {{ with .Params.subtitle }}<p class="sub">{{ . }}</p>{{ end }}
+  {{- if eq .Section "post" }}
+  <div class="meta mono"><span>{{ .Date.Format "2006-01-02" }}</span><span>{{ .ReadingTime }} min</span>
+    {{- range .Params.categories }}<a href="{{ "categories/" | relURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}</div>
+  {{- end }}
+  <div class="content">{{ .Content }}</div>
+  {{- if eq .Section "post" }}
+  <nav class="pager mono">
+    {{ with .PrevInSection }}<a href="{{ .RelPermalink }}">→ {{ .Title }}</a>{{ else }}<span></span>{{ end }}
+    {{ with .NextInSection }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
+  </nav>
+  {{- end }}
+</article>
+{{ end }}

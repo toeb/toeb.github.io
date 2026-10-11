@@ -1,0 +1,6 @@
+{{- /* running entry number: position in date order (oldest = 001) */ -}}
+{{- $n := 0 -}}
+{{- range $i, $p := sort (where site.RegularPages "Section" "post") "Date" -}}
+  {{- if eq $p.RelPermalink $.RelPermalink }}{{ $n = add $i 1 }}{{ end -}}
+{{- end -}}
+{{- printf "%03d" $n -}}

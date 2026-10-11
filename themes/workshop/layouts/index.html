@@ -1,0 +1,20 @@
+{{ define "main" }}
+{{- $posts := where site.RegularPages "Section" "post" }}
+<div class="intro mono"><span>{{ site.Params.author }} · {{ site.Params.role }}</span><span>{{ len $posts }} entries · since {{ (index (sort $posts "Date") 0).Date.Year }}</span></div>
+{{- with index $posts.ByDate.Reverse 0 }}
+<section class="hero">
+  {{- with .Params.image }}<img src="{{ . | relURL }}" alt="">{{ end }}
+  <div>
+    <span class="label mono">New · Entry {{ partial "entry-number.html" . }}{{ with .Params.tags }} · {{ delimit (first 2 .) " · " }}{{ end }}</span>
+    <h2><a href="{{ .RelPermalink }}">{{ .Title }}{{ with .Params.subtitle }}: {{ . | lower }}{{ end }}</a></h2>
+    <p>{{ .Description | default (.Summary | plainify | truncate 180) }}</p>
+    <a class="mono more" href="{{ .RelPermalink }}">Read the entry →</a>
+  </div>
+</section>
+{{- end }}
+<div class="list">
+{{- range after 1 $posts.ByDate.Reverse }}
+  {{ partial "row.html" . }}
+{{- end }}
+</div>
+{{ end }}

@@ -1,0 +1,2 @@
+{{- $diagram := hasPrefix (path.Base .Destination) "g_" -}}
+<figure{{ if $diagram }} class="diagram"{{ end }}><img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" loading="lazy">{{ with .Text }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>

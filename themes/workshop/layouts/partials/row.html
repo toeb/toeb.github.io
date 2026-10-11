@@ -1,0 +1,6 @@
+<div class="row">
+  <span class="n mono">{{ partial "entry-number.html" . }}</span>
+  <span class="d mono">{{ .Date.Format "2006-01-02" }}</span>
+  <span><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Description }}<small>{{ . }}</small>{{ end }}</span>
+  <span class="g mono">{{ with .Params.tags }}{{ index . 0 }}{{ end }}</span>
+</div>

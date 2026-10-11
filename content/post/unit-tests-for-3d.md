@@ -1,10 +1,10 @@
 ---
 title:       "Unit tests for 3D"
 subtitle:    "How a verification harness made my first print fit"
+tags:        ["agents", "3D printing", "testing"]
 description: "Harness engineering: deterministic checks around probabilistic agents, shown on a parametric 3D-printed ampoule case."
 date:        2026-10-11
-author:      "toeb"
-image:       ""
+image:       "/images/unit-tests-for-3d/hero_case.jpg"
 ---
 
 I wanted to 3D-print an ampoule case for my wife, and it fit on the first print. The trick was not the CAD.

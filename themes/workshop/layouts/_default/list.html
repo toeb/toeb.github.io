@@ -1,0 +1,4 @@
+{{ define "main" }}
+<div class="intro mono"><span>{{ with .Data.Singular }}{{ . }} · {{ end }}{{ .Title }}</span><span>{{ len .Pages }} entries</span></div>
+<div class="list">{{ range .Pages.ByDate.Reverse }}{{ partial "row.html" . }}{{ end }}</div>
+{{ end }}

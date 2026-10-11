@@ -1,0 +1,4 @@
+<footer class="site mono">
+  <span>© {{ now.Year }} {{ site.Params.author }}</span>
+  <span>{{ range site.Params.links }}<a href="{{ .url }}">{{ .name }}</a>{{ end }}</span>
+</footer>

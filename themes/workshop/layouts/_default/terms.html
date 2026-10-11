@@ -1,0 +1,4 @@
+{{ define "main" }}
+<div class="intro mono"><span>{{ .Title }}</span><span>{{ len .Data.Terms }} terms</span></div>
+<div class="terms">{{ range .Data.Terms.ByCount }}<a class="mono" href="{{ .Page.RelPermalink }}">{{ .Page.Title }} <b>{{ .Count }}</b></a>{{ end }}</div>
+{{ end }}
