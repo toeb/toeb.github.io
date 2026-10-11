@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177198277-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-177198277-1');
+    </script>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="toeb&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://toeb.github.io//images/carbon.png">
+    <meta property="twitter:image" content="https://toeb.github.io//images/carbon.png" />
+    
+
+    
+    <meta name="title" content="Unit tests for 3D" />
+    <meta property="og:title" content="Unit tests for 3D" />
+    <meta property="twitter:title" content="Unit tests for 3D" />
+    
+
+    
+    <meta name="description" content="Harness engineering: deterministic checks around probabilistic agents, shown on a parametric 3D-printed ampoule case.">
+    <meta property="og:description" content="Harness engineering: deterministic checks around probabilistic agents, shown on a parametric 3D-printed ampoule case." />
+    <meta property="twitter:description" content="Harness engineering: deterministic checks around probabilistic agents, shown on a parametric 3D-printed ampoule case." />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="thetoeb, toeb, blog, programming">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Unit tests for 3D-Toeb Blog</title>
+
+    <link rel="canonical" href="/post/unit-tests-for-3d/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+    
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">toeb&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/tech">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/carbon.png')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>Unit tests for 3D</h1>
+                    <h2 class="subheading">How a verification harness made my first print fit</h2>
+                    <span class="meta">
+                        Posted by 
+                        
+                            toeb
+                         
+                        on 
+                        Sunday, October 11, 2026
+                        
+                        
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>I wanted to 3D-print an ampoule case for my wife, and it fit on the first print. The trick was not the CAD.
+A verification harness checked every design virtually before the printer saw it. You choose which ampoules and how
+many; the generator either packs them into a fixed case or designs the smallest case that holds them.</p>
+<p><strong>Try it:</strong> <a href="https://toeb.github.io/toeb.parametric3d/">paramcad designer</a>, which runs entirely in your browser.</p>
+<h2 id="from-cad-to-print">From CAD to print</h2>
+<p>The printed case is the fork-clip version: two 10 ml and four 2 ml ampoules in a 121.5 × 121.5 mm PETG case.
+It went together on the first print. Only the closing clamps and the clips showed small deviations, which is exactly
+what the outer loop below turns into calibration data and new rules.</p>
+<p>
+  <img src="/images/unit-tests-for-3d/01_case_print_vs_cad.jpg" alt="The finished case with its ampoules: print and CAD">
+
+</p>
+<p>
+  <img src="/images/unit-tests-for-3d/02_plate_print_vs_cad.jpg" alt="All parts on one PETG plate, and the same parts exploded in CAD">
+
+</p>
+<p>
+  <img src="/images/unit-tests-for-3d/03_fork_clips_print_vs_cad.jpg" alt="Fork clips: flexure fingers that grip only the straight body of each ampoule">
+
+</p>
+<p>
+  <img src="/images/unit-tests-for-3d/04_clamp_print_vs_cad.jpg" alt="The closing clamp in profile, one of the two parts with small deviations">
+
+</p>
+<p>
+  <img src="/images/unit-tests-for-3d/05_hinge_print_vs_cad.jpg" alt="Lid hinge knuckles, held together by a piece of 1.75 mm filament">
+
+</p>
+<h2 id="the-harness-unit-tests-for-3d">The harness: unit tests for 3D</h2>
+<p>Think unit tests, but for geometry: collisions, the lid&rsquo;s movement, heights, wall thickness and fit. Rule by rule,
+it grew until it could tell virtually whether the real part would work.</p>
+<p>
+  <img src="/images/unit-tests-for-3d/g_layers.jpg" alt="The verification harness, with numbers from one real build">
+
+</p>
+<h2 id="the-loop">The loop</h2>
+<p>The agents never had to guess. A full check takes about 2 seconds and names the failed check, the value, the limit
+and the location. So they could iterate many times before anything was printed. The outer loop is the real print:
+photographed, measured, compared with the CAD.</p>
+<p>
+  <img src="/images/unit-tests-for-3d/g_loop.jpg" alt="The two loops: agent iterations inside, real prints outside">
+
+</p>
+<h2 id="every-failure-became-a-rule">Every failure became a rule</h2>
+<table>
+<thead>
+<tr>
+<th>What went wrong</th>
+<th>Rule now in the harness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A clip sat on the ampoule&rsquo;s fragile neck.</td>
+<td>Holders may only touch the straight body.</td>
+</tr>
+<tr>
+<td>The lid jumped through a latched clamp between two motion steps.</td>
+<td>No step may move a part more than one wall thickness.</td>
+</tr>
+<tr>
+<td>Lightening windows left floating islands, each one watertight.</td>
+<td>Every printed part must be exactly one body.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="beyond-classic-unit-tests">Beyond classic unit tests</h2>
+<p>Unit tests are only the start. Here the harness also renders the model, animates the motion and compares photos of
+the real print with the CAD. In bigger systems the same thinking means installing the product on fresh virtual
+machines in the build pipeline and running complete scenarios as smoke tests, plus long-running and
+hardware-in-the-loop tests.</p>
+<p>I list every technique I can think of, then keep the ones that earn trust. It&rsquo;s a trade-off: stay virtual and fast
+as long as possible, and go real and slow only where reality alone can answer. Whatever is kept must be
+deterministic and trustworthy.</p>
+<p>
+  <img src="/images/unit-tests-for-3d/g_techniques.jpg" alt="Testing techniques by cost and trust (my placement)">
+
+</p>
+<p>Two habits keep this manageable. First, be systematic inside the tests themselves: each check is a module, declared
+next to the part it protects and run by one generic runner. Second, test the tests: the checker is fed parts with
+planted defects (an overlap, a thin wall, an open mesh) and must find every one. Look at the whole creation process,
+not only the code: inputs, generation, verification, packaging, the print and the photo of the print.</p>
+<p>
+  <img src="/images/unit-tests-for-3d/site_verify.jpg" alt="The same harness running in the browser: every check passes, and the 3MF plates are ready">
+
+</p>
+<h2 id="harness-engineering">Harness engineering</h2>
+<p>At its core this is just TDD. The hard part with agents is making the validation fast, complete, automatic and
+virtual. I often spend more time on the harness than on the implementation, which then becomes almost trivial.</p>
+<p>
+  <img src="/images/unit-tests-for-3d/g_pillars.jpg" alt="What makes a harness worth trusting">
+
+</p>
+<p>The literature calls this harness engineering: deterministic, reliable flows around a probabilistic agent, to
+harness its power.</p>
+<h2 id="beyond-3d-printing">Beyond 3D printing</h2>
+<p>The recipe transfers to any agent task:</p>
+<ol>
+<li><strong>Define &ldquo;done&rdquo; as checks a machine can run</strong>, before the agent starts: tests for code, schema and consistency
+rules for data, rule-based checks for documents.</li>
+<li><strong>Make every failure specific:</strong> what failed, where, and by how much. That is what the agent iterates on.</li>
+<li><strong>Keep the checks as fast and virtual as possible</strong>, then add long-running, hardware-in-the-loop and full-install
+tests where only reality can answer. Whatever you keep must stay deterministic and trustworthy, and the tests
+themselves need testing.</li>
+<li><strong>Turn every escaped defect into a new check</strong>, so the same mistake can&rsquo;t come back.</li>
+<li><strong>Review the harness, not every attempt.</strong></li>
+</ol>
+<p>This was a small project, and I didn&rsquo;t give maintainability much thought. Still, the same principles hold for me at
+every scale.</p>
+
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/testpage/" data-toggle="tooltip" data-placement="top" title="An Example Post">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="toeb&#39;s Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fa fa-circle fa-stack-2x"></i>
+                               <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+                   
+                    
+                    <li>
+                        <a href="mailto:redacted@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/toeb">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/tobias-becker-a64475a3/">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/1229468/toeb">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    <li>
+                        <a target="_blank" href="https://www.reddit.com/user/toebi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-reddit fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                    
+                    
+            
+            
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; toeb&#39;s Blog 2026
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

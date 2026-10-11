@@ -8,6 +8,16 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 04 Jun 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://toeb.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Unit tests for 3D</title>
+      <link>https://toeb.github.io/post/unit-tests-for-3d/</link>
+      <pubDate>Sun, 11 Oct 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://toeb.github.io/post/unit-tests-for-3d/</guid>
+      <description>I wanted to 3D-print an ampoule case for my wife, and it fit on the first print. The trick was not the CAD. A verification harness checked every design virtually before the printer saw it. You choose which ampoules and how many; the generator either packs them into a fixed case or designs the smallest case that holds them.
+Try it: paramcad designer, which runs entirely in your browser.
+From CAD to print The printed case is the fork-clip version: two 10 ml and four 2 ml ampoules in a 121.</description>
+    </item>
+    <item>
       <title>cmakepp: Expression Syntax</title>
       <link>https://toeb.github.io/post/cmakeppexpressionsyntax/</link>
       <pubDate>Mon, 04 Jun 2018 00:00:00 +0000</pubDate>
